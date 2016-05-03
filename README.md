@@ -1,2 +1,3 @@
 # leaky-cauldron
-A nodejs application to analyze a local image file and make a CSS template based off of the dominant hex colors in the image.
+
+A web application to create a psuedo CSS template file.  Utilizes ES6.  In later versions I want to be able to do this in Nodejs.
