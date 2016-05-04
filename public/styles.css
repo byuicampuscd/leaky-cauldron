@@ -3,3 +3,29 @@
     padding: 0px;
     margin: 0px;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+textarea {
+    font-family: Helvetica, "Century Gothic", sans-serif;
+    font-weight: 100;
+}
+
+input,
+textarea {
+    display: block;
+}
+
+canvas {
+    position: absolute;
+    left: -100000px;
+}
+
+main {
+    display: flex;
+}
