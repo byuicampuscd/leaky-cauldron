@@ -1,4 +1,4 @@
-# leaky-cauldron
+# Leaky Cauldron
 
 A web application to create a psuedo CSS template file.
 
