@@ -21,10 +21,12 @@ textarea {
     display: block;
 }
 
+/*
 canvas {
     position: absolute;
     left: -100000px;
 }
+*/
 
 main {
     display: flex;

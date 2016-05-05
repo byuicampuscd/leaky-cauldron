@@ -27,7 +27,7 @@ var CanvasImage = function (image) {
     this.canvas  = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
 
-    document.querySelector("#list").appendChild(this.canvas);
+    document.querySelector(".splash #header").appendChild(this.canvas);
 
     this.width  = this.canvas.width  = image.width;
     this.height = this.canvas.height = image.height;

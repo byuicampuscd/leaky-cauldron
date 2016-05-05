@@ -12,6 +12,11 @@ function handleFileSelect(evt) {
 
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
+            
+            console.log(theFile);
+            
+//            document.querySelector("").src = theFile.name;
+            
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
@@ -46,11 +51,11 @@ function getHexPallete(domColor, pallete, cssTemplate) {
             div = document.createElement("div"),
             hex = `#${firstbit}${secbit}${thirbit}`;
 
-        div.style.width = "200px";
-        div.style.height = "200px";
+        div.style.width = "50px";
+        div.style.height = "50px";
         div.style.backgroundColor = hex;
         div.className = hex;
-        document.body.appendChild(flexContainer);
+        document.querySelector("#colorPallete").appendChild(flexContainer);
         flexContainer.appendChild(div);
         palleteArray.push(hex);
     }
