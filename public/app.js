@@ -12,29 +12,33 @@ function handleFileSelect(evt) {
 
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
-            
-            console.log(theFile);
-            
-//            document.querySelector("").src = theFile.name;
-            
+
+            var filename = theFile.name.replace(/\.[^/.]+$/, "");
+
+            console.log(filename);
+
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
 
                 var colorThief = new ColorThief();
-                var image = new CanvasImage(img);
+                var image = new CanvasImage(img, filename);
 
                 var domColor = colorThief.getColor(img);
                 var pallete = colorThief.getPalette(img);
 
-                var get = getHexPallete(domColor, pallete, cssTemplate);
-                console.log(get);
+                var get = getHexPallete(domColor, pallete);
+
+
             };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
     }
+    var textarea = document.createElement("textarea");
+    textarea.id = "cssOutput";
+    document.querySelector('output').appendChild(textarea);
 }
 
 function getHexPallete(domColor, pallete, cssTemplate) {
@@ -49,17 +53,20 @@ function getHexPallete(domColor, pallete, cssTemplate) {
             secbit = pallete[i][1].toString(16),
             thirbit = pallete[i][2].toString(16),
             div = document.createElement("div"),
-            hex = `#${firstbit}${secbit}${thirbit}`;
+            hex = `#${firstbit}${secbit}${thirbit}`,
+            hexText = document.createTextNode(hex),
+            hexTextPara = document.createElement("p");
 
-        div.style.width = "50px";
+        div.style.width = "100px";
         div.style.height = "50px";
         div.style.backgroundColor = hex;
-        div.className = hex;
+        div.id = hex;
+        hexTextPara.appendChild(hexText);
+        div.appendChild(hexTextPara);
         document.querySelector("#colorPallete").appendChild(flexContainer);
         flexContainer.appendChild(div);
         palleteArray.push(hex);
     }
-    return cssTemplate(palleteArray);
 }
 
 function cssTemplate(array) {
@@ -193,5 +200,10 @@ a:visited {
     return style;
 }
 
+document.onclick = function (e) {
+    if (e.srcElement.id.indexOf("#") > -1) {
+        console.log(e.srcElement.id);
+    }
+}
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);

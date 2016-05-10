@@ -4,30 +4,24 @@
     margin: 0px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-input,
-textarea {
-    font-family: Helvetica, "Century Gothic", sans-serif;
-    font-weight: 100;
-}
-
 input,
 textarea {
     display: block;
 }
 
-/*
 canvas {
-    position: absolute;
-    left: -100000px;
+    width: 100%;
 }
-*/
 
 main {
     display: flex;
+}
+
+#large{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+div#footer {
+    width: 100%;
 }
