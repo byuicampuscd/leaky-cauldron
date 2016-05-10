@@ -15,8 +15,6 @@ function handleFileSelect(evt) {
 
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
 
-            console.log(filename);
-
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
@@ -69,141 +67,234 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     }
 }
 
+function saveTextAsFile(text) {
+    var textToWrite = text;
+    var textFileAsBlob = new Blob([textToWrite], {
+        type: 'text/plain'
+    });
+    var fileNameToSaveAs = 'course';
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL !== null) {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    } else {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+    downloadLink.click();
+}
+
 function cssTemplate(array) {
+    console.log(array);
     var style = `
 html {
-	background: -webkit-radial-gradient(ellipse, ${array[1]} 0%, ${array[0]} 100%) fixed;
-	background: radial-gradient(ellipse, ${array[1]} 0%, ${array[0]} 100%) fixed;
+	background: -webkit-radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
+	background: radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
 }
 
 h1 {
-	color: ${array[2]};
+	color: ${array[2].value};
 }
 
 h2,
 h4 {
-	color: ${array[3]};
+	color: ${array[3].value};
 }
 
 h3,
 h5 {
-	color: ${array[4]};
+	color: ${array[4].value};
 }
 
 a {
-	color: #2d5d94;
-	border-bottom: 2px solid #2d5d94;
+	color: ${array[5].value};
+	border-bottom: 2px solid ${array[5].value};
 }
 
 a:hover {
-	color: #7b4c8d;
-    border-bottom: 2px solid #7b4c8d;
+	color: ${array[6].value};
+    border-bottom: 2px solid ${array[6].value};
 }
 
 a:visited {
-	color: #7b4c8d;
-    border-bottom: 2px solid #7b4c8d;
+	color: ${array[6].value};
+    border-bottom: 2px solid ${array[6].value};
 }
 
 #footer {
-	color: #e2e2e2;
-	background-color: #2d5d94;
+	color: ${array[8].value};
+	background-color: ${array[7].value};
 }
 
-/********************************************
+/******
     SPLASH PAGE STYLING
-*********************************************/
+*****/
 
 .splash #article {
-	color: #eaeaea;
-	background-color: #125576;
+	color: ${array[9].value};
+	background-color: ${array[10].value};
 }
 
 .splash h1 {
-	color: #fafafa;
+	color: ${array[11].value};
 }
 
 .splash h2,
 .splash h4 {
-	color: #a1d7ff;
+	color: ${array[12].value};
 }
 
 .splash h3,
 .splash h5{
-	color: #c3c3c3;
+	color: ${array[13].value};
 }
 
 .splash a {
-    color: #a1d7ff;
-	border-bottom: 2px solid #a1d7ff;
+    color: ${array[14].value};
+	border-bottom: 2px solid ${array[14].value};
 }
 
 .splash a:hover {
-	color: #c08fd3;
-    border-bottom: 2px solid #c08fd3;
+	color: ${array[15].value};
+    border-bottom: 2px solid ${array[15].value};
 }
 
 .splash a:visited {
-	color: #c08fd3;
-    border-bottom: 2px solid #c08fd3;
+	color: ${array[15].value};
+    border-bottom: 2px solid ${array[15].value};
 }
 
 .splash #footer {
-	color: #e2e2e2;
-	background-color: #133955;
+	color: ${array[17].value};
+	background-color: ${array[16].value};
 }
 
-/********************************************
+/******
     FEATURES STYLING
-*********************************************/
+*******/
 
 /* Callout box */
 .callout {
-    color: #2d5d94;
-    background: #e3ded1;
+    color: ${array[19].value};
+    background: ${array[18].value};
 }
 
 /* Drop downs */
 .drop-down {
-    background: #6c6c6c;
+    background: ${array[20].value};
 }
 
 .drop-down:hover {
-    background: #7f7f7f;
+    background: ${array[21].value};
 }
 
 /* Rubric table */
 /* Column headings */
 .rubric tr:first-child th {
-	background-color: #1e435d;
+	background-color: ${array[22].value};
 }
 
 /* Row headings */
 .rubric th {
-    background-color: #2d5d94;
+    background-color: ${array[23].value};
 }
 
 /* Mouseover popups */
 #main .popup {
-    border-bottom: dotted 2px #3084c3;
+    border-bottom: dotted 2px ${array[24].value};
 }
 
 #main .popup span {
-    background: #274b66;
+    background: ${array[24].value};
 }
 
 #main .popup:after {
-    border-color: #274b66 transparent transparent transparent;
+    border-color: ${array[24].value} transparent;
 }
 `;
-
+    saveTextAsFile(style)
     return style;
 }
 
-document.onclick = function (e) {
-    if (e.srcElement.id.indexOf("#") > -1) {
-        console.log(e.srcElement.id);
-    }
+function changePreview(array) {
+    document.querySelector('html').style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%`;
+    
+    //SMALL TEMPLATE
+    document.querySelector('#small h1').style.color = `${array[2].value}`;
+    document.querySelector('#small h2').style.color = `${array[3].value}`;
+    document.querySelector('#small h3').style.color = `${array[4].value}`;
+    document.querySelector('#small h4').style.color = `${array[3].value}`;
+    document.querySelector('#small h5').style.color = `${array[4].value}`;    
+    document.querySelector('#small a').style.color = `${array[5].value}`;
+    document.querySelector('#small a').style.borderBottom = `2px solid ${array[5].value}`;
+    
+    //psuedo elements can't be set?
+//    console.log(document.querySelector('#small a'));
+//    
+//    document.querySelector('#small a:hover').style.color = `${array[6].value}`;
+//    document.querySelector('#small a:hover').style.borderBottom = `2px solid ${array[6].value}`;
+//    document.querySelector('#small a:visited').style.color = `${array[6].value}`;
+//    document.querySelector('#small a:visited').style.borderBottom = `2px solid ${array[6].value}`;
+    
+    document.querySelector('#small #footer').style.color = `${array[8].value}`;
+    document.querySelector('#small #footer').style.backgroundColor = `${array[7].value}`;
+    
+    //Large TEMPLATE
+    document.querySelector('#large #article').style.color = `${array[9].value}`;
+    document.querySelector('#large #article').style.backgroundColor = `${array[10].value}`;    
+    document.querySelector('#large h1').style.color = `${array[11].value}`;
+    document.querySelector('#large h2').style.color = `${array[12].value}`;
+    document.querySelector('#large h3').style.color = `${array[13].value}`;
+    document.querySelector('#large h4').style.color = `${array[12].value}`;
+    document.querySelector('#large h5').style.color = `${array[13].value}`;    
+    document.querySelector('#large a').style.color = `${array[14].value}`;
+    document.querySelector('#large a').style.borderBottom = `2px solid ${array[14].value}`;
+    
+    //again from small
+//    document.querySelector('#large a:hover').style.color = `${array[15].value}`;
+//    document.querySelector('#large a:hover').style.borderBottom = `2px solid ${array[15].value}`;
+//    document.querySelector('#large a:visited').style.color = `${array[15].value}`;
+//    document.querySelector('#large a:visited').style.borderBottom = `2px solid ${array[15].value}`;
+    
+    document.querySelector('#large #footer').style.color = `${array[17].value}`;
+    document.querySelector('#large #footer').style.backgroundColor = `${array[16].value}`;
+    
+    
+    //FEATURES
+    document.querySelector('#features .callout').style.color = `${array[19].value}`;
+    document.querySelector('#features .callout').style.background = `${array[18].value}`;    
+    document.querySelector('#features .drop-down').style.background = `${array[20].value}`;
+//    document.querySelector('#features .drop-down:hover').style.background = `${array[21].value}`;
+    document.querySelector('#features .rubric tr:first-child th').style.backgroundColor = `${array[22].value}`;
+    document.querySelector('#features .rubric th').style.backgroundColor = `${array[23].value}`;
+    document.querySelector('#features #main .popup').style.borderBottom = `${array[24].value}`;
+    document.querySelector('#features #main span').style.background = `${array[24].value}`;
+//    document.querySelector('#features #main .popup:after').style.borderColor = `${array[24].value} transparent`;
+    
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+document.onclick = function (e) {
+    if (e.srcElement.localName === "input" && e.srcElement.type === "submit") {
+        var allInputBoxes = document.querySelectorAll("aside input[name]"),
+            cssTemp,
+            textarea = document.querySelector("textarea");
+        
+        if (allInputBoxes.length === 25) {
+            cssTemp = cssTemplate(allInputBoxes);
+            changePreview(allInputBoxes);
+            textarea.value = cssTemp;
+        } else {
+            console.log("Please fill in all boxes.")
+        }
+    }
+}

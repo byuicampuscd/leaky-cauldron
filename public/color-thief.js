@@ -27,7 +27,6 @@ var CanvasImage = function (image, fileName) {
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
 
-    console.log(fileName);
     if (fileName==="largeBanner") {
         document.querySelector("#large #header").appendChild(this.canvas);
     } else if (fileName==="smallBanner") {

@@ -17,7 +17,8 @@ main {
     display: flex;
 }
 
-#large{
+#large,
+#small{
     margin-top: 50px;
     margin-bottom: 50px;
 }
