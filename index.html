@@ -19,65 +19,71 @@
 
     <div id="colorPallete"></div>
 
-<!--
-    <aside>
-        <label>Background-Colors</label>
-        <input name="outer" placeholder="Outer Radial Color">
-        <input name="inner" placeholder="Inner Raidal Color">
+    <!--    Add IDs to differentiate in JS?-->
 
-        <label>Small Template</label>
-        <input name="sh1" placeholder="H1 color">
-        <input name="sh2" placeholder="H2 and h4 color">
-        <input name="sh3" placeholder="H3 and h5 color">
-        <input name="slink" placeholder="Link">
-        <input name="slinkhover" placeholder="Link Hover">
-        <input name="sfooter" placeholder="Small Footer Color">
-        <input name="sfooterText" placeholder="Small Footer Text">
-
-        <label>Large Template</label>
-        <input name="lbackground" placeholder="Splash Background Color">
-        <input name="ltext" placeholder="Splash Text">
-        <input name="lh1" placeholder="H1 color">
-        <input name="lh2" placeholder="H2 and h4 color">
-        <input name="lh3" placeholder="H3 and h5 color">
-        <input name="llink" placeholder="Link">
-        <input name="llinkhover" placeholder="Link Hover">
-        <input name="lfooter" placeholder="Large Footer Color">
-        <input name="lfooterText" placeholder="Large Footer Text">
-
-        <label>Features Template</label>
-        <input name="callbox" placeholder="Callout Box">
-        <input name="calltext" placeholder="Callout Text">
-        <input name="dropdown" placeholder="Dropdown">
-        <input name="drophover" placeholder="Dropdown Hover">
-        <input name="firstHeader" placeholder="TR:first-child TH">
-        <input name="rowHeaders" placeholder="TH">
-        <input name="popup" placeholder="Popup colors">
-    </aside>
-    <input type="submit">
--->
-    
     <div id="inputs">
-        <p id="page-selection"><b>Page:</b> small <input type="radio" name="page" checked> large <input type="radio" name="page"> features <input type="radio" name="page"></p>
-        <div id="">
-            <p><b>Background-Colors:</b> Outer <input type="radio" name="option" checked> Inner <input type="radio" name="option"></p>
-
-            <p id="splash-options"><b>Splash:</b> background <input type="radio" name="option"> Text <input type="radio" name="option"></p>
-
-            <p><b>Headings:</b> h1 <input type="radio" name="option"> h2 / h4 <input type="radio" name="option"> h3 / h5 <input type="radio" name="option"></p>
-
-            <p><b>Links:</b> Default <input type="radio" name="option"> Hover <input type="radio" name="option"></p>
-
-            <p><b>Footer:</b> Background <input type="radio" name="option"> Text <input type="radio" name="option"></p>
+        <div id="page-options">
+            <p id="page-selection">
+                <strong>Page:</strong> small
+                <input id="small-radio" type="radio" name="page" checked> large
+                <input id="large-radio" type="radio" name="page"> features
+                <input id="features-radio" type="radio" name="page">
+            </p>
         </div>
-        <div id="features-options">
-            <p><b>Callout:</b> Background <input type="radio" name="option"> Text <input type="radio" name="option"></p>
+        <div id="general">
+            <p id="background-colors">
+                <strong>Background-Colors:</strong> Outer
+                <input id="outergrad" type="radio" name="option" checked> Inner
+                <input id="innergrad" type="radio" name="option">
+            </p>
 
-            <p><b>Dropdown:</b> Background <input type="radio" name="option"> Hover <input type="radio" name="option"></p>
+            <p id="splash-options">
+                <strong>Splash:</strong> background
+                <input id="splash-back" type="radio" name="option"> Text
+                <input id="splash-text" type="radio" name="option">
+            </p>
 
-            <p><b>Rubric Table:</b> Column Heading <input type="radio" name="option"> Row Heading <input type="radio" name="option"></p>
+            <p id="headings">
+                <strong>Headings:</strong> h1
+                <input id="h1" type="radio" name="option"> h2 / h4
+                <input id="h2" type="radio" name="option"> h3 / h5
+                <input id="h3" type="radio" name="option">
+            </p>
 
-            <p><b>Popups:</b> Background <input type="radio" name="option"></p>
+            <p id="links">
+                <strong>Links:</strong> Default
+                <input id="a" type="radio" name="option"> Hover
+                <input id="link-hover" type="radio" name="option">
+            </p>
+
+            <p id="footer-option">
+                <strong>Footer:</strong> Background
+                <input id="footer-color" type="radio" name="option"> Text
+                <input id="footer-text" type="radio" name="option">
+            </p>
+
+            <p id="callout">
+                <strong>Callout:</strong> Background
+                <input id="callout-color" type="radio" name="option"> Text
+                <input id="callout-text" type="radio" name="option">
+            </p>
+
+            <p id="drop-down">
+                <strong>Dropdown:</strong> Background
+                <input id="dropdown-color" type="radio" name="option"> Hover
+                <input id="dropdown-hover" type="radio" name="option">
+            </p>
+
+            <p id="rubric">
+                <strong>Rubric Table:</strong> Column Heading
+                <input id="rubric-column" type="radio" name="option"> Row Heading
+                <input id="rubric-row" type="radio" name="option">
+            </p>
+
+            <p id="popup">
+                <strong>Popups:</strong> Background
+                <input id="popup-color" type="radio" name="option">
+            </p>
         </div>
     </div>
 
@@ -97,13 +103,13 @@
                 <h2>Page Content</h2>
 
                 <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a href="#">Duis autem</a> vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                
+
                 <!-- end #article -->
             </div>
             <div id="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
         </div>
     </div>
-    
+
     <div id="large">
         <div id="main" class="splash">
             <div id="header">

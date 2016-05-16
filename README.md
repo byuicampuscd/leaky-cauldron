@@ -9,3 +9,4 @@ From there, a form will appear asking for which colors you want to use for which
 
 ### Collborators
 Eric Julander 
+Jay Hanson
