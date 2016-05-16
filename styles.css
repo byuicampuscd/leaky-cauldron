@@ -26,3 +26,26 @@ main {
 div#footer {
     width: 100%;
 }
+
+/* Inputs */
+
+#inputs {
+    margin: 10px;
+    padding: 10px;
+    background: #f0f0f0;
+}
+
+#page-selection {
+    padding: 5px;
+    border-bottom: 2px solid #000;
+}
+
+#inputs b {
+    margin-right: 5px;
+}
+
+
+#inputs input {
+    display: inline;
+    margin-right: 10px;
+}
