@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+input,
+textarea {
+    display: block;
+}
+
+canvas {
+    width: 100%;
+}
+
+main {
+    display: flex;
+}
+
+#large,
+#small{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+div#footer {
+    width: 100%;
+}
