@@ -270,6 +270,7 @@ var optimize = {
             },
             "a": function (h) {
                 document.querySelector("#small a").style.color = h;
+                document.querySelector("#small a").style.borderBottom = `2px solid ${h}`;
             },
             "link-hover": function (h) {
                 document.querySelector("#small a:hover").style.color = h;
@@ -289,54 +290,59 @@ var optimize = {
                 document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
             },
             "splash-back": function (h) {
-                document.querySelector("html").style.background = h;
+                document.querySelector("#large #article").style.backgroundColor = h;
             },
             "splash-text": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large p").style.color = h;
             },
             "h1": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large h1").style.color = h;
             },
             "h2": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large h2").style.color = h;
+                document.querySelector("#large h4").style.color = h;
             },
             "h3": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large h3").style.color = h;
+                document.querySelector("#large h5").style.color = h;
             },
             "a": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large a").style.color = h;
+                document.querySelector("#large a").style.borderBottom = `2px solid ${h}`;
             },
             "link-hover": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large a:hover").style.color = h;
             },
             "footer-color": function (h) {
-                document.querySelector("html").style.background = h;
+                document.querySelector("#large #footer").style.background = h;
             },
             "footer-text": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#large #footer").style.color = h;
             },
         },
         "features-radio": {
             "callout-color": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#callout").style.backgroundColor = h;
             },
             "callout-text": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("#callout").style.color = h;
             },
             "dropdown-color": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("drop-down").style.backgroundColor = h;
             },
             "dropdown-hover": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("drop-down").style.backgroundColor = h;
             },
             "rubric-column": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("rubric").style.color = h;
             },
             "rubric-row": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("rubric").style.color = h;
             },
             "popup-color": function (h) {
-                document.querySelector("html").style.color = h;
+                document.querySelector("popup").style.color = h;
+                document.querySelector("popup:after").style.color = h;
+                document.querySelector("popup span").style.color = h;
             }
         }
     };
