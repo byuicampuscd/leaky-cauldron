@@ -299,7 +299,7 @@ var options = {
         },
         "links": {
             "a": "",
-            "link-hover":""
+            "link-hover": ""
         },
         "footer": {
             "footer-color": "",
@@ -312,20 +312,14 @@ var options = {
 }
 
 document.onclick = function (e) {
-
     var hexcode;
-
-    if (e.srcElement.parentNode.parentNode.id === "page-options"){
+    if (e.srcElement.parentNode.parentNode.id === "page-options") {
         localStorage["page-selection"] = e.srcElement.id;
-    } else if (e.srcElement.parentNode.parentNode.id === "general"){
+    } else if (e.srcElement.parentNode.parentNode.id === "general") {
         localStorage["general"] = e.srcElement.id;
-    } else if (e.srcElement.id.indexOf("#")>-1){
-        hexcode = e.srcElement.id.replace(/\s+/g,"");;
+    } else if (e.srcElement.id.indexOf("#") > -1) {
+        hexcode = e.srcElement.id.replace(/\s+/g, "");;
         console.log(hexcode);
     }
-
-        console.log(e.srcElement.id
-                    , e.srcElement.parentNode.id
-                    , e.srcElement.parentNode.parentNode.id);
-
+    console.log(e.srcElement.id, e.srcElement.parentNode.id, e.srcElement.parentNode.parentNode.id);
 }
