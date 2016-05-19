@@ -50,16 +50,12 @@ function getHexPallete(domColor, pallete, cssTemplate) {
             secbit = pallete[i][1].toString(16),
             thirbit = pallete[i][2].toString(16),
             div = document.createElement("div"),
-            hex = `#${firstbit}${secbit}${thirbit}`,
-            hexText = document.createTextNode(hex),
-            hexTextPara = document.createElement("p");
+            hex = `#${firstbit}${secbit}${thirbit}`;
 
         div.style.width = "100px";
         div.style.height = "50px";
         div.style.backgroundColor = hex;
         div.id = hex;
-        hexTextPara.appendChild(hexText);
-        div.appendChild(hexTextPara);
         document.querySelector("#colorPallete").appendChild(flexContainer);
         flexContainer.appendChild(div);
         palleteArray.push(hex);
@@ -223,66 +219,9 @@ a:visited {
     return style;
 }
 
-function changePreview(array) {
-    document.querySelector('html').style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%`;
-
-    //SMALL TEMPLATE
-    document.querySelector('#small h1').style.color = `${array[2].value}`;
-    document.querySelector('#small h2').style.color = `${array[3].value}`;
-    document.querySelector('#small h3').style.color = `${array[4].value}`;
-    document.querySelector('#small h4').style.color = `${array[3].value}`;
-    document.querySelector('#small h5').style.color = `${array[4].value}`;
-    document.querySelector('#small a').style.color = `${array[5].value}`;
-    document.querySelector('#small a').style.borderBottom = `2px solid ${array[5].value}`;
-
-    //psuedo elements can't be set?
-    //    console.log(document.querySelector('#small a'));
-    //
-    //    document.querySelector('#small a:hover').style.color = `${array[6].value}`;
-    //    document.querySelector('#small a:hover').style.borderBottom = `2px solid ${array[6].value}`;
-    //    document.querySelector('#small a:visited').style.color = `${array[6].value}`;
-    //    document.querySelector('#small a:visited').style.borderBottom = `2px solid ${array[6].value}`;
-
-    document.querySelector('#small #footer').style.color = `${array[8].value}`;
-    document.querySelector('#small #footer').style.backgroundColor = `${array[7].value}`;
-
-    //Large TEMPLATE
-    document.querySelector('#large #article').style.color = `${array[9].value}`;
-    document.querySelector('#large #article').style.backgroundColor = `${array[10].value}`;
-    document.querySelector('#large h1').style.color = `${array[11].value}`;
-    document.querySelector('#large h2').style.color = `${array[12].value}`;
-    document.querySelector('#large h3').style.color = `${array[13].value}`;
-    document.querySelector('#large h4').style.color = `${array[12].value}`;
-    document.querySelector('#large h5').style.color = `${array[13].value}`;
-    document.querySelector('#large a').style.color = `${array[14].value}`;
-    document.querySelector('#large a').style.borderBottom = `2px solid ${array[14].value}`;
-
-    //again from small
-    //    document.querySelector('#large a:hover').style.color = `${array[15].value}`;
-    //    document.querySelector('#large a:hover').style.borderBottom = `2px solid ${array[15].value}`;
-    //    document.querySelector('#large a:visited').style.color = `${array[15].value}`;
-    //    document.querySelector('#large a:visited').style.borderBottom = `2px solid ${array[15].value}`;
-
-    document.querySelector('#large #footer').style.color = `${array[17].value}`;
-    document.querySelector('#large #footer').style.backgroundColor = `${array[16].value}`;
-
-
-    //FEATURES
-    document.querySelector('#features .callout').style.color = `${array[19].value}`;
-    document.querySelector('#features .callout').style.background = `${array[18].value}`;
-    document.querySelector('#features .drop-down').style.background = `${array[20].value}`;
-    //    document.querySelector('#features .drop-down:hover').style.background = `${array[21].value}`;
-    document.querySelector('#features .rubric tr:first-child th').style.backgroundColor = `${array[22].value}`;
-    document.querySelector('#features .rubric th').style.backgroundColor = `${array[23].value}`;
-    document.querySelector('#features #main .popup').style.borderBottom = `${array[24].value}`;
-    document.querySelector('#features #main span').style.background = `${array[24].value}`;
-    //    document.querySelector('#features #main .popup:after').style.borderColor = `${array[24].value} transparent`;
-
-}
-
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-var options = {
+var optimize = {
     "general": {
         "background-colors": {
             "outergrad": "",
@@ -309,17 +248,55 @@ var options = {
     "features-options": {
 
     }
+}, options = {
+    "page-selection": {
+        "small-radio": "",
+        "large-radio": "",
+        "features-radio": ""
+    },
+    "general": {
+        "outergrad": "",
+        "innergrad": "",
+        "splash-back": "",
+        "splash-text": "",
+        "h1": "",
+        "h2": "",
+        "h3": "",
+        "a": "",
+        "link-hover": "",
+        "footer-color": "",
+        "callout-color": "",
+        "callout-text": "",
+        "dropdown-color": "",
+        "dropdown-hover": "",
+        "rubric-column": "",
+        "rubric-row": "",
+        "popup-color": ""
+    }
 }
 
+function changeTemplate(hexcode) {
+    var page = localStorage["page-selection"],
+        general = localStorage["general"];
+    console.log(page, general);
+};
+
+localStorage["page-selection"] = "small-radio";
+localStorage["general"] = "outergrad";
+
 document.onclick = function (e) {
-    var hexcode;
+    var hexcode,
+        parent = "general";
     if (e.srcElement.parentNode.parentNode.id === "page-options") {
         localStorage["page-selection"] = e.srcElement.id;
-    } else if (e.srcElement.parentNode.parentNode.id === "general") {
-        localStorage["general"] = e.srcElement.id;
-    } else if (e.srcElement.id.indexOf("#") > -1) {
-        hexcode = e.srcElement.id.replace(/\s+/g, "");;
-        console.log(hexcode);
     }
-    console.log(e.srcElement.id, e.srcElement.parentNode.id, e.srcElement.parentNode.parentNode.id);
+    if (e.srcElement.parentNode.parentNode.id === "general") {
+        parent = e.srcElement.parentNode;
+        localStorage["general"] = e.srcElement.id;
+    }
+    if (e.srcElement.id.indexOf("#") > -1) {
+        hexcode = e.srcElement.id.replace(/\s+/g, "");
+        console.log(hexcode, e.srcElement);
+        changeTemplate(hexcode);
+    }
 }
