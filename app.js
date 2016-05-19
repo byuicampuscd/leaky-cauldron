@@ -252,10 +252,12 @@ var optimize = {
     options = {
         "small-radio": {
             "outergrad": function (h) {
-                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
+                console.log("grad outer color");
+                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
             },
             "innergrad": function (h) {
-                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
+                console.log("grad inner color");
+                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
             },
             "h1": function (h) {
                 document.querySelector("#small h1").style.color = h;
@@ -284,10 +286,12 @@ var optimize = {
         },
         "large-radio": {
             "outergrad": function (h) {
-                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
+                console.log("grad outer color");
+                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
             },
             "innergrad": function (h) {
-                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
+                console.log("grad inner color");
+//                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
             },
             "splash-back": function (h) {
                 document.querySelector("#large #article").style.backgroundColor = h;
@@ -322,42 +326,42 @@ var optimize = {
         },
         "features-radio": {
             "callout-color": function (h) {
-                document.querySelector("#callout").style.backgroundColor = h;
+                document.querySelector("#features .callout").style.backgroundColor = h;
             },
             "callout-text": function (h) {
-                document.querySelector("#callout").style.color = h;
+                document.querySelector("#features .callout").style.color = h;
             },
             "dropdown-color": function (h) {
-                document.querySelector("drop-down").style.backgroundColor = h;
+                document.querySelector("#features .drop-down").style.backgroundColor = h;
             },
             "dropdown-hover": function (h) {
-                document.querySelector("drop-down").style.backgroundColor = h;
+                console.log("dropdown hover");
+                //                document.querySelector("#features .drop-down").style.backgroundColor = h;
             },
             "rubric-column": function (h) {
-                document.querySelector("rubric").style.color = h;
+                console.log("rubric column psuedo");
+                //                document.querySelector("#features .rubric tr:first-child th").style.backgroundColor = h;
             },
             "rubric-row": function (h) {
-                document.querySelector("rubric").style.color = h;
+                document.querySelector("#features .rubric th").style.backgroundColor = h;
             },
             "popup-color": function (h) {
-                document.querySelector("popup").style.color = h;
-                document.querySelector("popup:after").style.color = h;
-                document.querySelector("popup span").style.color = h;
+                document.querySelector("#features .popup").style.borderBottom = h;
+                //                document.querySelector("#features .popup:after").style.color = h;
+                document.querySelector("#features .popup span").style.backgroundColor = h;
             }
         }
     };
 
 function changeTemplate(hexcode) {
     var page = localStorage["page-selection"],
-        general = localStorage["general"],
-        features = localStorage["features-page"];
-    console.log(hexcode, page, general, features);
+        general = localStorage["general"];
+    console.log(hexcode, page, general);
     options[page][general](hexcode);
 };
 
 localStorage["page-selection"] = "small-radio";
 localStorage["general"] = "outergrad";
-localStorage["features-page"] = "callout-color";
 
 document.onclick = function (e) {
     var hexcode,
@@ -368,10 +372,6 @@ document.onclick = function (e) {
     if (e.srcElement.parentNode.parentNode.id === "general") {
         parent = e.srcElement.parentNode;
         localStorage["general"] = e.srcElement.id;
-    }
-    if (e.srcElement.parentNode.parentNode.id === "features-page") {
-        parent = e.srcElement.parentNode;
-        localStorage["features-page"] = e.srcElement.id;
     }
     if (e.srcElement.id.indexOf("#") > -1) {
         hexcode = e.srcElement.id.replace(/\s+/g, "");
