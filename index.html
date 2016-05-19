@@ -11,7 +11,7 @@
 
 <body>
 
-    <h1>Choose the photo you wish to upload</h1>
+    <h1 style="color: white;">Leaky Cauldron</h1>
 
     <input type="file" id="files" name="files[]" multiple />
     <output id="list">
@@ -22,11 +22,13 @@
     <!--    Add IDs to differentiate in JS?-->
 
     <div id="inputs">
+        <h2>Regular Page Features</h2>
         <div id="page-options">
             <p id="page-selection">
                 <strong>Page:</strong> small
                 <input id="small-radio" type="radio" name="page" checked> large
-                <input id="large-radio" type="radio" name="page"> features
+                <input id="large-radio" type="radio" name="page">
+                features
                 <input id="features-radio" type="radio" name="page">
             </p>
         </div>
@@ -62,28 +64,30 @@
                 <input id="footer-text" type="radio" name="option">
             </p>
         </div>
+        <hr>
+        <h2>Features</h2>
         <div id="features-page">
             <p id="callout">
                 <strong>Callout:</strong> Background
-                <input id="callout-color" type="radio" name="option"> Text
-                <input id="callout-text" type="radio" name="option">
+                <input id="callout-color" type="radio" name="feat" checked> Text
+                <input id="callout-text" type="radio" name="feat">
             </p>
 
             <p id="drop-down">
                 <strong>Dropdown:</strong> Background
-                <input id="dropdown-color" type="radio" name="option"> Hover
-                <input id="dropdown-hover" type="radio" name="option">
+                <input id="dropdown-color" type="radio" name="feat"> Hover
+                <input id="dropdown-hover" type="radio" name="feat">
             </p>
 
             <p id="rubric">
                 <strong>Rubric Table:</strong> Column Heading
-                <input id="rubric-column" type="radio" name="option"> Row Heading
-                <input id="rubric-row" type="radio" name="option">
+                <input id="rubric-column" type="radio" name="feat"> Row Heading
+                <input id="rubric-row" type="radio" name="feat">
             </p>
 
             <p id="popup">
                 <strong>Popups:</strong> Background
-                <input id="popup-color" type="radio" name="option">
+                <input id="popup-color" type="radio" name="feat">
             </p>
         </div>
     </div>
