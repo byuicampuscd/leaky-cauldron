@@ -94,123 +94,98 @@ html {
 	background: -webkit-radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
 	background: radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
 }
-
 h1 {
 	color: ${array[2].value};
 }
-
 h2,
 h4 {
 	color: ${array[3].value};
 }
-
 h3,
 h5 {
 	color: ${array[4].value};
 }
-
 a {
 	color: ${array[5].value};
 	border-bottom: 2px solid ${array[5].value};
 }
-
 a:hover {
 	color: ${array[6].value};
     border-bottom: 2px solid ${array[6].value};
 }
-
 a:visited {
 	color: ${array[6].value};
     border-bottom: 2px solid ${array[6].value};
 }
-
 #footer {
 	color: ${array[8].value};
 	background-color: ${array[7].value};
 }
-
 /******
     SPLASH PAGE STYLING
 *****/
-
 .splash #article {
 	color: ${array[9].value};
 	background-color: ${array[10].value};
 }
-
 .splash h1 {
 	color: ${array[11].value};
 }
-
 .splash h2,
 .splash h4 {
 	color: ${array[12].value};
 }
-
 .splash h3,
 .splash h5{
 	color: ${array[13].value};
 }
-
 .splash a {
     color: ${array[14].value};
 	border-bottom: 2px solid ${array[14].value};
 }
-
 .splash a:hover {
 	color: ${array[15].value};
     border-bottom: 2px solid ${array[15].value};
 }
-
 .splash a:visited {
 	color: ${array[15].value};
     border-bottom: 2px solid ${array[15].value};
 }
-
 .splash #footer {
 	color: ${array[17].value};
 	background-color: ${array[16].value};
 }
-
 /******
     FEATURES STYLING
 *******/
-
 /* Callout box */
 .callout {
     color: ${array[19].value};
     background: ${array[18].value};
 }
-
 /* Drop downs */
 .drop-down {
     background: ${array[20].value};
 }
-
 .drop-down:hover {
     background: ${array[21].value};
 }
-
 /* Rubric table */
 /* Column headings */
 .rubric tr:first-child th {
 	background-color: ${array[22].value};
 }
-
 /* Row headings */
 .rubric th {
     background-color: ${array[23].value};
 }
-
 /* Mouseover popups */
 #main .popup {
     border-bottom: dotted 2px ${array[24].value};
 }
-
 #main .popup span {
     background: ${array[24].value};
 }
-
 #main .popup:after {
     border-color: ${array[24].value} transparent;
 }
@@ -369,7 +344,7 @@ document.onclick = function (e) {
     if (e.srcElement.parentNode.parentNode.id === "page-options") {
         localStorage["page-selection"] = e.srcElement.id;
     }
-    if (e.srcElement.parentNode.parentNode.id === "general") {
+    if (e.srcElement.parentNode.parentNode.parentNode.id === "general") {
         parent = e.srcElement.parentNode;
         localStorage["general"] = e.srcElement.id;
     }
@@ -378,4 +353,24 @@ document.onclick = function (e) {
         console.log(hexcode, e.srcElement);
         changeTemplate(hexcode);
     }
+}
+
+/* Change Page */
+function changePage() {
+    var selector = this.event.srcElement.dataset.selector,
+        pages = document.querySelectorAll("#small, #large, #features"),
+        i;
+    // Close all pages and feature options
+    for (i = 0; i < pages.length; i += 1) {
+        pages[i].style.display = "none";
+    }
+    // Display selected page
+    document.querySelector(selector).style.display = "block";
+    if (selector == "#features") {
+        document.querySelector("#small-large-options").style.display = "none";
+        document.querySelector("#feature-options").style.display = "block";
+    } else {
+        document.querySelector("#small-large-options").style.display = "block";
+        document.querySelector("#feature-options").style.display = "none";
+     }
 }

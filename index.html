@@ -17,77 +17,77 @@
     <output id="list">
     </output>
 
-    <div id="colorPallete"></div>
-
     <!--    Add IDs to differentiate in JS?-->
 
     <div id="inputs">
-        <h2>Regular Page Features</h2>
         <div id="page-options">
             <p id="page-selection">
                 <strong>Page:</strong> small
-                <input id="small-radio" type="radio" name="page" checked> large
-                <input id="large-radio" type="radio" name="page">
+                <input id="small-radio" type="radio" name="page" data-selector="#small" onclick="changePage()" checked> large
+                <input id="large-radio" type="radio" name="page" data-selector="#large" onclick="changePage()">
                 features
-                <input id="features-radio" type="radio" name="page">
+                <input id="features-radio" type="radio" name="page" data-selector="#features" onclick="changePage()">
             </p>
         </div>
         <div id="general">
-            <p id="background-colors">
-                <strong>Background-Colors:</strong> Outer
-                <input id="outergrad" type="radio" name="option" checked> Inner
-                <input id="innergrad" type="radio" name="option">
-            </p>
+            <div id="small-large-options">
+                <p id="background-colors">
+                    <strong>Background-Colors:</strong> Outer
+                    <input id="outergrad" type="radio" name="option" checked> Inner
+                    <input id="innergrad" type="radio" name="option">
+                </p>
 
-            <p id="splash-options">
-                <strong>Splash:</strong> background
-                <input id="splash-back" type="radio" name="option"> Text
-                <input id="splash-text" type="radio" name="option">
-            </p>
+                <p id="splash-options">
+                    <strong>Splash:</strong> background
+                    <input id="splash-back" type="radio" name="option"> Text
+                    <input id="splash-text" type="radio" name="option">
+                </p>
 
-            <p id="headings">
-                <strong>Headings:</strong> h1
-                <input id="h1" type="radio" name="option"> h2 / h4
-                <input id="h2" type="radio" name="option"> h3 / h5
-                <input id="h3" type="radio" name="option">
-            </p>
+                <p id="headings">
+                    <strong>Headings:</strong> h1
+                    <input id="h1" type="radio" name="option"> h2 / h4
+                    <input id="h2" type="radio" name="option"> h3 / h5
+                    <input id="h3" type="radio" name="option">
+                </p>
 
-            <p id="links">
-                <strong>Links:</strong> Default
-                <input id="a" type="radio" name="option"> Hover
-                <input id="link-hover" type="radio" name="option">
-            </p>
+                <p id="links">
+                    <strong>Links:</strong> Default
+                    <input id="a" type="radio" name="option"> Hover
+                    <input id="link-hover" type="radio" name="option">
+                </p>
 
-            <p id="footer-option">
-                <strong>Footer:</strong> Background
-                <input id="footer-color" type="radio" name="option"> Text
-                <input id="footer-text" type="radio" name="option">
-            </p>
-        <hr>
-        <h2>Features</h2>
-            <p id="callout">
-                <strong>Callout:</strong> Background
-                <input id="callout-color" type="radio" name="option"> Text
-                <input id="callout-text" type="radio" name="option">
-            </p>
+                <p id="footer-option">
+                    <strong>Footer:</strong> Background
+                    <input id="footer-color" type="radio" name="option"> Text
+                    <input id="footer-text" type="radio" name="option">
+                </p>
+            </div>
+        <div id="feature-options">
+                <p id="callout">
+                    <strong>Callout:</strong> Background
+                    <input id="callout-color" type="radio" name="option"> Text
+                    <input id="callout-text" type="radio" name="option">
+                </p>
 
-            <p id="drop-down">
-                <strong>Dropdown:</strong> Background
-                <input id="dropdown-color" type="radio" name="option"> Hover
-                <input id="dropdown-hover" type="radio" name="option">
-            </p>
+                <p id="drop-down">
+                    <strong>Dropdown:</strong> Background
+                    <input id="dropdown-color" type="radio" name="option"> Hover
+                    <input id="dropdown-hover" type="radio" name="option">
+                </p>
 
-            <p id="rubric">
-                <strong>Rubric Table:</strong> Column Heading
-                <input id="rubric-column" type="radio" name="option"> Row Heading
-                <input id="rubric-row" type="radio" name="option">
-            </p>
+                <p id="rubric">
+                    <strong>Rubric Table:</strong> Column Heading
+                    <input id="rubric-column" type="radio" name="option"> Row Heading
+                    <input id="rubric-row" type="radio" name="option">
+                </p>
 
-            <p id="popup">
-                <strong>Popups:</strong> Background
-                <input id="popup-color" type="radio" name="option">
-            </p>
+                <p id="popup">
+                    <strong>Popups:</strong> Background
+                    <input id="popup-color" type="radio" name="option">
+                </p>
+            </div>
         </div>
+        <div id="colorPallete"></div>
     </div>
 
     <div id="small">

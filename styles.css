@@ -23,6 +23,13 @@ main {
     margin-bottom: 50px;
 }
 
+#large,
+#features,
+#feature-options{
+    display: none;
+}
+
+
 div#footer {
     width: 100%;
 }
