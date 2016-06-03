@@ -60,6 +60,11 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         flexContainer.appendChild(div);
         palleteArray.push(hex);
     }
+    // Add click event handler
+    $("#colorPallete main > div").click( function () {
+        options[selectedRadio].color = this.id;
+        options[selectedRadio].setColor();
+    });
 }
 
 function saveTextAsFile(text) {
@@ -84,7 +89,7 @@ function saveTextAsFile(text) {
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
-    downloadLink.click();
+    downloadLink.click(updateColor);
 }
 
 function cssTemplate(array) {
@@ -196,181 +201,132 @@ a:visited {
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-var optimize = {
-        "general": {
-            "background-colors": {
-                "outergrad": "",
-                "innergrad": ""
-            },
-            "splash-options": {
-                "splash-back": "",
-                "splash-text": "",
-            },
-            "headings": {
-                "h1": "",
-                "h2": "",
-                "h3": ""
-            },
-            "links": {
-                "a": "",
-                "link-hover": ""
-            },
-            "footer": {
-                "footer-color": "",
-                "footer-text": ""
-            }
-        },
-        "features-options": {
-
-        }
-    },
-    options = {
-        "small-radio": {
-            "outergrad": function (h) {
-                console.log("grad outer color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
-            },
-            "innergrad": function (h) {
-                console.log("grad inner color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
-            },
-            "h1": function (h) {
-                document.querySelector("#small h1").style.color = h;
-            },
-            "h2": function (h) {
-                document.querySelector("#small h2").style.color = h;
-                document.querySelector("#small h4").style.color = h;
-            },
-            "h3": function (h) {
-                document.querySelector("#small h3").style.color = h;
-                document.querySelector("#small h5").style.color = h;
-            },
-            "a": function (h) {
-                document.querySelector("#small a").style.color = h;
-                document.querySelector("#small a").style.borderBottom = `2px solid ${h}`;
-            },
-            "link-hover": function (h) {
-                document.querySelector("#small a:hover").style.color = h;
-            },
-            "footer-color": function (h) {
-                document.querySelector("#small #footer").style.backgroundColor = h;
-            },
-            "footer-text": function (h) {
-                document.querySelector("#small #footer").style.color = h;
-            },
-        },
-        "large-radio": {
-            "outergrad": function (h) {
-                console.log("grad outer color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
-            },
-            "innergrad": function (h) {
-                console.log("grad inner color");
-//                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
-            },
-            "splash-back": function (h) {
-                document.querySelector("#large #article").style.backgroundColor = h;
-            },
-            "splash-text": function (h) {
-                document.querySelector("#large p").style.color = h;
-            },
-            "h1": function (h) {
-                document.querySelector("#large h1").style.color = h;
-            },
-            "h2": function (h) {
-                document.querySelector("#large h2").style.color = h;
-                document.querySelector("#large h4").style.color = h;
-            },
-            "h3": function (h) {
-                document.querySelector("#large h3").style.color = h;
-                document.querySelector("#large h5").style.color = h;
-            },
-            "a": function (h) {
-                document.querySelector("#large a").style.color = h;
-                document.querySelector("#large a").style.borderBottom = `2px solid ${h}`;
-            },
-            "link-hover": function (h) {
-                document.querySelector("#large a:hover").style.color = h;
-            },
-            "footer-color": function (h) {
-                document.querySelector("#large #footer").style.background = h;
-            },
-            "footer-text": function (h) {
-                document.querySelector("#large #footer").style.color = h;
-            },
-        },
-        "features-radio": {
-            "callout-color": function (h) {
-                document.querySelector("#features .callout").style.backgroundColor = h;
-            },
-            "callout-text": function (h) {
-                document.querySelector("#features .callout").style.color = h;
-            },
-            "dropdown-color": function (h) {
-                document.querySelector("#features .drop-down").style.backgroundColor = h;
-            },
-            "dropdown-hover": function (h) {
-                console.log("dropdown hover");
-                //                document.querySelector("#features .drop-down").style.backgroundColor = h;
-            },
-            "rubric-column": function (h) {
-                console.log("rubric column psuedo");
-                //                document.querySelector("#features .rubric tr:first-child th").style.backgroundColor = h;
-            },
-            "rubric-row": function (h) {
-                document.querySelector("#features .rubric th").style.backgroundColor = h;
-            },
-            "popup-color": function (h) {
-                document.querySelector("#features .popup").style.borderBottom = h;
-                //                document.querySelector("#features .popup:after").style.color = h;
-                document.querySelector("#features .popup span").style.backgroundColor = h;
-            }
-        }
-    };
-
-function changeTemplate(hexcode) {
-    var page = localStorage["page-selection"],
-        general = localStorage["general"];
-    console.log(hexcode, page, general);
-    options[page][general](hexcode);
-};
-
-localStorage["page-selection"] = "small-radio";
-localStorage["general"] = "outergrad";
-
-document.onclick = function (e) {
-    var hexcode,
-        parent = "general";
-    if (e.srcElement.parentNode.parentNode.id === "page-options") {
-        localStorage["page-selection"] = e.srcElement.id;
-    }
-    if (e.srcElement.parentNode.parentNode.parentNode.id === "general") {
-        parent = e.srcElement.parentNode;
-        localStorage["general"] = e.srcElement.id;
-    }
-    if (e.srcElement.id.indexOf("#") > -1) {
-        hexcode = e.srcElement.id.replace(/\s+/g, "");
-        console.log(hexcode, e.srcElement);
-        changeTemplate(hexcode);
-    }
-}
-
 /* Change Page */
 function changePage() {
-    var selector = this.event.srcElement.dataset.selector,
-        pages = document.querySelectorAll("#small, #large, #features"),
-        i;
+    var page = this.event.srcElement.dataset.selector,
+        selector = "#" + page + ", #" + page + "-options";
+    
     // Close all pages and feature options
-    for (i = 0; i < pages.length; i += 1) {
-        pages[i].style.display = "none";
-    }
-    // Display selected page
-    document.querySelector(selector).style.display = "block";
-    if (selector == "#features") {
-        document.querySelector("#small-large-options").style.display = "none";
-        document.querySelector("#feature-options").style.display = "block";
-    } else {
-        document.querySelector("#small-large-options").style.display = "block";
-        document.querySelector("#feature-options").style.display = "none";
-     }
+    $("#small, #large, #features, #small-options, #large-options, #features-options").css("display", "none");
+    
+    // Display selected page and options
+    $(selector).css("display", "block");
+    
+    // Update selectedRadio
+    selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
 }
+
+// Options set
+var options = {
+    innergrad : {
+        color: "#406986",
+        setColor: function() { $("html").css("background", "radial-gradient(ellipse, " + this.color +" 0%, " + options.outergrad.color + " 100%)"); }
+    },
+    outergrad : {
+        color: "#16344a",
+        setColor: function() { $("html").css("background", "radial-gradient(ellipse, " + options.innergrad.color +" 0%, " + this.color + " 100%)"); }
+    },
+    h1 : {
+        color: "#333333",
+        setColor: function() { $("#small h1").css("color", this.color); }
+    },
+    h2 : {
+        color: "#2d5d94",
+        setColor: function() { $("#small h2, #small h4").css("color", this.color); }
+    },
+    h3 : {
+        color: "#5f6060",
+        setColor: function() { $("#small h3, #small h5").css("color", this.color); }
+    },
+    a : {
+        color: "#2d5d94",
+        setColor: function() { $("#small a.default").css("color", this.color);
+                               $("#small a.default").css("borderColor", this.color); }
+    },
+    aHover : {
+        color: "#7b4c8d",
+        setColor: function() { $("#small a.hover").css("color", this.color);
+                               $("#small a.hover").css("borderColor", this.color); }
+    },
+    footerColor : {
+        color: "#e2e2e2",
+        setColor: function() { $("#small .footer").css("color", this.color); }
+    },
+    footerBackground : {
+        color: "#2d5d94",
+        setColor: function() { $("#small .footer").css("backgroundColor", this.color); }
+    },
+    splashBackground : {
+        color: "#fafafa",
+        setColor: function() { $("#large .article").css("backgroundColor", this.color); }
+    },
+    splashColor : {
+        color: "#fafafa",
+        setColor: function() { $("#large .article").css("color", this.color); }
+    },
+    splashH1 : {
+        color: "#fafafa",
+        setColor: function() { $("#large h1").css("color", this.color); }
+    },
+    splashH2 : {
+        color: "#a1d7ff",
+        setColor: function() { $("#large h2, #large h4").css("color", this.color); }
+    },
+    splashH3 : {
+        color: "#c3c3c3",
+        setColor: function() { $("#large h3, #large h5").css("color", this.color); }
+    },
+    splashA : {
+        color: "#a1d7ff",
+        setColor: function() { $("#large a.default").css("color", this.color);
+                               $("#large a.default").css("borderColor", this.color); }
+    },
+    splashAHover : {
+        color: "#c08fd3",
+        setColor: function() { $("#large a.hover").css("color", this.color);
+                               $("#large a.hover").css("borderColor", this.color); }
+    },
+    splashFooterColor : {
+        color: "#e2e2e2",
+        setColor: function() { $("#large .footer").css("color", this.color); }
+    },
+    splashFooterBackground : {
+        color: "#133955",
+        setColor: function() { $("#large .footer").css("backgroundColor", this.color); }
+    },
+    calloutBackground : {
+        color: "#e3ded1",
+        setColor: function() { $("#features .callout").css("backgroundColor", this.color); }
+    },
+    calloutColor : {
+        color: "#2d5d94",
+        setColor: function() { $("#features .callout").css("color", this.color); }
+    },
+    dropdownBackground : {
+        color: "#6c6c6c",
+        setColor: function() { $("#features .drop-down.default").css("backgroundColor", this.color); }
+    },
+    dropdownHover : {
+        color: "#7f7f7f",
+        setColor: function() { $("#features .drop-down.hover").css("backgroundColor", this.color); }
+    },
+    columnHeading : {
+        color: "#1e435d",
+        setColor: function() { $("#features table tr:first-child th").css("backgroundColor", this.color); }
+    },
+    rowHeading : {
+        color: "#2d5d94",
+        setColor: function() { $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color); }
+    },
+    popup : {
+        color: "#274b66",
+        setColor: function() { $("#features .popup").css("borderColor", this.color);
+                               $("#features .popup span").css("backgroundColor", this.color);}
+    }
+};
+
+var selectedRadio = "innergrad";
+// Update selectedRadio everytime a radio button is clicked
+$("#general input").click(function() {
+    selectedRadio = this.id;
+});

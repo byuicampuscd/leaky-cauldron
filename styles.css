@@ -14,32 +14,51 @@ canvas {
 }
 
 main {
-    display: flex;
+/*    display: flex;*/
+}
+
+/* Color Pallete */
+#colorPallete {
+    width: calc(100% - 420px);
+}
+
+#colorPallete,
+#colorPallete main div {
+    display: inline-block;
+}
+
+#colorPallete main:nth-child(2) {
+    display: none;
+}
+
+#colorPallete main div {
+    margin: 2px;
 }
 
 #large,
-#small{
-    margin-top: 50px;
+#small,
+#features {
+    margin-top: 25px;
     margin-bottom: 50px;
 }
 
 #large,
 #features,
-#feature-options{
+#large-options,
+#features-options {
     display: none;
 }
 
-
-div#footer {
-    width: 100%;
+/* Inputs */
+#wrapper {
+    background: #f0f0f0;
 }
 
-/* Inputs */
-
 #inputs {
-    margin: 10px;
+    display: inline-block;
     padding: 10px;
-    background: #f0f0f0;
+    width: 410px;
+    vertical-align: top;
 }
 
 #page-selection {
@@ -55,4 +74,72 @@ div#footer {
 #inputs input {
     display: inline;
     margin-right: 10px;
+}
+
+/* Default CSS (Needed to avoid multiple elements with the same ID */
+.main {
+	width: 90%;
+	max-width: 950px;
+	margin: 0 auto;
+	box-shadow: 0 0 12px #000000;
+}
+
+.main a {
+    border-bottom: 2px solid inherit;
+}
+
+.header img {
+	width: 100%;
+    display: block;
+}
+
+.article {
+	position: relative;
+    padding: 20px;
+    color: #3e3e3e;
+	background-color: #f0f0f0;
+}
+
+.splash > .article {
+	color: #eaeaea;
+	background-color: #125576;
+}
+
+/* Keeps images from escaping the bottom of #article */
+.article:after {
+	content: "";
+	clear: both;
+	height: 0px;
+	display: block;
+	opacity: 0;
+}
+
+.footer {
+	text-align: center;
+	padding: 6px;
+	color: #e2e2e2;
+	background-color: #2d5d94;
+	font-size: 13px;
+}
+
+.splash .footer {
+	color: #e2e2e2;
+	background-color: #133955;
+}
+
+.popup span,
+.popup span {
+    opacity: 1;
+    z-index: 100;
+    transition: all .3s;
+}
+
+.popup:after,
+.popup:after {
+    opacity: 1;
+    z-index: 100;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    transition: all .2s .1s;
 }
