@@ -18,8 +18,15 @@ main {
 }
 
 /* Color Pallete */
-#colorPallete {
+#colorSuggestions,
+#customColor {
+    display: inline-block;
+    margin-top: 30px;
     width: calc(100% - 420px);
+}
+
+#colorSuggestions {
+    display: none;
 }
 
 #colorPallete,
@@ -51,7 +58,21 @@ main {
 
 /* Inputs */
 #wrapper {
+    position: relative;
     background: #f0f0f0;
+}
+
+#wrapper button {
+    position: absolute;
+    top: 10px;
+}
+
+#wrapper button:nth-of-type(1) {
+    left: 410px;
+}
+
+#wrapper button:nth-of-type(2) {
+    left: 520px;
 }
 
 #inputs {
@@ -142,4 +163,10 @@ main {
     -ms-transform: translateY(0);
     transform: translateY(0);
     transition: all .2s .1s;
+}
+
+/* Remove border on color picker */
+.sp-container {
+    border: none;
+    background: #d5d5d5;
 }

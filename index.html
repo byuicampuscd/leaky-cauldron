@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaky Cauldron</title>
+    <link type="text/css" rel="stylesheet" href="spectrum/spectrum.css">
     <link type="text/css" rel="stylesheet" href="https://content.byui.edu/integ/gen/be2c7d0f-ed5e-4dca-ac0b-0b2a7155a4f2/0/byuidefault.css">
     <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
@@ -109,7 +110,14 @@
                 </div>
             </div>
         </div>
-        <div id="colorPallete"></div>
+        <button id="showSuggestions" type="button">See Suggestions</button>
+        <button id="showColorPicker" type="button">Choose a Color</button>
+        <div id="colorSuggestions">
+            <div id="colorPallete"></div>
+        </div>
+        <div id="customColor">
+            <input type="text" id="colorPicker">
+        </div>
     </div>
 
     <div id="small">
@@ -215,6 +223,7 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="spectrum/spectrum.js"></script>
     <script src="color-thief.js"></script>
     <script src="app.js"></script>
 </body>

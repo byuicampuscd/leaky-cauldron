@@ -64,6 +64,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     $("#colorPallete main > div").click( function () {
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
+        $("#colorPicker").spectrum("set", options[selectedRadio].color);
     });
 }
 
@@ -92,110 +93,110 @@ function saveTextAsFile(text) {
     downloadLink.click(updateColor);
 }
 
-function cssTemplate(array) {
-    console.log(array);
+function cssTemplate() {
     var style = `
 html {
-	background: -webkit-radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
-	background: radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
+	background: -webkit-radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
+	background: radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
 }
 h1 {
-	color: ${array[2].value};
+	color: ${options.h1.color};
 }
 h2,
 h4 {
-	color: ${array[3].value};
+	color: ${options.h2.color};
 }
 h3,
 h5 {
-	color: ${array[4].value};
+	color: ${options.h3.color};
 }
 a {
-	color: ${array[5].value};
-	border-bottom: 2px solid ${array[5].value};
+	color: ${options.a.color};
+	border-bottom: 2px solid ${options.a.color};
 }
 a:hover {
-	color: ${array[6].value};
-    border-bottom: 2px solid ${array[6].value};
+	color: ${options.aHover.color};
+    border-bottom: 2px solid ${options.aHover.color};
 }
 a:visited {
-	color: ${array[6].value};
-    border-bottom: 2px solid ${array[6].value};
+	color: ${options.aHover.color};
+    border-bottom: 2px solid ${options.aHover.color};
 }
 #footer {
-	color: ${array[8].value};
-	background-color: ${array[7].value};
+	color: ${options.footerColor.color};
+	background-color: ${options.footerBackground.color};
 }
 /******
     SPLASH PAGE STYLING
 *****/
 .splash #article {
-	color: ${array[9].value};
-	background-color: ${array[10].value};
+	color: ${options.splashColor.color};
+	background-color: ${options.splashBackground.color};
 }
 .splash h1 {
-	color: ${array[11].value};
+	color: ${options.splashH1.color};
 }
 .splash h2,
 .splash h4 {
-	color: ${array[12].value};
+	color: ${options.splashH2.color};
 }
 .splash h3,
 .splash h5{
-	color: ${array[13].value};
+	color: ${options.splashH3.color};
 }
 .splash a {
-    color: ${array[14].value};
-	border-bottom: 2px solid ${array[14].value};
+    color: ${options.splashA.color};
+	border-bottom: 2px solid ${options.splashA.color};
 }
 .splash a:hover {
-	color: ${array[15].value};
-    border-bottom: 2px solid ${array[15].value};
+	color: ${options.splashAHover.color};
+    border-bottom: 2px solid ${options.splashAHover.color};
 }
 .splash a:visited {
-	color: ${array[15].value};
-    border-bottom: 2px solid ${array[15].value};
+	color: ${options.splashAHover.color};
+    border-bottom: 2px solid ${options.splashAHover.color};
 }
 .splash #footer {
-	color: ${array[17].value};
-	background-color: ${array[16].value};
+	color: ${options.splashFooterColor.color};
+	background-color: ${options.splashFooterBackground.color};
 }
 /******
     FEATURES STYLING
 *******/
 /* Callout box */
 .callout {
-    color: ${array[19].value};
-    background: ${array[18].value};
+    color: ${options.calloutColor.color};
+    background: ${options.calloutBackground.color};
 }
 /* Drop downs */
 .drop-down {
-    background: ${array[20].value};
+    background: ${options.dropdownBackground.color};
 }
 .drop-down:hover {
-    background: ${array[21].value};
+    background: ${options.dropdownHover.color};
 }
 /* Rubric table */
 /* Column headings */
 .rubric tr:first-child th {
-	background-color: ${array[22].value};
+	background-color: ${options.columnHeading.color};
 }
 /* Row headings */
 .rubric th {
-    background-color: ${array[23].value};
+    background-color: ${options.rowHeading.color};
 }
 /* Mouseover popups */
 #main .popup {
-    border-bottom: dotted 2px ${array[24].value};
+    border-bottom: dotted 2px ${options.popup.color};
 }
 #main .popup span {
-    background: ${array[24].value};
+    background: ${options.popup.color};
 }
 #main .popup:after {
-    border-color: ${array[24].value} transparent;
+    border-color: ${options.popup.color} transparent;
 }
 `;
-    saveTextAsFile(style)
+//    saveTextAsFile(style);
+    document.querySelector("textarea").innerHTML = style;
     return style;
 }
 
@@ -214,6 +215,9 @@ function changePage() {
     
     // Update selectedRadio
     selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
+    
+    // Update colorPicker
+    $("#colorPicker").spectrum("set", options[selectedRadio].color);
 }
 
 // Options set
@@ -257,11 +261,11 @@ var options = {
         setColor: function() { $("#small .footer").css("backgroundColor", this.color); }
     },
     splashBackground : {
-        color: "#fafafa",
+        color: "#125576",
         setColor: function() { $("#large .article").css("backgroundColor", this.color); }
     },
     splashColor : {
-        color: "#fafafa",
+        color: "#eaeaea",
         setColor: function() { $("#large .article").css("color", this.color); }
     },
     splashH1 : {
@@ -329,4 +333,29 @@ var selectedRadio = "innergrad";
 // Update selectedRadio everytime a radio button is clicked
 $("#general input").click(function() {
     selectedRadio = this.id;
+    $("#colorPicker").spectrum("set", options[selectedRadio].color);
+});
+
+$("#showSuggestions").click( function() {
+    $("#customColor").css("display", "none");
+    $("#colorSuggestions").css("display", "inline-block");
+});
+$("#showColorPicker").click( function() {
+    $("#colorSuggestions").css("display", "none");
+    $("#customColor").css("display", "inline-block");
+    
+});
+
+
+// Color Picker
+$("#colorPicker").spectrum({
+    flat: true,
+    color: "#406986",
+    showButtons:false,
+    showInput: true,
+    preferredFormat: "hex",
+    move: function(color) {
+        options[selectedRadio].color = color.toHexString();
+        options[selectedRadio].setColor();
+    }
 });
