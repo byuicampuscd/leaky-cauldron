@@ -21,28 +21,55 @@ function handleFileSelect(evt) {
 
                 var colorThief = new ColorThief();
                 var image = new CanvasImage(img, filename);
+                
+                if (filename === "smallBanner"){
+                    var img2 = new Image();
+                    img2.src = e.target.result;
+                    
+                    var colorThief = new ColorThief();
+                    var image = new CanvasImage(img2, filename + "Two");
+                }
 
                 var domColor = colorThief.getColor(img);
                 var pallete = colorThief.getPalette(img);
 
-                var get = getHexPallete(domColor, pallete);
+                var get = getHexPallete(domColor, pallete, filename);
 
             };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
+        
     }
-    var textarea = document.createElement("textarea");
-    textarea.id = "cssOutput";
-    document.querySelector('output').appendChild(textarea);
 }
 
 function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";
     pallete.unshift(domColor);
     var palleteArray = [],
-        flexContainer = document.createElement("main");;
+        flexContainer = document.createElement("div"),
+        currentPage = "";
+    
+   // Check that a page is being viewed and not the css
+    if(document.querySelector("#page-selection input:checked") != null) {
+        currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
+    }
+    
+    // If current page is features use small
+    if (currentPage === "features") {
+        currentPage = "small";
+    }
+    
+    // Hide the color suggestions for banner not being viewed
+    if (!cssTemplate.includes(currentPage)) {
+        flexContainer.style.display = "none";
+    }
+    
+    flexContainer.id = cssTemplate + "Suggestions";
+    
+    // Determine which suggestions to show or hide based off which page is currently selected
+    
 
     for (var i = 0; i < pallete.length; i++) {
 
@@ -52,8 +79,6 @@ function getHexPallete(domColor, pallete, cssTemplate) {
             div = document.createElement("div"),
             hex = `#${firstbit}${secbit}${thirbit}`;
 
-        div.style.width = "100px";
-        div.style.height = "50px";
         div.style.backgroundColor = hex;
         div.id = hex;
         document.querySelector("#colorPallete").appendChild(flexContainer);
@@ -61,17 +86,17 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         palleteArray.push(hex);
     }
     // Add click event handler
-    $("#colorPallete main > div").click( function () {
+    $("#colorPallete div > div").click( function () {
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
     });
 }
 
-function saveTextAsFile(text) {
-    var textToWrite = text;
+function saveTextAsFile() {
+    var textToWrite = style;
     var textFileAsBlob = new Blob([textToWrite], {
-        type: 'text/plain'
+        type: 'text/css'
     });
     var fileNameToSaveAs = 'course';
 
@@ -90,11 +115,19 @@ function saveTextAsFile(text) {
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
-    downloadLink.click(updateColor);
+    downloadLink.click();
 }
-
+var style = "";
 function cssTemplate() {
-    var style = `
+    style = `/********************************************************
+    The purpose of course.css is to house only the css
+    specific to an individual course. The online.css
+    houses all the default template formatting.
+********************************************************/
+/* DO NOT DELETE OR MODIFY THIS IMPORT */
+@import url("https://content.byui.edu/integ/gen/599082e0-3e89-4fd9-ac69-2615865d63c7/0/online.css");
+
+/* Add Course Specific css Below */
 html {
 	background: -webkit-radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
 	background: radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
@@ -126,9 +159,9 @@ a:visited {
 	color: ${options.footerColor.color};
 	background-color: ${options.footerBackground.color};
 }
-/******
+/********************************************
     SPLASH PAGE STYLING
-*****/
+********************************************/
 .splash #article {
 	color: ${options.splashColor.color};
 	background-color: ${options.splashBackground.color};
@@ -160,9 +193,9 @@ a:visited {
 	color: ${options.splashFooterColor.color};
 	background-color: ${options.splashFooterBackground.color};
 }
-/******
+/********************************************
     FEATURES STYLING
-*******/
+********************************************/
 /* Callout box */
 .callout {
     color: ${options.calloutColor.color};
@@ -193,11 +226,11 @@ a:visited {
 }
 #main .popup:after {
     border-color: ${options.popup.color} transparent;
-}
-`;
-//    saveTextAsFile(style);
-    document.querySelector("textarea").innerHTML = style;
-    return style;
+}`;
+    $("#small, #large, #features, #general, #color-wrapper").css("display", "none");
+    $("#css-output").css("display", "block");
+    document.querySelector("#page-selection input:checked").checked = false;
+    document.querySelector("#css-output textarea").innerHTML = style;
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
@@ -208,10 +241,20 @@ function changePage() {
         selector = "#" + page + ", #" + page + "-options";
     
     // Close all pages and feature options
-    $("#small, #large, #features, #small-options, #large-options, #features-options").css("display", "none");
+    $("#small, #large, #features, #css-output, #small-options, #large-options, #features-options").css("display", "none");
     
     // Display selected page and options
-    $(selector).css("display", "block");
+    $(selector + ", #general").css("display", "block");
+    $("#color-wrapper").css("display", "");
+    
+    // Display correct color suggestions
+    if (page === "small" || page === "features") {
+        $("#largeBannerSuggestions").css("display", "none");
+        $("#smallBannerSuggestions").css("display", "");
+    } else {
+        $("#smallBannerSuggestions").css("display", "none");
+        $("#largeBannerSuggestions").css("display", "");
+    }
     
     // Update selectedRadio
     selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
@@ -224,11 +267,11 @@ function changePage() {
 var options = {
     innergrad : {
         color: "#406986",
-        setColor: function() { $("html").css("background", "radial-gradient(ellipse, " + this.color +" 0%, " + options.outergrad.color + " 100%)"); }
+        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color +" 0%, " + options.outergrad.color + " 100%)"); }
     },
     outergrad : {
         color: "#16344a",
-        setColor: function() { $("html").css("background", "radial-gradient(ellipse, " + options.innergrad.color +" 0%, " + this.color + " 100%)"); }
+        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color +" 0%, " + this.color + " 100%)"); }
     },
     h1 : {
         color: "#333333",
@@ -336,22 +379,11 @@ $("#general input").click(function() {
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
 
-$("#showSuggestions").click( function() {
-    $("#customColor").css("display", "none");
-    $("#colorSuggestions").css("display", "inline-block");
-});
-$("#showColorPicker").click( function() {
-    $("#colorSuggestions").css("display", "none");
-    $("#customColor").css("display", "inline-block");
-    
-});
-
-
 // Color Picker
 $("#colorPicker").spectrum({
     flat: true,
     color: "#406986",
-    showButtons:false,
+    showButtons: false,
     showInput: true,
     preferredFormat: "hex",
     move: function(color) {
@@ -359,3 +391,26 @@ $("#colorPicker").spectrum({
         options[selectedRadio].setColor();
     }
 });
+
+function useSmallColors() {
+    // Update color values
+    options.splashBackground.color = "#f0f0f0";
+    options.splashColor.color = "#3e3e3e";
+    options.splashH1.color = options.h1.color;
+    options.splashH2.color = options.h2.color;
+    options.splashH3.color = options.h3.color;
+    options.splashA.color = options.a.color;
+    options.splashAHover.color = options.aHover.color;
+    options.splashFooterBackground.color = options.footerBackground.color;
+    options.splashFooterColor.color = options.footerColor.color;
+    // Set colors
+    options.splashBackground.setColor();
+    options.splashColor.setColor();
+    options.splashH1.setColor();
+    options.splashH2.setColor();
+    options.splashH3.setColor();
+    options.splashA.setColor();
+    options.splashAHover.setColor();
+    options.splashFooterBackground.setColor();
+    options.splashFooterColor.setColor();
+}

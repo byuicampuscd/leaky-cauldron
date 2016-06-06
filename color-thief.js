@@ -31,7 +31,9 @@ var CanvasImage = function (image, fileName) {
         document.querySelector("#large .header").appendChild(this.canvas);
     } else if (fileName==="smallBanner") {
         document.querySelector("#small .header").appendChild(this.canvas);
-    } else if (fileName === undefined) {
+    } else if (fileName === "smallBannerTwo") {
+        document.querySelector("#features .header").appendChild(this.canvas);
+    }else if (fileName === undefined) {
         document.querySelector("#colorPallete").appendChild(this.canvas);
     } else {        
         console.log("error! undefined image name");
