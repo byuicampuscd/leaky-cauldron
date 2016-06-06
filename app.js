@@ -22,27 +22,54 @@ function handleFileSelect(evt) {
                 var colorThief = new ColorThief();
                 var image = new CanvasImage(img, filename);
 
+                if (filename === "smallBanner"){
+                    var img2 = new Image();
+                    img2.src = e.target.result;
+
+                    var colorThief = new ColorThief();
+                    var image = new CanvasImage(img2, filename + "Two");
+                }
+
                 var domColor = colorThief.getColor(img);
                 var pallete = colorThief.getPalette(img);
 
-                var get = getHexPallete(domColor, pallete);
+                var get = getHexPallete(domColor, pallete, filename);
 
             };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
+
     }
-    var textarea = document.createElement("textarea");
-    textarea.id = "cssOutput";
-    document.querySelector('output').appendChild(textarea);
 }
 
 function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";
     pallete.unshift(domColor);
     var palleteArray = [],
-        flexContainer = document.createElement("main");;
+        flexContainer = document.createElement("div"),
+        currentPage = "";
+
+   // Check that a page is being viewed and not the css
+    if(document.querySelector("#page-selection input:checked") != null) {
+        currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
+    }
+
+    // If current page is features use small
+    if (currentPage === "features") {
+        currentPage = "small";
+    }
+
+    // Hide the color suggestions for banner not being viewed
+    if (!cssTemplate.includes(currentPage)) {
+        flexContainer.style.display = "none";
+    }
+
+    flexContainer.id = cssTemplate + "Suggestions";
+
+    // Determine which suggestions to show or hide based off which page is currently selected
+
 
     for (var i = 0; i < pallete.length; i++) {
 
@@ -52,20 +79,24 @@ function getHexPallete(domColor, pallete, cssTemplate) {
             div = document.createElement("div"),
             hex = `#${firstbit}${secbit}${thirbit}`;
 
-        div.style.width = "100px";
-        div.style.height = "50px";
         div.style.backgroundColor = hex;
         div.id = hex;
         document.querySelector("#colorPallete").appendChild(flexContainer);
         flexContainer.appendChild(div);
         palleteArray.push(hex);
     }
+    // Add click event handler
+    $("#colorPallete div > div").click( function () {
+        options[selectedRadio].color = this.id;
+        options[selectedRadio].setColor();
+        $("#colorPicker").spectrum("set", options[selectedRadio].color);
+    });
 }
 
-function saveTextAsFile(text) {
-    var textToWrite = text;
+function saveTextAsFile() {
+    var textToWrite = style;
     var textFileAsBlob = new Blob([textToWrite], {
-        type: 'text/plain'
+        type: 'text/css'
     });
     var fileNameToSaveAs = 'course';
 
@@ -86,291 +117,300 @@ function saveTextAsFile(text) {
     }
     downloadLink.click();
 }
+var style = "";
+function cssTemplate() {
+    style = `/********************************************************
+    The purpose of course.css is to house only the css
+    specific to an individual course. The online.css
+    houses all the default template formatting.
+********************************************************/
+/* DO NOT DELETE OR MODIFY THIS IMPORT */
+@import url("https://content.byui.edu/integ/gen/599082e0-3e89-4fd9-ac69-2615865d63c7/0/online.css");
 
-function cssTemplate(array) {
-    console.log(array);
-    var style = `
+/* Add Course Specific css Below */
 html {
-	background: -webkit-radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
-	background: radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%) fixed;
+	background: -webkit-radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
+	background: radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
 }
 h1 {
-	color: ${array[2].value};
+	color: ${options.h1.color};
 }
 h2,
 h4 {
-	color: ${array[3].value};
+	color: ${options.h2.color};
 }
 h3,
 h5 {
-	color: ${array[4].value};
+	color: ${options.h3.color};
 }
 a {
-	color: ${array[5].value};
-	border-bottom: 2px solid ${array[5].value};
+	color: ${options.a.color};
+	border-bottom: 2px solid ${options.a.color};
 }
 a:hover {
-	color: ${array[6].value};
-    border-bottom: 2px solid ${array[6].value};
+	color: ${options.aHover.color};
+    border-bottom: 2px solid ${options.aHover.color};
 }
 a:visited {
-	color: ${array[6].value};
-    border-bottom: 2px solid ${array[6].value};
+	color: ${options.aHover.color};
+    border-bottom: 2px solid ${options.aHover.color};
 }
 #footer {
-	color: ${array[8].value};
-	background-color: ${array[7].value};
+	color: ${options.footerColor.color};
+	background-color: ${options.footerBackground.color};
 }
-/******
+/********************************************
     SPLASH PAGE STYLING
-*****/
+********************************************/
 .splash #article {
-	color: ${array[9].value};
-	background-color: ${array[10].value};
+	color: ${options.splashColor.color};
+	background-color: ${options.splashBackground.color};
 }
 .splash h1 {
-	color: ${array[11].value};
+	color: ${options.splashH1.color};
 }
 .splash h2,
 .splash h4 {
-	color: ${array[12].value};
+	color: ${options.splashH2.color};
 }
 .splash h3,
 .splash h5{
-	color: ${array[13].value};
+	color: ${options.splashH3.color};
 }
 .splash a {
-    color: ${array[14].value};
-	border-bottom: 2px solid ${array[14].value};
+    color: ${options.splashA.color};
+	border-bottom: 2px solid ${options.splashA.color};
 }
 .splash a:hover {
-	color: ${array[15].value};
-    border-bottom: 2px solid ${array[15].value};
+	color: ${options.splashAHover.color};
+    border-bottom: 2px solid ${options.splashAHover.color};
 }
 .splash a:visited {
-	color: ${array[15].value};
-    border-bottom: 2px solid ${array[15].value};
+	color: ${options.splashAHover.color};
+    border-bottom: 2px solid ${options.splashAHover.color};
 }
 .splash #footer {
-	color: ${array[17].value};
-	background-color: ${array[16].value};
+	color: ${options.splashFooterColor.color};
+	background-color: ${options.splashFooterBackground.color};
 }
-/******
+/********************************************
     FEATURES STYLING
-*******/
+********************************************/
 /* Callout box */
 .callout {
-    color: ${array[19].value};
-    background: ${array[18].value};
+    color: ${options.calloutColor.color};
+    background: ${options.calloutBackground.color};
 }
 /* Drop downs */
 .drop-down {
-    background: ${array[20].value};
+    background: ${options.dropdownBackground.color};
 }
 .drop-down:hover {
-    background: ${array[21].value};
+    background: ${options.dropdownHover.color};
 }
 /* Rubric table */
 /* Column headings */
 .rubric tr:first-child th {
-	background-color: ${array[22].value};
+	background-color: ${options.columnHeading.color};
 }
 /* Row headings */
 .rubric th {
-    background-color: ${array[23].value};
+    background-color: ${options.rowHeading.color};
 }
 /* Mouseover popups */
 #main .popup {
-    border-bottom: dotted 2px ${array[24].value};
+    border-bottom: dotted 2px ${options.popup.color};
 }
 #main .popup span {
-    background: ${array[24].value};
+    background: ${options.popup.color};
 }
 #main .popup:after {
-    border-color: ${array[24].value} transparent;
-}
-`;
-    saveTextAsFile(style)
-    return style;
+    border-color: ${options.popup.color} transparent;
+}`;
+    $("#small, #large, #features, #general, #color-wrapper").css("display", "none");
+    $("#css-output").css("display", "block");
+    document.querySelector("#page-selection input:checked").checked = false;
+    document.querySelector("#css-output textarea").innerHTML = style;
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-var optimize = {
-        "general": {
-            "background-colors": {
-                "outergrad": "",
-                "innergrad": ""
-            },
-            "splash-options": {
-                "splash-back": "",
-                "splash-text": "",
-            },
-            "headings": {
-                "h1": "",
-                "h2": "",
-                "h3": ""
-            },
-            "links": {
-                "a": "",
-                "link-hover": ""
-            },
-            "footer": {
-                "footer-color": "",
-                "footer-text": ""
-            }
-        },
-        "features-options": {
-
-        }
-    },
-    options = {
-        "small-radio": {
-            "outergrad": function (h) {
-                console.log("grad outer color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
-            },
-            "innergrad": function (h) {
-                console.log("grad inner color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${h} 0%, ${h} 100%)`;
-            },
-            "h1": function (h) {
-                document.querySelector("#small h1").style.color = h;
-            },
-            "h2": function (h) {
-                document.querySelector("#small h2").style.color = h;
-                document.querySelector("#small h4").style.color = h;
-            },
-            "h3": function (h) {
-                document.querySelector("#small h3").style.color = h;
-                document.querySelector("#small h5").style.color = h;
-            },
-            "a": function (h) {
-                document.querySelector("#small a").style.color = h;
-                document.querySelector("#small a").style.borderBottom = `2px solid ${h}`;
-            },
-            "link-hover": function (h) {
-                document.querySelector("#small a:hover").style.color = h;
-            },
-            "footer-color": function (h) {
-                document.querySelector("#small #footer").style.backgroundColor = h;
-            },
-            "footer-text": function (h) {
-                document.querySelector("#small #footer").style.color = h;
-            },
-        },
-        "large-radio": {
-            "outergrad": function (h) {
-                console.log("grad outer color");
-                //                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
-            },
-            "innergrad": function (h) {
-                console.log("grad inner color");
-//                document.querySelector("html").style.background = `radial-gradient(ellipse, ${array[1].value} 0%, ${array[0].value} 100%)`;
-            },
-            "splash-back": function (h) {
-                document.querySelector("#large #article").style.backgroundColor = h;
-            },
-            "splash-text": function (h) {
-                document.querySelector("#large p").style.color = h;
-            },
-            "h1": function (h) {
-                document.querySelector("#large h1").style.color = h;
-            },
-            "h2": function (h) {
-                document.querySelector("#large h2").style.color = h;
-                document.querySelector("#large h4").style.color = h;
-            },
-            "h3": function (h) {
-                document.querySelector("#large h3").style.color = h;
-                document.querySelector("#large h5").style.color = h;
-            },
-            "a": function (h) {
-                document.querySelector("#large a").style.color = h;
-                document.querySelector("#large a").style.borderBottom = `2px solid ${h}`;
-            },
-            "link-hover": function (h) {
-                document.querySelector("#large a:hover").style.color = h;
-            },
-            "footer-color": function (h) {
-                document.querySelector("#large #footer").style.background = h;
-            },
-            "footer-text": function (h) {
-                document.querySelector("#large #footer").style.color = h;
-            },
-        },
-        "features-radio": {
-            "callout-color": function (h) {
-                document.querySelector("#features .callout").style.backgroundColor = h;
-            },
-            "callout-text": function (h) {
-                document.querySelector("#features .callout").style.color = h;
-            },
-            "dropdown-color": function (h) {
-                document.querySelector("#features .drop-down").style.backgroundColor = h;
-            },
-            "dropdown-hover": function (h) {
-                console.log("dropdown hover");
-                //                document.querySelector("#features .drop-down").style.backgroundColor = h;
-            },
-            "rubric-column": function (h) {
-                console.log("rubric column psuedo");
-                //                document.querySelector("#features .rubric tr:first-child th").style.backgroundColor = h;
-            },
-            "rubric-row": function (h) {
-                document.querySelector("#features .rubric th").style.backgroundColor = h;
-            },
-            "popup-color": function (h) {
-                document.querySelector("#features .popup").style.borderBottom = h;
-                //                document.querySelector("#features .popup:after").style.color = h;
-                document.querySelector("#features .popup span").style.backgroundColor = h;
-            }
-        }
-    };
-
-function changeTemplate(hexcode) {
-    var page = localStorage["page-selection"],
-        general = localStorage["general"];
-    console.log(hexcode, page, general);
-    options[page][general](hexcode);
-};
-
-localStorage["page-selection"] = "small-radio";
-localStorage["general"] = "outergrad";
-
-document.onclick = function (e) {
-    var hexcode,
-        parent = "general";
-    if (e.srcElement.parentNode.parentNode.id === "page-options") {
-        localStorage["page-selection"] = e.srcElement.id;
-    }
-    if (e.srcElement.parentNode.parentNode.parentNode.id === "general") {
-        parent = e.srcElement.parentNode;
-        localStorage["general"] = e.srcElement.id;
-    }
-    if (e.srcElement.id.indexOf("#") > -1) {
-        hexcode = e.srcElement.id.replace(/\s+/g, "");
-        console.log(hexcode, e.srcElement);
-        changeTemplate(hexcode);
-    }
-}
-
 /* Change Page */
 function changePage() {
-    var selector = this.event.srcElement.dataset.selector,
-        pages = document.querySelectorAll("#small, #large, #features"),
-        i;
+    var page = this.event.srcElement.dataset.selector,
+        selector = "#" + page + ", #" + page + "-options";
+
     // Close all pages and feature options
-    for (i = 0; i < pages.length; i += 1) {
-        pages[i].style.display = "none";
-    }
-    // Display selected page
-    document.querySelector(selector).style.display = "block";
-    if (selector == "#features") {
-        document.querySelector("#small-large-options").style.display = "none";
-        document.querySelector("#feature-options").style.display = "block";
+    $("#small, #large, #features, #css-output, #small-options, #large-options, #features-options").css("display", "none");
+
+    // Display selected page and options
+    $(selector + ", #general").css("display", "block");
+    $("#color-wrapper").css("display", "");
+
+    // Display correct color suggestions
+    if (page === "small" || page === "features") {
+        $("#largeBannerSuggestions").css("display", "none");
+        $("#smallBannerSuggestions").css("display", "");
     } else {
-        document.querySelector("#small-large-options").style.display = "block";
-        document.querySelector("#feature-options").style.display = "none";
-     }
+        $("#smallBannerSuggestions").css("display", "none");
+        $("#largeBannerSuggestions").css("display", "");
+    }
+
+    // Update selectedRadio
+    selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
+
+    // Update colorPicker
+    $("#colorPicker").spectrum("set", options[selectedRadio].color);
+}
+
+// Options set
+var options = {
+    innergrad : {
+        color: "#406986",
+        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color +" 0%, " + options.outergrad.color + " 100%)"); }
+    },
+    outergrad : {
+        color: "#16344a",
+        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color +" 0%, " + this.color + " 100%)"); }
+    },
+    h1 : {
+        color: "#333333",
+        setColor: function() { $("#small h1").css("color", this.color); }
+    },
+    h2 : {
+        color: "#2d5d94",
+        setColor: function() { $("#small h2, #small h4").css("color", this.color); }
+    },
+    h3 : {
+        color: "#5f6060",
+        setColor: function() { $("#small h3, #small h5").css("color", this.color); }
+    },
+    a : {
+        color: "#2d5d94",
+        setColor: function() { $("#small a.default").css("color", this.color);
+                               $("#small a.default").css("borderColor", this.color); }
+    },
+    aHover : {
+        color: "#7b4c8d",
+        setColor: function() { $("#small a.hover").css("color", this.color);
+                               $("#small a.hover").css("borderColor", this.color); }
+    },
+    footerColor : {
+        color: "#e2e2e2",
+        setColor: function() { $("#small .footer").css("color", this.color); }
+    },
+    footerBackground : {
+        color: "#2d5d94",
+        setColor: function() { $("#small .footer").css("backgroundColor", this.color); }
+    },
+    splashBackground : {
+        color: "#125576",
+        setColor: function() { $("#large .article").css("backgroundColor", this.color); }
+    },
+    splashColor : {
+        color: "#eaeaea",
+        setColor: function() { $("#large .article").css("color", this.color); }
+    },
+    splashH1 : {
+        color: "#fafafa",
+        setColor: function() { $("#large h1").css("color", this.color); }
+    },
+    splashH2 : {
+        color: "#a1d7ff",
+        setColor: function() { $("#large h2, #large h4").css("color", this.color); }
+    },
+    splashH3 : {
+        color: "#c3c3c3",
+        setColor: function() { $("#large h3, #large h5").css("color", this.color); }
+    },
+    splashA : {
+        color: "#a1d7ff",
+        setColor: function() { $("#large a.default").css("color", this.color);
+                               $("#large a.default").css("borderColor", this.color); }
+    },
+    splashAHover : {
+        color: "#c08fd3",
+        setColor: function() { $("#large a.hover").css("color", this.color);
+                               $("#large a.hover").css("borderColor", this.color); }
+    },
+    splashFooterColor : {
+        color: "#e2e2e2",
+        setColor: function() { $("#large .footer").css("color", this.color); }
+    },
+    splashFooterBackground : {
+        color: "#133955",
+        setColor: function() { $("#large .footer").css("backgroundColor", this.color); }
+    },
+    calloutBackground : {
+        color: "#e3ded1",
+        setColor: function() { $("#features .callout").css("backgroundColor", this.color); }
+    },
+    calloutColor : {
+        color: "#2d5d94",
+        setColor: function() { $("#features .callout").css("color", this.color); }
+    },
+    dropdownBackground : {
+        color: "#6c6c6c",
+        setColor: function() { $("#features .drop-down.default").css("backgroundColor", this.color); }
+    },
+    dropdownHover : {
+        color: "#7f7f7f",
+        setColor: function() { $("#features .drop-down.hover").css("backgroundColor", this.color); }
+    },
+    columnHeading : {
+        color: "#1e435d",
+        setColor: function() { $("#features table tr:first-child th").css("backgroundColor", this.color); }
+    },
+    rowHeading : {
+        color: "#2d5d94",
+        setColor: function() { $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color); }
+    },
+    popup : {
+        color: "#274b66",
+        setColor: function() { $("#features .popup").css("borderColor", this.color);
+                               $("#features .popup span").css("backgroundColor", this.color);}
+    }
+};
+
+var selectedRadio = "innergrad";
+// Update selectedRadio everytime a radio button is clicked
+$("#general input").click(function() {
+    selectedRadio = this.id;
+    $("#colorPicker").spectrum("set", options[selectedRadio].color);
+});
+
+// Color Picker
+$("#colorPicker").spectrum({
+    flat: true,
+    color: "#406986",
+    showButtons: false,
+    showInput: true,
+    preferredFormat: "hex",
+    move: function(color) {
+        options[selectedRadio].color = color.toHexString();
+        options[selectedRadio].setColor();
+    }
+});
+
+function useSmallColors() {
+    // Update color values
+    options.splashBackground.color = "#f0f0f0";
+    options.splashColor.color = "#3e3e3e";
+    options.splashH1.color = options.h1.color;
+    options.splashH2.color = options.h2.color;
+    options.splashH3.color = options.h3.color;
+    options.splashA.color = options.a.color;
+    options.splashAHover.color = options.aHover.color;
+    options.splashFooterBackground.color = options.footerBackground.color;
+    options.splashFooterColor.color = options.footerColor.color;
+    // Set colors
+    options.splashBackground.setColor();
+    options.splashColor.setColor();
+    options.splashH1.setColor();
+    options.splashH2.setColor();
+    options.splashH3.setColor();
+    options.splashA.setColor();
+    options.splashAHover.setColor();
+    options.splashFooterBackground.setColor();
+    options.splashFooterColor.setColor();
 }

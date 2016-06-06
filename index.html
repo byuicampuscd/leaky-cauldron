@@ -5,202 +5,235 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaky Cauldron</title>
+    <link type="text/css" rel="stylesheet" href="spectrum/spectrum.css">
     <link type="text/css" rel="stylesheet" href="https://content.byui.edu/integ/gen/be2c7d0f-ed5e-4dca-ac0b-0b2a7155a4f2/0/byuidefault.css">
     <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
 
 <body>
 
-    <h1 style="color: white;">Leaky Cauldron</h1>
-
     <input type="file" id="files" name="files[]" multiple />
     <output id="list">
     </output>
 
-    <div id="inputs">
-        <div id="page-options">
-            <p id="page-selection">
-                <strong>Page:</strong> small
-                <input id="small-radio" type="radio" name="page" data-selector="#small" onclick="changePage()" checked> large
-                <input id="large-radio" type="radio" name="page" data-selector="#large" onclick="changePage()">
-                features
-                <input id="features-radio" type="radio" name="page" data-selector="#features" onclick="changePage()">
-            </p>
-        </div>
-        <div id="general">
-            <div id="small-large-options">
-                <p id="background-colors">
-                    <strong>Background-Colors:</strong> Outer
-                    <input id="outergrad" type="radio" name="option" checked> Inner
-                    <input id="innergrad" type="radio" name="option">
-                </p>
+    <div id="input-wrapper">
+        <h5>Upload Banners</h5>
+        <input type="file" id="files" name="files[]" multiple />
 
-                <p id="splash-options">
-                    <strong>Splash:</strong> background
-                    <input id="splash-back" type="radio" name="option"> Text
-                    <input id="splash-text" type="radio" name="option">
-                </p>
-
-                <p id="headings">
-                    <strong>Headings:</strong> h1
-                    <input id="h1" type="radio" name="option"> h2 / h4
-                    <input id="h2" type="radio" name="option"> h3 / h5
-                    <input id="h3" type="radio" name="option">
-                </p>
-
-                <p id="links">
-                    <strong>Links:</strong> Default
-                    <input id="a" type="radio" name="option"> Hover
-                    <input id="link-hover" type="radio" name="option">
-                </p>
-
-                <p id="footer-option">
-                    <strong>Footer:</strong> Background
-                    <input id="footer-color" type="radio" name="option"> Text
-                    <input id="footer-text" type="radio" name="option">
+        <div id="inputs">
+            <div id="page-options">
+                <p id="page-selection">
+                    <strong>Page:</strong> small
+                    <input type="radio" name="page" data-selector="small" onclick="changePage()" checked> large
+                    <input type="radio" name="page" data-selector="large" onclick="changePage()"> features
+                    <input type="radio" name="page" data-selector="features" onclick="changePage()">
+                    <input type="button" onclick="cssTemplate()" value="Show CSS">
                 </p>
             </div>
-        <div id="feature-options">
-                <p id="callout">
-                    <strong>Callout:</strong> Background
-                    <input id="callout-color" type="radio" name="option"> Text
-                    <input id="callout-text" type="radio" name="option">
-                </p>
+            <div id="general">
+                <div id="small-options">
+                    <p>
+                        <strong>Background-Colors:</strong> Inner
+                        <input id="innergrad" type="radio" name="small" checked> Outer
+                        <input id="outergrad" type="radio" name="small">
+                    </p>
 
-                <p id="drop-down">
-                    <strong>Dropdown:</strong> Background
-                    <input id="dropdown-color" type="radio" name="option"> Hover
-                    <input id="dropdown-hover" type="radio" name="option">
-                </p>
+                    <p>
+                        <strong>Headings:</strong> h1
+                        <input id="h1" type="radio" name="small"> h2 / h4
+                        <input id="h2" type="radio" name="small"> h3 / h5
+                        <input id="h3" type="radio" name="small">
+                    </p>
 
-                <p id="rubric">
-                    <strong>Rubric Table:</strong> Column Heading
-                    <input id="rubric-column" type="radio" name="option"> Row Heading
-                    <input id="rubric-row" type="radio" name="option">
-                </p>
+                    <p>
+                        <strong>Links:</strong> Default
+                        <input id="a" type="radio" name="small"> Hover
+                        <input id="aHover" type="radio" name="small">
+                    </p>
 
-                <p id="popup">
-                    <strong>Popups:</strong> Background
-                    <input id="popup-color" type="radio" name="option">
-                </p>
+                    <p>
+                        <strong>Footer:</strong> Background
+                        <input id="footerBackground" type="radio" name="small"> Text
+                        <input id="footerColor" type="radio" name="small">
+                    </p>
+                </div>
+                <div id="large-options">
+
+                    <p>
+                        <strong>Splash:</strong> background
+                        <input id="splashBackground" type="radio" name="splash" checked> Text
+                        <input id="splashColor" type="radio" name="splash">
+                    </p>
+
+                    <p>
+                        <strong>Headings:</strong> h1
+                        <input id="splashH1" type="radio" name="splash"> h2 / h4
+                        <input id="splashH2" type="radio" name="splash"> h3 / h5
+                        <input id="splashH3" type="radio" name="splash">
+                    </p>
+
+                    <p>
+                        <strong>Links:</strong> Default
+                        <input id="splashA" type="radio" name="splash"> Hover
+                        <input id="splashAHover" type="radio" name="splash">
+                    </p>
+
+                    <p>
+                        <strong>Footer:</strong> Background
+                        <input id="splashFooterBackground" type="radio" name="splash"> Text
+                        <input id="splashFooterColor" type="radio" name="splash">
+                    </p>
+                    <p>
+                        <input type="button" onclick="useSmallColors()" value="Use Small Template Colors">
+                    </p>
+                </div>
+                <div id="features-options">
+                    <p>
+                        <strong>Callout:</strong> Background
+                        <input id="calloutBackground" type="radio" name="features" checked> Text
+                        <input id="calloutColor" type="radio" name="features">
+                    </p>
+
+                    <p>
+                        <strong>Dropdown:</strong> Background
+                        <input id="dropdownBackground" type="radio" name="features"> Hover
+                        <input id="dropdownHover" type="radio" name="features">
+                    </p>
+
+                    <p>
+                        <strong>Rubric Table:</strong> Column Heading
+                        <input id="columnHeading" type="radio" name="features"> Row Heading
+                        <input id="rowHeading" type="radio" name="features">
+                    </p>
+
+                    <p>
+                        <strong>Popups:</strong> Background
+                        <input id="popup" type="radio" name="features">
+                    </p>
+                </div>
             </div>
         </div>
-        <div id="colorPallete"></div>
+        <div id="color-wrapper">
+            <input type="text" id="colorPicker">
+            <div id="colorPallete"></div>
+        </div>
     </div>
+    <div id="template-wrapper">
+        <div id="small">
+            <div class="main">
+                <div class="header">
+                </div>
+                <div class="article">
+                    <h1>Heading 1</h1>
+                    <h2>Heading 2</h2>
+                    <h3>Heading 3</h3>
+                    <h4>Heading 4</h4>
+                    <h5>Heading 5</h5>
 
-    <div id="small">
-        <div id="main">
-            <div id="header">
+                    <hr />
+
+                    <h2>Page Content</h2>
+
+                    <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a class="default" href="#">default color</a> vel <a class="hover" href="#">hover color</a> eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+
+                    <!-- end #article -->
+                </div>
+                <div class="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
             </div>
-            <div id="article">
-                <h1>Heading 1</h1>
-                <h2>Heading 2</h2>
-                <h3>Heading 3</h3>
-                <h4>Heading 4</h4>
-                <h5>Heading 5</h5>
+        </div>
 
-                <hr />
+        <div id="large">
+            <div class="main splash">
+                <div class="header">
+                </div>
+                <div class="article">
 
-                <h2>Page Content</h2>
+                    <h1>Heading 1</h1>
+                    <h2>Heading 2</h2>
+                    <h3>Heading 3</h3>
+                    <h4>Heading 4</h4>
+                    <h5>Heading 5</h5>
 
-                <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a href="#">Duis autem</a> vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                    <hr />
 
+                    <h2>Paragraph Title</h2>
+
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a class="default" href="#">default color</a> vel <a class="hover" href="#">hover color</a> vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                </div>
                 <!-- end #article -->
+                <div class="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
             </div>
-            <div id="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
         </div>
-    </div>
 
-    <div id="large">
-        <div id="main" class="splash">
-            <div id="header">
-            </div>
-            <div id="article">
-
-                <h1>Heading 1</h1>
-                <h2>Heading 2</h2>
-                <h3>Heading 3</h3>
-                <h4>Heading 4</h4>
-                <h5>Heading 5</h5>
-
-                <hr />
-
-                <h2>Paragraph Title</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a href="#">Duis autem</a> vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-            </div>
-            <!-- end #article -->
-            <div id="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
-        </div>
-    </div>
-
-    <div id="features">
-        <div id="main">
-            <div id="header">
-            </div>
-
-            <div id="article">
-                <h1>Features Template</h1>
-
-                <h4>Callout Box</h4>
-
-                <p class="callout">This is a callout box which can be used to emphasize text.</p>
-
-                <h4>Drop Down</h4>
-
-                <div class="drop-down">
-                    Example
+        <div id="features">
+            <div class="main">
+                <div class="header">
                 </div>
 
-                <h4>Rubric Table</h4>
+                <div class="article">
+                    <h4>Callout Box</h4>
 
-                <table class="rubric">
-                    <tr>
-                        <th>Heading</th>
-                        <th>Heading</th>
-                        <th>Heading</th>
-                        <th>Heading</th>
-                        <th>Heading</th>
-                    </tr>
-                    <tr>
-                        <th>Heading</th>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                    </tr>
-                    <tr>
-                        <th>Heading</th>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                    </tr>
-                    <tr>
-                        <th>Heading</th>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                    </tr>
-                    <tr>
-                        <th>Heading</th>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                        <td>Text</td>
-                    </tr>
-                </table>
+                    <p class="callout">This is a callout box which can be used to emphasize text.</p>
 
-                <h4>Mouseover pop-up</h4>
+                    <h4>Drop Down</h4>
 
-                <p>Here is a mouseover <span class="popup">pop-up<span>Here you can put whatever message you would like!</span></span>
-                </p>
+                    <div class="drop-down default">
+                        Default
+                    </div>
 
+                    <div class="drop-down hover">
+                        Hover
+                    </div>
+
+                    <h4>Rubric Table</h4>
+
+                    <table class="rubric">
+                        <tr>
+                            <th>Heading</th>
+                            <th>Heading</th>
+                            <th>Heading</th>
+                            <th>Heading</th>
+                            <th>Heading</th>
+                        </tr>
+                        <tr>
+                            <th>Heading</th>
+                            <td>Text</td>
+                            <td>Text</td>
+                            <td>Text</td>
+                            <td>Text</td>
+                        </tr>
+                        <tr>
+                            <th>Heading</th>
+                            <td>Text</td>
+                            <td>Text</td>
+                            <td>Text</td>
+                            <td>Text</td>
+                        </tr>
+                    </table>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <h4>Mouseover pop-up</h4>
+
+                    <p>Here is a mouseover <span class="popup">pop-up<span>Here you can put whatever message you would like!</span></span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div id="css-output">
+            <div class="main">
+                <div class="article">
+                    <input type="button" onclick="saveTextAsFile()" value="Download CSS File">
+                    <textarea id="list"></textarea>
+                </div>
             </div>
         </div>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="spectrum/spectrum.js"></script>
     <script src="color-thief.js"></script>
     <script src="app.js"></script>
 </body>
