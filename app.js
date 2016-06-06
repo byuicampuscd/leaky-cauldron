@@ -19,21 +19,20 @@ function handleFileSelect(evt) {
                 var img = new Image();
                 img.src = e.target.result;
 
-                var colorThief = new ColorThief();
-                var image = new CanvasImage(img, filename);
+                var colorThief = new ColorThief(),
+                    image = new CanvasImage(img, filename);
 
-                if (filename === "smallBanner"){
+                if (filename === "smallBanner") {
                     var img2 = new Image();
                     img2.src = e.target.result;
 
-                    var colorThief = new ColorThief();
-                    var image = new CanvasImage(img2, filename + "Two");
+                    var colorThief = new ColorThief(),
+                        image = new CanvasImage(img2, filename + "Two");
                 }
 
-                var domColor = colorThief.getColor(img);
-                var pallete = colorThief.getPalette(img);
-
-                var get = getHexPallete(domColor, pallete, filename);
+                var domColor = colorThief.getColor(img),
+                    pallete = colorThief.getPalette(img),
+                    get = getHexPallete(domColor, pallete, filename);
 
             };
         })(f);
@@ -51,8 +50,8 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         flexContainer = document.createElement("div"),
         currentPage = "";
 
-   // Check that a page is being viewed and not the css
-    if(document.querySelector("#page-selection input:checked") != null) {
+    // Check that a page is being viewed and not the css
+    if (document.querySelector("#page-selection input:checked") != null) {
         currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
     }
 
@@ -86,21 +85,26 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         palleteArray.push(hex);
     }
     // Add click event handler
-    $("#colorPallete div > div").click( function () {
+    $("#colorPallete div > div").click(function () {
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
     });
 }
 
-function saveTextAsFile() {
-    var textToWrite = style;
-    var textFileAsBlob = new Blob([textToWrite], {
-        type: 'text/css'
-    });
-    var fileNameToSaveAs = 'course';
+function saveTextAsFile(text) {
 
-    var downloadLink = document.createElement("a");
+
+    var textToWrite = style,
+        textFileAsBlob = new Blob([textToWrite], {
+            type: 'text/css'
+        }),
+        fileNameToSaveAs = 'course',
+        downloadLink = document.createElement("a"),
+        small = document.querySelector("a[href*='small']"),
+        large = document.querySelector("a[href*='large']"),
+        coursejs = document.querySelector("a[href*='course']");
+
     downloadLink.download = fileNameToSaveAs;
     downloadLink.innerHTML = "Download File";
     if (window.URL !== null) {
@@ -115,9 +119,19 @@ function saveTextAsFile() {
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
-    downloadLink.click();
+
+    if (text === "cssOnly") {
+        downloadLink.click();
+    } else {
+        downloadLink.click();
+        small.click();
+        large.click();
+        coursejs.click();
+    }
 }
+
 var style = "";
+
 function cssTemplate() {
     style = `/********************************************************
     The purpose of course.css is to house only the css
@@ -265,116 +279,166 @@ function changePage() {
 
 // Options set
 var options = {
-    innergrad : {
+    innergrad: {
         color: "#406986",
-        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color +" 0%, " + options.outergrad.color + " 100%)"); }
+        setColor: function () {
+            $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color + " 0%, " + options.outergrad.color + " 100%)");
+        }
     },
-    outergrad : {
+    outergrad: {
         color: "#16344a",
-        setColor: function() { $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color +" 0%, " + this.color + " 100%)"); }
+        setColor: function () {
+            $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color + " 0%, " + this.color + " 100%)");
+        }
     },
-    h1 : {
+    h1: {
         color: "#333333",
-        setColor: function() { $("#small h1").css("color", this.color); }
+        setColor: function () {
+            $("#small h1").css("color", this.color);
+        }
     },
-    h2 : {
+    h2: {
         color: "#2d5d94",
-        setColor: function() { $("#small h2, #small h4").css("color", this.color); }
+        setColor: function () {
+            $("#small h2, #small h4").css("color", this.color);
+        }
     },
-    h3 : {
+    h3: {
         color: "#5f6060",
-        setColor: function() { $("#small h3, #small h5").css("color", this.color); }
+        setColor: function () {
+            $("#small h3, #small h5").css("color", this.color);
+        }
     },
-    a : {
+    a: {
         color: "#2d5d94",
-        setColor: function() { $("#small a.default").css("color", this.color);
-                               $("#small a.default").css("borderColor", this.color); }
+        setColor: function () {
+            $("#small a.default").css("color", this.color);
+            $("#small a.default").css("borderColor", this.color);
+        }
     },
-    aHover : {
+    aHover: {
         color: "#7b4c8d",
-        setColor: function() { $("#small a.hover").css("color", this.color);
-                               $("#small a.hover").css("borderColor", this.color); }
+        setColor: function () {
+            $("#small a.hover").css("color", this.color);
+            $("#small a.hover").css("borderColor", this.color);
+        }
     },
-    footerColor : {
+    footerColor: {
         color: "#e2e2e2",
-        setColor: function() { $("#small .footer").css("color", this.color); }
+        setColor: function () {
+            $("#small .footer").css("color", this.color);
+        }
     },
-    footerBackground : {
+    footerBackground: {
         color: "#2d5d94",
-        setColor: function() { $("#small .footer").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#small .footer").css("backgroundColor", this.color);
+        }
     },
-    splashBackground : {
+    splashBackground: {
         color: "#125576",
-        setColor: function() { $("#large .article").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#large .article").css("backgroundColor", this.color);
+        }
     },
-    splashColor : {
+    splashColor: {
         color: "#eaeaea",
-        setColor: function() { $("#large .article").css("color", this.color); }
+        setColor: function () {
+            $("#large .article").css("color", this.color);
+        }
     },
-    splashH1 : {
+    splashH1: {
         color: "#fafafa",
-        setColor: function() { $("#large h1").css("color", this.color); }
+        setColor: function () {
+            $("#large h1").css("color", this.color);
+        }
     },
-    splashH2 : {
+    splashH2: {
         color: "#a1d7ff",
-        setColor: function() { $("#large h2, #large h4").css("color", this.color); }
+        setColor: function () {
+            $("#large h2, #large h4").css("color", this.color);
+        }
     },
-    splashH3 : {
+    splashH3: {
         color: "#c3c3c3",
-        setColor: function() { $("#large h3, #large h5").css("color", this.color); }
+        setColor: function () {
+            $("#large h3, #large h5").css("color", this.color);
+        }
     },
-    splashA : {
+    splashA: {
         color: "#a1d7ff",
-        setColor: function() { $("#large a.default").css("color", this.color);
-                               $("#large a.default").css("borderColor", this.color); }
+        setColor: function () {
+            $("#large a.default").css("color", this.color);
+            $("#large a.default").css("borderColor", this.color);
+        }
     },
-    splashAHover : {
+    splashAHover: {
         color: "#c08fd3",
-        setColor: function() { $("#large a.hover").css("color", this.color);
-                               $("#large a.hover").css("borderColor", this.color); }
+        setColor: function () {
+            $("#large a.hover").css("color", this.color);
+            $("#large a.hover").css("borderColor", this.color);
+        }
     },
-    splashFooterColor : {
+    splashFooterColor: {
         color: "#e2e2e2",
-        setColor: function() { $("#large .footer").css("color", this.color); }
+        setColor: function () {
+            $("#large .footer").css("color", this.color);
+        }
     },
-    splashFooterBackground : {
+    splashFooterBackground: {
         color: "#133955",
-        setColor: function() { $("#large .footer").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#large .footer").css("backgroundColor", this.color);
+        }
     },
-    calloutBackground : {
+    calloutBackground: {
         color: "#e3ded1",
-        setColor: function() { $("#features .callout").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#features .callout").css("backgroundColor", this.color);
+        }
     },
-    calloutColor : {
+    calloutColor: {
         color: "#2d5d94",
-        setColor: function() { $("#features .callout").css("color", this.color); }
+        setColor: function () {
+            $("#features .callout").css("color", this.color);
+        }
     },
-    dropdownBackground : {
+    dropdownBackground: {
         color: "#6c6c6c",
-        setColor: function() { $("#features .drop-down.default").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#features .drop-down.default").css("backgroundColor", this.color);
+        }
     },
-    dropdownHover : {
+    dropdownHover: {
         color: "#7f7f7f",
-        setColor: function() { $("#features .drop-down.hover").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#features .drop-down.hover").css("backgroundColor", this.color);
+        }
     },
-    columnHeading : {
+    columnHeading: {
         color: "#1e435d",
-        setColor: function() { $("#features table tr:first-child th").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#features table tr:first-child th").css("backgroundColor", this.color);
+        }
     },
-    rowHeading : {
+    rowHeading: {
         color: "#2d5d94",
-        setColor: function() { $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color); }
+        setColor: function () {
+            $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color);
+        }
     },
-    popup : {
+    popup: {
         color: "#274b66",
-        setColor: function() { $("#features .popup").css("borderColor", this.color);
-                               $("#features .popup span").css("backgroundColor", this.color);}
+        setColor: function () {
+            $("#features .popup").css("borderColor", this.color);
+            $("#features .popup span").css("backgroundColor", this.color);
+        }
     }
 };
 
 var selectedRadio = "innergrad";
 // Update selectedRadio everytime a radio button is clicked
-$("#general input").click(function() {
+$("#general input").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
@@ -386,7 +450,7 @@ $("#colorPicker").spectrum({
     showButtons: false,
     showInput: true,
     preferredFormat: "hex",
-    move: function(color) {
+    move: function (color) {
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
     }

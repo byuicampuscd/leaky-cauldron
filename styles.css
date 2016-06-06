@@ -104,6 +104,10 @@ canvas {
     padding: 10px;
 }
 
+#css-output p {
+    display: inline-block;
+}
+
 /* Default CSS (Needed to avoid multiple elements with the same ID */
 
 #template-wrapper {
