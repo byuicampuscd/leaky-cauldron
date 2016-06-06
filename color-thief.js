@@ -28,10 +28,12 @@ var CanvasImage = function (image, fileName) {
     this.context = this.canvas.getContext('2d');
 
     if (fileName==="largeBanner") {
-        document.querySelector("#large #header").appendChild(this.canvas);
+        document.querySelector("#large .header").appendChild(this.canvas);
     } else if (fileName==="smallBanner") {
-        document.querySelector("#small #header").appendChild(this.canvas);
-    } else if (fileName === undefined) {
+        document.querySelector("#small .header").appendChild(this.canvas);
+    } else if (fileName === "smallBannerTwo") {
+        document.querySelector("#features .header").appendChild(this.canvas);
+    }else if (fileName === undefined) {
         document.querySelector("#colorPallete").appendChild(this.canvas);
     } else {        
         console.log("error! undefined image name");

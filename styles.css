@@ -4,42 +4,37 @@
     margin: 0px;
 }
 
+html {
+    background: #f0f0f0;
+}
+
 input,
 textarea {
     display: block;
 }
 
-canvas {
-    width: 100%;
+/*********************************************
+    INPUT AREA
+*********************************************/
+
+#input-wrapper {
+    padding: 10px;
 }
 
-main {
-    display: flex;
+#inputs {
+    display: inline-block;
+    padding: 10px;
+    width: 410px;
+    vertical-align: top;
 }
 
-#large,
-#small{
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-#large,
-#features,
-#feature-options{
+#large-options,
+#features-options {
     display: none;
 }
 
-
-div#footer {
+canvas {
     width: 100%;
-}
-
-/* Inputs */
-
-#inputs {
-    margin: 10px;
-    padding: 10px;
-    background: #f0f0f0;
 }
 
 #page-selection {
@@ -55,4 +50,171 @@ div#footer {
 #inputs input {
     display: inline;
     margin-right: 10px;
+}
+
+/* Color-wrapper */
+#color-wrapper {
+    display: inline-block;
+}
+
+/* Color Picker */
+
+.sp-container {
+    border: none;
+    background: #d5d5d5;
+}
+
+.sp-input {
+    background: #f0f0f0;
+}
+
+/* Color Pallete */
+
+#colorPallete {
+    display: inline-block;
+    margin-left: 15px;
+    max-width: 150px;
+}
+
+#colorPallete div div {
+    display: inline-block;
+    margin: 2px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+/*********************************************
+    TEMPLATE AREA
+*********************************************/
+
+#large,
+#features,
+#css-output {
+    display: none;
+}
+
+#css-output input {
+    margin-bottom: 10px;
+}
+
+#css-output textarea {
+    width: 100%;
+    height: 1450px;
+    padding: 10px;
+}
+
+#css-output p {
+    display: inline-block;
+}
+
+/* Default CSS (Needed to avoid multiple elements with the same ID */
+
+#template-wrapper {
+    padding: 20px 0 100px;
+    background: -webkit-radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
+	background: radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
+}
+
+.main {
+	width: 90%;
+	max-width: 950px;
+	margin: 0 auto;
+	box-shadow: 0 0 12px #000000;
+}
+
+.main a {
+    border-bottom: 2px solid inherit;
+}
+
+.header canvas {
+	width: 100%;
+    display: block;
+}
+
+.article {
+	position: relative;
+    padding: 20px;
+    color: #3e3e3e;
+	background-color: #f0f0f0;
+}
+
+.splash > .article {
+	color: #eaeaea;
+	background-color: #125576;
+}
+
+/* Keeps images from escaping the bottom of #article */
+.article:after {
+	content: "";
+	clear: both;
+	height: 0px;
+	display: block;
+	opacity: 0;
+}
+
+.footer {
+	text-align: center;
+	padding: 6px;
+	color: #e2e2e2;
+	background-color: #2d5d94;
+	font-size: 13px;
+}
+
+.splash .footer {
+	color: #e2e2e2;
+	background-color: #133955;
+}
+
+.popup span,
+.popup span {
+    opacity: 1;
+    z-index: 100;
+    transition: all .3s;
+}
+
+.popup:after,
+.popup:after {
+    opacity: 1;
+    z-index: 100;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    transition: all .2s .1s;
+}
+
+@media only screen and (min-width: 1200px) {
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    #input-wrapper {
+        display: inline-block;
+        width: 420px;
+        vertical-align: top;
+    }
+
+    #inputs {
+        display: block;
+    }
+
+    #color-wrapper {
+        display: block;
+        text-align: center;
+    }
+
+    #colorPallete {
+        display: block;
+        margin-top: 15px;
+        margin-left: 0;
+        max-width: none;
+    }
+
+    #template-wrapper {
+        display: inline-block;
+        width: calc(100% - 425px);
+        min-height: 100%;
+    }
 }
