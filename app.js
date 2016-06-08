@@ -86,6 +86,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     }
     // Add click event handler
     $("#colorPallete div > div").click(function () {
+        updateUndo(options[selectedRadio].color);
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
@@ -456,6 +457,11 @@ $("#colorPicker").spectrum({
     }
 });
 
+// Each time the colorPicker is clicked to make a change the current color is saved in the undo array
+$("#colorPicker").on("dragstart.spectrum", function(e, color) {
+    updateUndo(options[selectedRadio].color);
+});
+
 function useSmallColors() {
     // Update color values
     options.splashBackground.color = "#f0f0f0";
@@ -478,3 +484,50 @@ function useSmallColors() {
     options.splashFooterBackground.setColor();
     options.splashFooterColor.setColor();
 }
+
+var undo = [],
+    redo = [];
+
+function updateUndo(oldColor) {
+    undo.push({key: selectedRadio, color: oldColor});
+    // Reset redo
+    redo = [];
+    // Keep undo array from getting really large
+    if (undo.length > 30) {
+        undo.shift();
+    }
+}
+
+function applyUndo() {
+    var undoColor;
+    if (undo.length > 0) {
+        redo.push({key: selectedRadio, color: options[selectedRadio].color});
+        undoColor= undo.pop();
+        options[undoColor.key].color = undoColor.color;
+        options[undoColor.key].setColor();
+        $("#colorPicker").spectrum("set", undoColor.color);
+        document.querySelector("#" + undoColor.key).checked = true;
+        selectedRadio = undoColor.key;
+    }
+}
+
+function applyRedo() {
+    var redoColor;
+    if (redo.length > 0) {
+        undo.push({key: selectedRadio, color: options[selectedRadio].color});
+        redoColor= redo.pop();
+        options[redoColor.key].color = redoColor.color;
+        options[redoColor.key].setColor();
+        $("#colorPicker").spectrum("set", redoColor.color);
+        document.querySelector("#" + redoColor.key).checked = true;
+        selectedRadio = redoColor.key;
+    }
+}
+
+document.onkeydown = function () {
+  if (event.which === 85) {
+      applyUndo();
+  } else if (event.which === 82) {
+      applyRedo();
+  }
+};
