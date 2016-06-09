@@ -64,6 +64,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     }
     // Add click event handler
     $("#colorPallete div > div").click(function () {
+        updateUndo(options[selectedRadio].color);
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
@@ -295,12 +296,14 @@ var options = {
         color: "#e2e2e2",
         setColor: function () {
             $("#small .footer").css("color", this.color);
+            $("#features .footer").css("color", this.color);
         }
     },
     footerBackground: {
         color: "#2d5d94",
         setColor: function () {
             $("#small .footer").css("backgroundColor", this.color);
+            $("#features .footer").css("backgroundColor", this.color);
         }
     },
     splashBackground: {
@@ -406,7 +409,7 @@ var options = {
 
 var selectedRadio = "innergrad";
 // Update selectedRadio everytime a radio button is clicked
-$("#general input").click(function () {
+$("#general input:not(#useSmallTemplate)").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
@@ -421,6 +424,11 @@ $("#colorPicker").spectrum({
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
     }
+});
+
+// Each time the colorPicker is clicked to make a change the current color is saved in the undo array
+$("#colorPicker").on("dragstart.spectrum", function(e, color) {
+    updateUndo(options[selectedRadio].color);
 });
 
 function useSmallColors() {
@@ -445,3 +453,50 @@ function useSmallColors() {
     options.splashFooterBackground.setColor();
     options.splashFooterColor.setColor();
 }
+
+var undo = [],
+    redo = [];
+
+function updateUndo(oldColor) {
+    undo.push({key: selectedRadio, color: oldColor});
+    // Reset redo
+    redo = [];
+    // Keep undo array from getting really large
+    if (undo.length > 30) {
+        undo.shift();
+    }
+}
+
+function applyUndo() {
+    var undoColor;
+    if (undo.length > 0) {
+        redo.push({key: selectedRadio, color: options[selectedRadio].color});
+        undoColor= undo.pop();
+        options[undoColor.key].color = undoColor.color;
+        options[undoColor.key].setColor();
+        $("#colorPicker").spectrum("set", undoColor.color);
+        document.querySelector("#" + undoColor.key).checked = true;
+        selectedRadio = undoColor.key;
+    }
+}
+
+function applyRedo() {
+    var redoColor;
+    if (redo.length > 0) {
+        undo.push({key: selectedRadio, color: options[selectedRadio].color});
+        redoColor= redo.pop();
+        options[redoColor.key].color = redoColor.color;
+        options[redoColor.key].setColor();
+        $("#colorPicker").spectrum("set", redoColor.color);
+        document.querySelector("#" + redoColor.key).checked = true;
+        selectedRadio = redoColor.key;
+    }
+}
+
+document.onkeydown = function () {
+  if (event.which === 85) {
+      applyUndo();
+  } else if (event.which === 82) {
+      applyRedo();
+  }
+};
