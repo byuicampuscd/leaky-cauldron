@@ -1,45 +1,32 @@
 function handleFileSelect(evt) {
     "use strict";
     var files = evt.target.files;
-
     for (var i = 0, f; f = files[i]; i++) {
-
         if (!f.type.match('image.*')) {
             continue;
         }
-
         var reader = new FileReader();
-
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
-
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
-
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
-
                 var colorThief = new ColorThief(),
                     image = new CanvasImage(img, filename);
-
                 if (filename === "smallBanner") {
                     var img2 = new Image();
                     img2.src = e.target.result;
-
                     var colorThief = new ColorThief(),
                         image = new CanvasImage(img2, filename + "Two");
                 }
-
                 var domColor = colorThief.getColor(img),
                     pallete = colorThief.getPalette(img),
                     get = getHexPallete(domColor, pallete, filename);
-
             };
         })(f);
-
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-
     }
 }
 
@@ -49,35 +36,26 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     var palleteArray = [],
         flexContainer = document.createElement("div"),
         currentPage = "";
-
     // Check that a page is being viewed and not the css
     if (document.querySelector("#page-selection input:checked") != null) {
         currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
     }
-
     // If current page is features use small
     if (currentPage === "features") {
         currentPage = "small";
     }
-
     // Hide the color suggestions for banner not being viewed
     if (!cssTemplate.includes(currentPage)) {
         flexContainer.style.display = "none";
     }
-
     flexContainer.id = cssTemplate + "Suggestions";
-
     // Determine which suggestions to show or hide based off which page is currently selected
-
-
     for (var i = 0; i < pallete.length; i++) {
-
         var firstbit = pallete[i][0].toString(16),
             secbit = pallete[i][1].toString(16),
             thirbit = pallete[i][2].toString(16),
             div = document.createElement("div"),
             hex = `#${firstbit}${secbit}${thirbit}`;
-
         div.style.backgroundColor = hex;
         div.id = hex;
         document.querySelector("#colorPallete").appendChild(flexContainer);
@@ -86,6 +64,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     }
     // Add click event handler
     $("#colorPallete div > div").click(function () {
+        updateUndo(options[selectedRadio].color);
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
@@ -93,8 +72,6 @@ function getHexPallete(domColor, pallete, cssTemplate) {
 }
 
 function saveTextAsFile(text) {
-
-
     var textToWrite = style,
         textFileAsBlob = new Blob([textToWrite], {
             type: 'text/css'
@@ -104,7 +81,6 @@ function saveTextAsFile(text) {
         small = document.querySelector("a[href*='small']"),
         large = document.querySelector("a[href*='large']"),
         coursejs = document.querySelector("a[href*='course']");
-
     downloadLink.download = fileNameToSaveAs;
     downloadLink.innerHTML = "Download File";
     if (window.URL !== null) {
@@ -119,7 +95,6 @@ function saveTextAsFile(text) {
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
-
     if (text === "cssOnly") {
         downloadLink.click();
     } else {
@@ -129,7 +104,6 @@ function saveTextAsFile(text) {
         coursejs.click();
     }
 }
-
 var style = "";
 
 function cssTemplate() {
@@ -253,14 +227,11 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 function changePage() {
     var page = this.event.srcElement.dataset.selector,
         selector = "#" + page + ", #" + page + "-options";
-
     // Close all pages and feature options
     $("#small, #large, #features, #css-output, #small-options, #large-options, #features-options").css("display", "none");
-
     // Display selected page and options
     $(selector + ", #general").css("display", "block");
     $("#color-wrapper").css("display", "");
-
     // Display correct color suggestions
     if (page === "small" || page === "features") {
         $("#largeBannerSuggestions").css("display", "none");
@@ -269,10 +240,8 @@ function changePage() {
         $("#smallBannerSuggestions").css("display", "none");
         $("#largeBannerSuggestions").css("display", "");
     }
-
     // Update selectedRadio
     selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
-
     // Update colorPicker
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 }
@@ -327,12 +296,14 @@ var options = {
         color: "#e2e2e2",
         setColor: function () {
             $("#small .footer").css("color", this.color);
+            $("#features .footer").css("color", this.color);
         }
     },
     footerBackground: {
         color: "#2d5d94",
         setColor: function () {
             $("#small .footer").css("backgroundColor", this.color);
+            $("#features .footer").css("backgroundColor", this.color);
         }
     },
     splashBackground: {
@@ -438,11 +409,10 @@ var options = {
 
 var selectedRadio = "innergrad";
 // Update selectedRadio everytime a radio button is clicked
-$("#general input").click(function () {
+$("#general input:not(#useSmallTemplate)").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
-
 // Color Picker
 $("#colorPicker").spectrum({
     flat: true,
@@ -454,6 +424,11 @@ $("#colorPicker").spectrum({
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
     }
+});
+
+// Each time the colorPicker is clicked to make a change the current color is saved in the undo array
+$("#colorPicker").on("dragstart.spectrum", function(e, color) {
+    updateUndo(options[selectedRadio].color);
 });
 
 function useSmallColors() {
@@ -478,3 +453,50 @@ function useSmallColors() {
     options.splashFooterBackground.setColor();
     options.splashFooterColor.setColor();
 }
+
+var undo = [],
+    redo = [];
+
+function updateUndo(oldColor) {
+    undo.push({key: selectedRadio, color: oldColor});
+    // Reset redo
+    redo = [];
+    // Keep undo array from getting really large
+    if (undo.length > 30) {
+        undo.shift();
+    }
+}
+
+function applyUndo() {
+    var undoColor;
+    if (undo.length > 0) {
+        redo.push({key: selectedRadio, color: options[selectedRadio].color});
+        undoColor= undo.pop();
+        options[undoColor.key].color = undoColor.color;
+        options[undoColor.key].setColor();
+        $("#colorPicker").spectrum("set", undoColor.color);
+        document.querySelector("#" + undoColor.key).checked = true;
+        selectedRadio = undoColor.key;
+    }
+}
+
+function applyRedo() {
+    var redoColor;
+    if (redo.length > 0) {
+        undo.push({key: selectedRadio, color: options[selectedRadio].color});
+        redoColor= redo.pop();
+        options[redoColor.key].color = redoColor.color;
+        options[redoColor.key].setColor();
+        $("#colorPicker").spectrum("set", redoColor.color);
+        document.querySelector("#" + redoColor.key).checked = true;
+        selectedRadio = redoColor.key;
+    }
+}
+
+document.onkeydown = function () {
+  if (event.which === 85) {
+      applyUndo();
+  } else if (event.which === 82) {
+      applyRedo();
+  }
+};

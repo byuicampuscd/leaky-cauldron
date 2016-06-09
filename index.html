@@ -80,7 +80,7 @@
                         <input id="splashFooterColor" type="radio" name="splash">
                     </p>
                     <p>
-                        <input type="button" onclick="useSmallColors()" value="Use Small Template Colors">
+                        <input id="useSmallTemplate" type="button" onclick="useSmallColors()" value="Use Small Template Colors">
                     </p>
                 </div>
                 <div id="features-options">
@@ -217,6 +217,8 @@
                     </p>
 
                 </div>
+                <!-- end #article -->
+                <div class="footer">Copyright © 2016 by Brigham Young University - Idaho. All Rights Reserved.</div>
             </div>
         </div>
         <div id="css-output">
@@ -225,7 +227,7 @@
                     <input type="button" onclick="saveTextAsFile()" value="Download Web Files">
                     <p><a href="small.html" download> Download small.html</a> | </p>
                     <p><a href="large.html" download> Download large.html</a> | </p>
-                    <p><a href="#"  onclick="saveTextAsFile('cssOnly')"> Download course.css</a> | </p>
+                    <p><a href="#" onclick="saveTextAsFile('cssOnly')"> Download course.css</a> | </p>
                     <p><a href="course.js" download> Download course.js</a></p>
                     <textarea id="list"></textarea>
                 </div>
