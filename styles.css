@@ -123,8 +123,26 @@ canvas {
 	box-shadow: 0 0 12px #000000;
 }
 
-.main a {
-    border-bottom: 2px solid inherit;
+#small a.default,
+#small a.default:visited {
+    color: #2d5d94;
+    border-bottom: 2px solid #2d5d94;
+}
+
+#small a.hover {
+    color: #7b4c8d;
+    border-bottom: 2px solid #7b4c8d;
+}
+
+#large a.hover {
+    color: #c08fd3;
+    border-bottom: 2px solid #c08fd3;
+}
+
+#large a.default,
+#large a.default:visited {
+    color: #a1d7ff;
+    border-bottom: 2px solid #a1d7ff;
 }
 
 .header canvas {
@@ -164,6 +182,10 @@ canvas {
 .splash .footer {
 	color: #e2e2e2;
 	background-color: #133955;
+}
+
+.drop-down.hover {
+    background: #7f7f7f;
 }
 
 .popup span,

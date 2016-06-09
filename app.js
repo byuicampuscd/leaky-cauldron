@@ -328,12 +328,14 @@ var options = {
         color: "#e2e2e2",
         setColor: function () {
             $("#small .footer").css("color", this.color);
+            $("#features .footer").css("color", this.color);
         }
     },
     footerBackground: {
         color: "#2d5d94",
         setColor: function () {
             $("#small .footer").css("backgroundColor", this.color);
+            $("#features .footer").css("backgroundColor", this.color);
         }
     },
     splashBackground: {
@@ -439,7 +441,7 @@ var options = {
 
 var selectedRadio = "innergrad";
 // Update selectedRadio everytime a radio button is clicked
-$("#general input").click(function () {
+$("#general input:not(#useSmallTemplate)").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
