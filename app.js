@@ -301,13 +301,13 @@ var options = {
     h2: {
         color: "#2d5d94",
         setColor: function () {
-            $("#small h2, #small h4").css("color", this.color);
+            $("#small h2, #features h2, #small h4, #features h4").css("color", this.color);
         }
     },
     h3: {
         color: "#5f6060",
         setColor: function () {
-            $("#small h3, #small h5").css("color", this.color);
+            $("#small h3, #features h3, #small h5, #features h5").css("color", this.color);
         }
     },
     a: {
@@ -327,15 +327,13 @@ var options = {
     footerColor: {
         color: "#e2e2e2",
         setColor: function () {
-            $("#small .footer").css("color", this.color);
-            $("#features .footer").css("color", this.color);
+            $("#small .footer, #features .footer").css("color", this.color);
         }
     },
     footerBackground: {
         color: "#2d5d94",
         setColor: function () {
-            $("#small .footer").css("backgroundColor", this.color);
-            $("#features .footer").css("backgroundColor", this.color);
+            $("#small .footer, #features .footer").css("backgroundColor", this.color);
         }
     },
     splashBackground: {
