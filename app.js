@@ -1,45 +1,32 @@
 function handleFileSelect(evt) {
     "use strict";
     var files = evt.target.files;
-
     for (var i = 0, f; f = files[i]; i++) {
-
         if (!f.type.match('image.*')) {
             continue;
         }
-
         var reader = new FileReader();
-
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
-
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
-
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
-
                 var colorThief = new ColorThief(),
                     image = new CanvasImage(img, filename);
-
                 if (filename === "smallBanner") {
                     var img2 = new Image();
                     img2.src = e.target.result;
-
                     var colorThief = new ColorThief(),
                         image = new CanvasImage(img2, filename + "Two");
                 }
-
                 var domColor = colorThief.getColor(img),
                     pallete = colorThief.getPalette(img),
                     get = getHexPallete(domColor, pallete, filename);
-
             };
         })(f);
-
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-
     }
 }
 
@@ -49,35 +36,26 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     var palleteArray = [],
         flexContainer = document.createElement("div"),
         currentPage = "";
-
     // Check that a page is being viewed and not the css
     if (document.querySelector("#page-selection input:checked") != null) {
         currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
     }
-
     // If current page is features use small
     if (currentPage === "features") {
         currentPage = "small";
     }
-
     // Hide the color suggestions for banner not being viewed
     if (!cssTemplate.includes(currentPage)) {
         flexContainer.style.display = "none";
     }
-
     flexContainer.id = cssTemplate + "Suggestions";
-
     // Determine which suggestions to show or hide based off which page is currently selected
-
-
     for (var i = 0; i < pallete.length; i++) {
-
         var firstbit = pallete[i][0].toString(16),
             secbit = pallete[i][1].toString(16),
             thirbit = pallete[i][2].toString(16),
             div = document.createElement("div"),
             hex = `#${firstbit}${secbit}${thirbit}`;
-
         div.style.backgroundColor = hex;
         div.id = hex;
         document.querySelector("#colorPallete").appendChild(flexContainer);
@@ -94,8 +72,6 @@ function getHexPallete(domColor, pallete, cssTemplate) {
 }
 
 function saveTextAsFile(text) {
-
-
     var textToWrite = style,
         textFileAsBlob = new Blob([textToWrite], {
             type: 'text/css'
@@ -105,7 +81,6 @@ function saveTextAsFile(text) {
         small = document.querySelector("a[href*='small']"),
         large = document.querySelector("a[href*='large']"),
         coursejs = document.querySelector("a[href*='course']");
-
     downloadLink.download = fileNameToSaveAs;
     downloadLink.innerHTML = "Download File";
     if (window.URL !== null) {
@@ -120,7 +95,6 @@ function saveTextAsFile(text) {
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
-
     if (text === "cssOnly") {
         downloadLink.click();
     } else {
@@ -130,7 +104,6 @@ function saveTextAsFile(text) {
         coursejs.click();
     }
 }
-
 var style = "";
 
 function cssTemplate() {
@@ -254,14 +227,11 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 function changePage() {
     var page = this.event.srcElement.dataset.selector,
         selector = "#" + page + ", #" + page + "-options";
-
     // Close all pages and feature options
     $("#small, #large, #features, #css-output, #small-options, #large-options, #features-options").css("display", "none");
-
     // Display selected page and options
     $(selector + ", #general").css("display", "block");
     $("#color-wrapper").css("display", "");
-
     // Display correct color suggestions
     if (page === "small" || page === "features") {
         $("#largeBannerSuggestions").css("display", "none");
@@ -270,10 +240,8 @@ function changePage() {
         $("#smallBannerSuggestions").css("display", "none");
         $("#largeBannerSuggestions").css("display", "");
     }
-
     // Update selectedRadio
     selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
-
     // Update colorPicker
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 }
@@ -443,7 +411,6 @@ $("#general input:not(#useSmallTemplate)").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
-
 // Color Picker
 $("#colorPicker").spectrum({
     flat: true,
