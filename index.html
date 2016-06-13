@@ -13,8 +13,14 @@
 <body>
 
     <div id="input-wrapper">
-        <h5>Upload Banners</h5>
-        <input type="file" id="files" name="files[]" multiple />
+        <h4>Upload Banners</h4>
+        <input type="file" id="files" name="files[]" multiple>
+
+        <h5>Load/Save Templates</h5>
+        <label>
+            <input type="button" value="Load Template" onclick="loadScreen()">
+            <input type="button" value="Save Template" onclick="saveScreen()">
+        </label>
 
         <div id="inputs">
             <div id="page-options">
@@ -224,7 +230,6 @@
         <div id="css-output">
             <div class="main">
                 <div class="article">
-                    <input type="button" onclick="saveTextAsFile()" value="Download Web Files">
                     <p><a href="small.html" download> Download small.html</a> | </p>
                     <p><a href="large.html" download> Download large.html</a> | </p>
                     <p><a href="#" onclick="saveTextAsFile('cssOnly')"> Download course.css</a> | </p>
@@ -234,6 +239,8 @@
             </div>
         </div>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="spectrum/spectrum.js"></script>
     <script src="color-thief.js"></script>

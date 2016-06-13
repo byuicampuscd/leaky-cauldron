@@ -17,6 +17,18 @@ textarea {
     INPUT AREA
 *********************************************/
 
+[type='button'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px #316286 solid;
+    background-color: #376d95;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    display: inline;
+}
+
 #input-wrapper {
     padding: 10px;
 }
@@ -106,6 +118,30 @@ canvas {
 
 #css-output p {
     display: inline-block;
+}
+
+/*********Popups**************/
+
+.shade {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(10,10,10, 0.3);
+    width: 100%;
+    height: 2000px;
+    overflow: none;
+    z-index: 99;
+}
+
+.saveScreen {
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    width: 500px;
+    height: 300px;
+    z-index: 100;
+    background-color: #e8f4ff;
+    padding: 5px;
 }
 
 /* Default CSS (Needed to avoid multiple elements with the same ID */
