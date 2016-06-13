@@ -1,5 +1,223 @@
+// Options set
+var options = {
+        innergrad: {
+            color: "#406986",
+            setColor: function () {
+                $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color + " 0%, " + options.outergrad.color + " 100%)");
+            }
+        },
+        outergrad: {
+            color: "#16344a",
+            setColor: function () {
+                $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color + " 0%, " + this.color + " 100%)");
+            }
+        },
+        h1: {
+            color: "#333333",
+            setColor: function () {
+                $("#small h1").css("color", this.color);
+            }
+        },
+        h2: {
+            color: "#2d5d94",
+            setColor: function () {
+                $("#small h2, #features h2, #small h4, #features h4").css("color", this.color);
+            }
+        },
+        h3: {
+            color: "#5f6060",
+            setColor: function () {
+                $("#small h3, #features h3, #small h5, #features h5").css("color", this.color);
+            }
+        },
+        a: {
+            color: "#2d5d94",
+            setColor: function () {
+                $("#small a.default").css("color", this.color);
+                $("#small a.default").css("borderColor", this.color);
+            }
+        },
+        aHover: {
+            color: "#7b4c8d",
+            setColor: function () {
+                $("#small a.hover").css("color", this.color);
+                $("#small a.hover").css("borderColor", this.color);
+            }
+        },
+        footerColor: {
+            color: "#e2e2e2",
+            setColor: function () {
+                $("#small .footer, #features .footer").css("color", this.color);
+            }
+        },
+        footerBackground: {
+            color: "#2d5d94",
+            setColor: function () {
+                $("#small .footer, #features .footer").css("backgroundColor", this.color);
+            }
+        },
+        splashBackground: {
+            color: "#125576",
+            setColor: function () {
+                $("#large .article").css("backgroundColor", this.color);
+            }
+        },
+        splashColor: {
+            color: "#eaeaea",
+            setColor: function () {
+                $("#large .article").css("color", this.color);
+            }
+        },
+        splashH1: {
+            color: "#fafafa",
+            setColor: function () {
+                $("#large h1").css("color", this.color);
+            }
+        },
+        splashH2: {
+            color: "#a1d7ff",
+            setColor: function () {
+                $("#large h2, #large h4").css("color", this.color);
+            }
+        },
+        splashH3: {
+            color: "#c3c3c3",
+            setColor: function () {
+                $("#large h3, #large h5").css("color", this.color);
+            }
+        },
+        splashA: {
+            color: "#a1d7ff",
+            setColor: function () {
+                $("#large a.default").css("color", this.color);
+                $("#large a.default").css("borderColor", this.color);
+            }
+        },
+        splashAHover: {
+            color: "#c08fd3",
+            setColor: function () {
+                $("#large a.hover").css("color", this.color);
+                $("#large a.hover").css("borderColor", this.color);
+            }
+        },
+        splashFooterColor: {
+            color: "#e2e2e2",
+            setColor: function () {
+                $("#large .footer").css("color", this.color);
+            }
+        },
+        splashFooterBackground: {
+            color: "#133955",
+            setColor: function () {
+                $("#large .footer").css("backgroundColor", this.color);
+            }
+        },
+        calloutBackground: {
+            color: "#e3ded1",
+            setColor: function () {
+                $("#features .callout").css("backgroundColor", this.color);
+            }
+        },
+        calloutColor: {
+            color: "#2d5d94",
+            setColor: function () {
+                $("#features .callout").css("color", this.color);
+            }
+        },
+        dropdownBackground: {
+            color: "#6c6c6c",
+            setColor: function () {
+                $("#features .drop-down.default").css("backgroundColor", this.color);
+            }
+        },
+        dropdownHover: {
+            color: "#7f7f7f",
+            setColor: function () {
+                $("#features .drop-down.hover").css("backgroundColor", this.color);
+            }
+        },
+        columnHeading: {
+            color: "#1e435d",
+            setColor: function () {
+                $("#features table tr:first-child th").css("backgroundColor", this.color);
+            }
+        },
+        rowHeading: {
+            color: "#2d5d94",
+            setColor: function () {
+                $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color);
+            }
+        },
+        popup: {
+            color: "#274b66",
+            setColor: function () {
+                $("#features .popup").css("borderColor", this.color);
+                $("#features .popup span").css("backgroundColor", this.color);
+            }
+        }
+    },
+    selectedRadio = "innergrad",
+    style = "",
+    undo = [],
+    redo = [],
+    body = document.querySelector("body"),
+    imgHold = {},
+    loadedTemplateData,
+    fireTemplateName;
+
+// Update selectedRadio everytime a radio button is clicked
+$("#general input:not(#useSmallTemplate)").click(function () {
+    selectedRadio = this.id;
+    $("#colorPicker").spectrum("set", options[selectedRadio].color);
+});
+// Color Picker
+$("#colorPicker").spectrum({
+    flat: true,
+    color: "#406986",
+    showButtons: false,
+    showInput: true,
+    preferredFormat: "hex",
+    move: function (color) {
+        options[selectedRadio].color = color.toHexString();
+        options[selectedRadio].setColor();
+    }
+});
+
+function insertBanners(e, filename, state) {
+    var img = new Image();
+    var img2 = new Image();
+    if (state === "fireload") {
+        img.src = e;
+        console.log(filename);
+        if (filename === "smallBanner") {
+            img2.src = e;
+            var colorThief = new ColorThief(),
+                image = new CanvasImage(img2, filename + "Two");
+        }
+    } else if (state === "new") {
+        img.src = e.target.result;
+        if (filename === "smallBanner") {
+            img2.src = e.target.result;
+            var colorThief = new ColorThief(),
+                image = new CanvasImage(img2, filename + "Two");
+        }
+    }
+
+
+    imgHold[filename] = img.src;
+
+    var colorThief = new ColorThief(),
+        image = new CanvasImage(img, filename);
+    var domColor = colorThief.getColor(img),
+        pallete = colorThief.getPalette(img),
+        get = getHexPallete(domColor, pallete, filename);
+
+}
+
 function handleFileSelect(evt) {
     "use strict";
+    fireTemplateName = "";
+    $(".header").html("");
     var files = evt.target.files;
     for (var i = 0, f; f = files[i]; i++) {
         if (!f.type.match('image.*')) {
@@ -10,19 +228,7 @@ function handleFileSelect(evt) {
         reader.onload = (function (theFile) {
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
             return function (e) {
-                var img = new Image();
-                img.src = e.target.result;
-                var colorThief = new ColorThief(),
-                    image = new CanvasImage(img, filename);
-                if (filename === "smallBanner") {
-                    var img2 = new Image();
-                    img2.src = e.target.result;
-                    var colorThief = new ColorThief(),
-                        image = new CanvasImage(img2, filename + "Two");
-                }
-                var domColor = colorThief.getColor(img),
-                    pallete = colorThief.getPalette(img),
-                    get = getHexPallete(domColor, pallete, filename);
+                insertBanners(e, filename, 'new');
             };
         })(f);
         // Read in the image file as a data URL.
@@ -104,9 +310,8 @@ function saveTextAsFile(text) {
         coursejs.click();
     }
 }
-var style = "";
 
-function cssTemplate() {
+function template() {
     style = `/********************************************************
     The purpose of course.css is to house only the css
     specific to an individual course. The online.css
@@ -215,13 +420,139 @@ a:visited {
 #main .popup:after {
     border-color: ${options.popup.color} transparent;
 }`;
+    return style;
+}
+
+function cssTemplate() {
+    var loadStyle = template();
     $("#small, #large, #features, #general, #color-wrapper").css("display", "none");
     $("#css-output").css("display", "block");
     document.querySelector("#page-selection input:checked").checked = false;
-    document.querySelector("#css-output textarea").innerHTML = style;
+    document.querySelector("#css-output textarea").innerHTML = loadStyle;
 }
 
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+function saveToFire(name) {
+    var currStyle = JSON.stringify(options);
+    if (imgHold) {
+        database.ref(name).update({
+            style: currStyle,
+            images: imgHold
+        }, function () {
+            $('.popupContain').remove();
+            $('#fireOptions').append("<p>Save confirmed!</p>");
+        })
+    } else {
+        database.ref(name).set({
+            style: currStyle
+        }, function () {
+            $('.popupContain').remove();
+            $('#fireOptions').append("<p>Save confirmed!</p>");
+        })
+    }
+}
+
+function displayData(d, div) {
+    var data = d;
+    var select = '<select>';
+
+    for (var i in data) {
+        select += '<option>' + i + '</option>';
+    }
+    select += '</select><br><br>';
+    $('.loadedSelect').append(select);
+}
+
+function readFromFire(div, func) {
+    database.ref().once("value", function (snap) {
+        loadedTemplateData = snap.val();
+        func(loadedTemplateData, div);
+    })
+}
+
+function saveScreen() {
+
+    if (fireTemplateName) {
+        saveToFire(fireTemplateName);
+    } else {
+        var popupContain = $("<div class='popupContain'></div>"),
+            div = $("<div class='saveScreen'></div>"),
+            shade = $("<div class='shade'></div>"),
+            h2 = $("<h2>Save Template</h2>"),
+            para = $("<p>This will save your current CSS template to a database.  Please input the course title.</p>"),
+            courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({
+                "margin-bottom": "5px",
+                "padding": "2.5px"
+            }),
+            submit = $("<input value='Submit to Database' type='button'>").click(function () {
+                var name = courseNameInput.val();
+                fireTemplateName = name;
+                saveToFire(name);
+            }),
+            cancel = $("<input value='Cancel' type='button'>").css({
+                "margin-left": "5px"
+            }).click(function () {
+                $('.popupContain').remove();
+            }),
+            warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
+
+        $(div).append(h2).append(para).append(courseNameInput);
+
+        if ($(".header").children().length < 1) {
+            $(div).append(warning);
+        }
+
+        $(div).append(submit).append(cancel);
+
+        $(popupContain).append(div).append(shade);
+
+        $("body").append(popupContain);
+    }
+}
+
+function loadTemplateOptions() {
+    var selectValue = $(".loadScreen select").val(),
+        newOptions = JSON.parse(loadedTemplateData[selectValue].style);
+
+    fireTemplateName = selectValue;
+
+    //CALL FUNCTION WITH TEXT IMAGE DATA
+
+    for (image in loadedTemplateData[selectValue].images) {
+        insertBanners(loadedTemplateData[selectValue].images[image], image, 'fireload');
+    }
+
+    for (option in options) {
+        options[option].color = newOptions[option].color;
+        options[option].setColor();
+    }
+    $('.loadContain').remove();
+};
+
+function loadScreen(loadedTemplateData) {
+
+    var loadContain = $("<div class='loadContain'></div>"),
+        loadedSelect = $("<div class='loadedSelect'></div>"),
+        div = $("<div class='loadScreen'></div>"),
+        shade = $("<div class='shade'></div>"),
+        h2 = $("<h2>Load Template</h2>"),
+        para = $("<p>This screen will load any saved templates.</p>"),
+        submit = $("<input value='Load Template' type='button'>").click(function () {
+            loadTemplateOptions();
+        }),
+        cancel = $("<input value='Cancel' type='button'>").css({
+            "margin-left": "5px"
+        }).click(function () {
+            $('.loadContain').remove();
+        });
+
+    $(div).append(h2).append(para).append(loadedSelect).append(submit).append(cancel);
+
+    $(loadContain).append(div).append(shade);
+
+    $("body").append(loadContain);
+
+    readFromFire(div, displayData);
+}
 
 /* Change Page */
 function changePage() {
@@ -246,186 +577,8 @@ function changePage() {
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 }
 
-// Options set
-var options = {
-    innergrad: {
-        color: "#406986",
-        setColor: function () {
-            $("#template-wrapper").css("background", "radial-gradient(ellipse, " + this.color + " 0%, " + options.outergrad.color + " 100%)");
-        }
-    },
-    outergrad: {
-        color: "#16344a",
-        setColor: function () {
-            $("#template-wrapper").css("background", "radial-gradient(ellipse, " + options.innergrad.color + " 0%, " + this.color + " 100%)");
-        }
-    },
-    h1: {
-        color: "#333333",
-        setColor: function () {
-            $("#small h1").css("color", this.color);
-        }
-    },
-    h2: {
-        color: "#2d5d94",
-        setColor: function () {
-            $("#small h2, #features h2, #small h4, #features h4").css("color", this.color);
-        }
-    },
-    h3: {
-        color: "#5f6060",
-        setColor: function () {
-            $("#small h3, #features h3, #small h5, #features h5").css("color", this.color);
-        }
-    },
-    a: {
-        color: "#2d5d94",
-        setColor: function () {
-            $("#small a.default").css("color", this.color);
-            $("#small a.default").css("borderColor", this.color);
-        }
-    },
-    aHover: {
-        color: "#7b4c8d",
-        setColor: function () {
-            $("#small a.hover").css("color", this.color);
-            $("#small a.hover").css("borderColor", this.color);
-        }
-    },
-    footerColor: {
-        color: "#e2e2e2",
-        setColor: function () {
-            $("#small .footer, #features .footer").css("color", this.color);
-        }
-    },
-    footerBackground: {
-        color: "#2d5d94",
-        setColor: function () {
-            $("#small .footer, #features .footer").css("backgroundColor", this.color);
-        }
-    },
-    splashBackground: {
-        color: "#125576",
-        setColor: function () {
-            $("#large .article").css("backgroundColor", this.color);
-        }
-    },
-    splashColor: {
-        color: "#eaeaea",
-        setColor: function () {
-            $("#large .article").css("color", this.color);
-        }
-    },
-    splashH1: {
-        color: "#fafafa",
-        setColor: function () {
-            $("#large h1").css("color", this.color);
-        }
-    },
-    splashH2: {
-        color: "#a1d7ff",
-        setColor: function () {
-            $("#large h2, #large h4").css("color", this.color);
-        }
-    },
-    splashH3: {
-        color: "#c3c3c3",
-        setColor: function () {
-            $("#large h3, #large h5").css("color", this.color);
-        }
-    },
-    splashA: {
-        color: "#a1d7ff",
-        setColor: function () {
-            $("#large a.default").css("color", this.color);
-            $("#large a.default").css("borderColor", this.color);
-        }
-    },
-    splashAHover: {
-        color: "#c08fd3",
-        setColor: function () {
-            $("#large a.hover").css("color", this.color);
-            $("#large a.hover").css("borderColor", this.color);
-        }
-    },
-    splashFooterColor: {
-        color: "#e2e2e2",
-        setColor: function () {
-            $("#large .footer").css("color", this.color);
-        }
-    },
-    splashFooterBackground: {
-        color: "#133955",
-        setColor: function () {
-            $("#large .footer").css("backgroundColor", this.color);
-        }
-    },
-    calloutBackground: {
-        color: "#e3ded1",
-        setColor: function () {
-            $("#features .callout").css("backgroundColor", this.color);
-        }
-    },
-    calloutColor: {
-        color: "#2d5d94",
-        setColor: function () {
-            $("#features .callout").css("color", this.color);
-        }
-    },
-    dropdownBackground: {
-        color: "#6c6c6c",
-        setColor: function () {
-            $("#features .drop-down.default").css("backgroundColor", this.color);
-        }
-    },
-    dropdownHover: {
-        color: "#7f7f7f",
-        setColor: function () {
-            $("#features .drop-down.hover").css("backgroundColor", this.color);
-        }
-    },
-    columnHeading: {
-        color: "#1e435d",
-        setColor: function () {
-            $("#features table tr:first-child th").css("backgroundColor", this.color);
-        }
-    },
-    rowHeading: {
-        color: "#2d5d94",
-        setColor: function () {
-            $("#features table tr:nth-child(n+2) th").css("backgroundColor", this.color);
-        }
-    },
-    popup: {
-        color: "#274b66",
-        setColor: function () {
-            $("#features .popup").css("borderColor", this.color);
-            $("#features .popup span").css("backgroundColor", this.color);
-        }
-    }
-};
-
-var selectedRadio = "innergrad";
-// Update selectedRadio everytime a radio button is clicked
-$("#general input:not(#useSmallTemplate)").click(function () {
-    selectedRadio = this.id;
-    $("#colorPicker").spectrum("set", options[selectedRadio].color);
-});
-// Color Picker
-$("#colorPicker").spectrum({
-    flat: true,
-    color: "#406986",
-    showButtons: false,
-    showInput: true,
-    preferredFormat: "hex",
-    move: function (color) {
-        options[selectedRadio].color = color.toHexString();
-        options[selectedRadio].setColor();
-    }
-});
-
 // Each time the colorPicker is clicked to make a change the current color is saved in the undo array
-$("#colorPicker").on("dragstart.spectrum", function(e, color) {
+$("#colorPicker").on("dragstart.spectrum", function (e, color) {
     updateUndo(options[selectedRadio].color);
 });
 
@@ -452,11 +605,11 @@ function useSmallColors() {
     options.splashFooterColor.setColor();
 }
 
-var undo = [],
-    redo = [];
-
 function updateUndo(oldColor) {
-    undo.push({key: selectedRadio, color: oldColor});
+    undo.push({
+        key: selectedRadio,
+        color: oldColor
+    });
     // Reset redo
     redo = [];
     // Keep undo array from getting really large
@@ -468,8 +621,11 @@ function updateUndo(oldColor) {
 function applyUndo() {
     var undoColor;
     if (undo.length > 0) {
-        redo.push({key: selectedRadio, color: options[selectedRadio].color});
-        undoColor= undo.pop();
+        redo.push({
+            key: selectedRadio,
+            color: options[selectedRadio].color
+        });
+        undoColor = undo.pop();
         options[undoColor.key].color = undoColor.color;
         options[undoColor.key].setColor();
         $("#colorPicker").spectrum("set", undoColor.color);
@@ -481,8 +637,11 @@ function applyUndo() {
 function applyRedo() {
     var redoColor;
     if (redo.length > 0) {
-        undo.push({key: selectedRadio, color: options[selectedRadio].color});
-        redoColor= redo.pop();
+        undo.push({
+            key: selectedRadio,
+            color: options[selectedRadio].color
+        });
+        redoColor = redo.pop();
         options[redoColor.key].color = redoColor.color;
         options[redoColor.key].setColor();
         $("#colorPicker").spectrum("set", redoColor.color);
@@ -490,6 +649,8 @@ function applyRedo() {
         selectedRadio = redoColor.key;
     }
 }
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 document.onkeydown = function () {
   if (event.which === 85) {
