@@ -160,7 +160,8 @@ var options = {
     style = "",
     undo = [],
     redo = [],
-    body = document.querySelector("body");
+    body = document.querySelector("body"),
+    imgHold = {};
 
 // Update selectedRadio everytime a radio button is clicked
 $("#general input:not(#useSmallTemplate)").click(function () {
@@ -194,6 +195,9 @@ function handleFileSelect(evt) {
             return function (e) {
                 var img = new Image();
                 img.src = e.target.result;
+
+                imgHold[filename] = img.src;
+
                 var colorThief = new ColorThief(),
                     image = new CanvasImage(img, filename);
                 if (filename === "smallBanner") {
@@ -409,22 +413,44 @@ function cssTemplate() {
 
 function saveToFire(name) {
     var currStyle = template();
-    database.ref(name).set({
-        style: currStyle,
-    }, function() {
-        location.reload();
-    })
+    if (imgHold) {
+        database.ref(name).set({
+            style: currStyle,
+            images: imgHold
+        }, function () {
+            location.reload();
+        })
+    } else {
+        database.ref(name).set({
+            style: currStyle
+        }, function () {
+            location.reload();
+        })
+    }
+}
+
+function readFromFire() {
+
 }
 
 function saveScreen() {
-    var div = $("<div class='saveScreen'></div>"),
+    var popupContain = $("<div class='popupContain'></div>"),
+        div = $("<div class='saveScreen'></div>"),
         shade = $("<div class='shade'></div>"),
         h2 = $("<h2>Save Template</h2>"),
         para = $("<p>This will save your current CSS template to a database.  Please input the course title.</p>"),
-        courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({"margin-bottom": "5px", "padding": "2.5px"}),
+        courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({
+            "margin-bottom": "5px",
+            "padding": "2.5px"
+        }),
         submit = $("<input value='Submit to Database' type='button'>").click(function () {
             var name = courseNameInput.val();
             saveToFire(name);
+        }),
+        cancel = $("<input value='Cancel' type='button'>").css({
+            "margin-left": "5px"
+        }).click(function () {
+            $('.popupContain').remove();
         }),
         warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
 
@@ -434,9 +460,11 @@ function saveScreen() {
         $(div).append(warning);
     }
 
-    $(div).append(submit);
+    $(div).append(submit).append(cancel);
 
-    $("body").append(div).append(shade);
+    $(popupContain).append(div).append(shade);
+
+    $("body").append(popupContain);
 }
 
 function loadScreen() {
