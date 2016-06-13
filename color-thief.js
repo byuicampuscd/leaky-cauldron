@@ -35,7 +35,7 @@ var CanvasImage = function (image, fileName) {
         document.querySelector("#features .header").appendChild(this.canvas);
     }else if (fileName === undefined) {
         document.querySelector("#colorPallete").appendChild(this.canvas);
-    } else {        
+    } else {
         console.log("error! undefined image name");
     }
 
