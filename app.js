@@ -161,7 +161,9 @@ var options = {
     undo = [],
     redo = [],
     body = document.querySelector("body"),
-    imgHold = {};
+    imgHold = {},
+    loadedTemplateData,
+    fireTemplateName;
 
 // Update selectedRadio everytime a radio button is clicked
 $("#general input:not(#useSmallTemplate)").click(function () {
@@ -181,8 +183,41 @@ $("#colorPicker").spectrum({
     }
 });
 
+function insertBanners(e, filename, state) {
+    var img = new Image();
+    var img2 = new Image();
+    if (state === "fireload") {
+        img.src = e;
+        console.log(filename);
+        if (filename === "smallBanner") {
+            img2.src = e;
+            var colorThief = new ColorThief(),
+                image = new CanvasImage(img2, filename + "Two");
+        }
+    } else if (state === "new") {
+        img.src = e.target.result;
+        if (filename === "smallBanner") {
+            img2.src = e.target.result;
+            var colorThief = new ColorThief(),
+                image = new CanvasImage(img2, filename + "Two");
+        }
+    }
+
+
+    imgHold[filename] = img.src;
+
+    var colorThief = new ColorThief(),
+        image = new CanvasImage(img, filename);
+    var domColor = colorThief.getColor(img),
+        pallete = colorThief.getPalette(img),
+        get = getHexPallete(domColor, pallete, filename);
+
+}
+
 function handleFileSelect(evt) {
     "use strict";
+    fireTemplateName = "";
+    $(".header").html("");
     var files = evt.target.files;
     for (var i = 0, f; f = files[i]; i++) {
         if (!f.type.match('image.*')) {
@@ -193,22 +228,7 @@ function handleFileSelect(evt) {
         reader.onload = (function (theFile) {
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
             return function (e) {
-                var img = new Image();
-                img.src = e.target.result;
-
-                imgHold[filename] = img.src;
-
-                var colorThief = new ColorThief(),
-                    image = new CanvasImage(img, filename);
-                if (filename === "smallBanner") {
-                    var img2 = new Image();
-                    img2.src = e.target.result;
-                    var colorThief = new ColorThief(),
-                        image = new CanvasImage(img2, filename + "Two");
-                }
-                var domColor = colorThief.getColor(img),
-                    pallete = colorThief.getPalette(img),
-                    get = getHexPallete(domColor, pallete, filename);
+                insertBanners(e, filename, 'new');
             };
         })(f);
         // Read in the image file as a data URL.
@@ -412,63 +432,126 @@ function cssTemplate() {
 }
 
 function saveToFire(name) {
-    var currStyle = template();
+    var currStyle = JSON.stringify(options);
     if (imgHold) {
-        database.ref(name).set({
+        database.ref(name).update({
             style: currStyle,
             images: imgHold
         }, function () {
-            location.reload();
+            $('.popupContain').remove();
+            $('#fireOptions').append("<p>Save confirmed!</p>");
         })
     } else {
         database.ref(name).set({
             style: currStyle
         }, function () {
-            location.reload();
+            $('.popupContain').remove();
+            $('#fireOptions').append("<p>Save confirmed!</p>");
         })
     }
 }
 
-function readFromFire() {
+function displayData(d, div) {
+    var data = d;
+    var select = '<select>';
 
+    for (var i in data) {
+        select += '<option>' + i + '</option>';
+    }
+    select += '</select><br><br>';
+    $('.loadedSelect').append(select);
+}
+
+function readFromFire(div, func) {
+    database.ref().once("value", function (snap) {
+        loadedTemplateData = snap.val();
+        func(loadedTemplateData, div);
+    })
 }
 
 function saveScreen() {
-    var popupContain = $("<div class='popupContain'></div>"),
-        div = $("<div class='saveScreen'></div>"),
+
+    if (fireTemplateName) {
+        saveToFire(fireTemplateName);
+    } else {
+        var popupContain = $("<div class='popupContain'></div>"),
+            div = $("<div class='saveScreen'></div>"),
+            shade = $("<div class='shade'></div>"),
+            h2 = $("<h2>Save Template</h2>"),
+            para = $("<p>This will save your current CSS template to a database.  Please input the course title.</p>"),
+            courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({
+                "margin-bottom": "5px",
+                "padding": "2.5px"
+            }),
+            submit = $("<input value='Submit to Database' type='button'>").click(function () {
+                var name = courseNameInput.val();
+                fireTemplateName = name;
+                saveToFire(name);
+            }),
+            cancel = $("<input value='Cancel' type='button'>").css({
+                "margin-left": "5px"
+            }).click(function () {
+                $('.popupContain').remove();
+            }),
+            warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
+
+        $(div).append(h2).append(para).append(courseNameInput);
+
+        if ($(".header").children().length < 1) {
+            $(div).append(warning);
+        }
+
+        $(div).append(submit).append(cancel);
+
+        $(popupContain).append(div).append(shade);
+
+        $("body").append(popupContain);
+    }
+}
+
+function loadTemplateOptions() {
+    var selectValue = $(".loadScreen select").val(),
+        newOptions = JSON.parse(loadedTemplateData[selectValue].style);
+
+    fireTemplateName = selectValue;
+
+    //CALL FUNCTION WITH TEXT IMAGE DATA
+
+    for (image in loadedTemplateData[selectValue].images) {
+        insertBanners(loadedTemplateData[selectValue].images[image], image, 'fireload');
+    }
+
+    for (option in options) {
+        options[option].color = newOptions[option].color;
+        options[option].setColor();
+    }
+    $('.loadContain').remove();
+};
+
+function loadScreen(loadedTemplateData) {
+
+    var loadContain = $("<div class='loadContain'></div>"),
+        loadedSelect = $("<div class='loadedSelect'></div>"),
+        div = $("<div class='loadScreen'></div>"),
         shade = $("<div class='shade'></div>"),
-        h2 = $("<h2>Save Template</h2>"),
-        para = $("<p>This will save your current CSS template to a database.  Please input the course title.</p>"),
-        courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({
-            "margin-bottom": "5px",
-            "padding": "2.5px"
-        }),
-        submit = $("<input value='Submit to Database' type='button'>").click(function () {
-            var name = courseNameInput.val();
-            saveToFire(name);
+        h2 = $("<h2>Load Template</h2>"),
+        para = $("<p>This screen will load any saved templates.</p>"),
+        submit = $("<input value='Load Template' type='button'>").click(function () {
+            loadTemplateOptions();
         }),
         cancel = $("<input value='Cancel' type='button'>").css({
             "margin-left": "5px"
         }).click(function () {
-            $('.popupContain').remove();
-        }),
-        warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
+            $('.loadContain').remove();
+        });
 
-    $(div).append(h2).append(para).append(courseNameInput);
+    $(div).append(h2).append(para).append(loadedSelect).append(submit).append(cancel);
 
-    if ($(".header").children().length < 1) {
-        $(div).append(warning);
-    }
+    $(loadContain).append(div).append(shade);
 
-    $(div).append(submit).append(cancel);
+    $("body").append(loadContain);
 
-    $(popupContain).append(div).append(shade);
-
-    $("body").append(popupContain);
-}
-
-function loadScreen() {
-    console.log("load screen!");
+    readFromFire(div, displayData);
 }
 
 /* Change Page */

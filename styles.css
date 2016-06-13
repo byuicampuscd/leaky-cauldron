@@ -27,6 +27,7 @@ textarea {
     border-radius: 5px;
     color: white;
     display: inline;
+    cursor: pointer;
 }
 
 #input-wrapper {
@@ -133,7 +134,8 @@ canvas {
     z-index: 99;
 }
 
-.saveScreen {
+.saveScreen,
+.loadScreen{
     position: absolute;
     left: 30%;
     top: 30%;
