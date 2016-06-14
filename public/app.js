@@ -217,6 +217,8 @@ function insertBanners(e, filename, state) {
 function handleFileSelect(evt) {
     "use strict";
     fireTemplateName = "";
+
+    //Clear exisiting banners
     $(".header").html("");
     var files = evt.target.files;
     for (var i = 0, f; f = files[i]; i++) {
@@ -510,6 +512,9 @@ function saveScreen() {
 }
 
 function loadTemplateOptions() {
+    //Clear exisiting banners
+    $(".header").html("");
+
     var selectValue = $(".loadScreen select").val(),
         newOptions = JSON.parse(loadedTemplateData[selectValue].style);
 
