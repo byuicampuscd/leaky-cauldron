@@ -44,6 +44,42 @@ var options = {
                 $("#small a.hover").css("borderColor", this.color);
             }
         },
+        prepareLabel: {
+            color: "#49807b",
+            setColor: function () {
+                $(".prepareBanner .label").css("background", this.color);
+            }
+        },
+        prepareActivity: {
+            color: "#8ed0cb",
+            setColor: function () {
+                $(".prepareBanner .activityType").css("background", this.color);
+            }
+        },
+        teachLabel: {
+            color: "#537491",
+            setColor: function () {
+                $(".teachBanner .label").css("background", this.color);
+            }
+        },
+        teachActivity: {
+            color: "#9abad6",
+            setColor: function () {
+                $(".teachBanner .activityType").css("background", this.color);
+            }
+        },
+        ponderLabel: {
+            color: "#8163a5",
+            setColor: function () {
+                $(".ponderBanner .label").css("background", this.color);
+            }
+        },
+        ponderActivity: {
+            color: "#baa4d4",
+            setColor: function () {
+                $(".ponderBanner .activityType").css("background", this.color);
+            }
+        },
         footerColor: {
             color: "#e2e2e2",
             setColor: function () {
@@ -178,6 +214,7 @@ $("#colorPicker").spectrum({
     showInput: true,
     preferredFormat: "hex",
     move: function (color) {
+        $("#saveStatus").html("");
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
     }
@@ -235,6 +272,8 @@ function handleFileSelect(evt) {
         })(f);
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
+        
+        $("#saveStatus").html("");
     }
 }
 
@@ -272,6 +311,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     }
     // Add click event handler
     $("#colorPallete div > div").click(function () {
+        $("#saveStatus").html("");
         updateUndo(options[selectedRadio].color);
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
@@ -421,6 +461,30 @@ a:visited {
 }
 #main .popup:after {
     border-color: ${options.popup.color} transparent;
+}
+h1.prepare,
+h2.prepare {
+    background: ${options.prepareActivity.color};
+}
+h1.prepare:before,
+h2.prepare:before {
+    background: ${options.prepareLabel.color};
+}
+h1.teach,
+h2.teach {
+    background: ${options.teachActivity.color};
+}
+h1.teach:before,
+h2.teach:before {
+    background: ${options.teachLabel.color};
+}
+h1.ponder,
+h2.ponder {
+    background: ${options.ponderActivity.color};
+}
+h1.ponder:before,
+h2.ponder:before {
+    background: ${options.ponderLabel.color};
 }`;
     return style;
 }
@@ -441,14 +505,14 @@ function saveToFire(name) {
             images: imgHold
         }, function () {
             $('.popupContain').remove();
-            $('#fireOptions').append("<p>Save confirmed!</p>");
+            $("#saveStatus").html("Saved");
         })
     } else {
         database.ref(name).set({
             style: currStyle
         }, function () {
             $('.popupContain').remove();
-            $('#fireOptions').append("<p>Save confirmed!</p>");
+            $("#saveStatus").html("Saved");
         })
     }
 }
@@ -512,6 +576,7 @@ function saveScreen() {
 }
 
 function loadTemplateOptions() {
+    
     //Clear exisiting banners
     $(".header").html("");
 
@@ -637,6 +702,7 @@ function applyUndo() {
         document.querySelector("#" + undoColor.key).checked = true;
         selectedRadio = undoColor.key;
     }
+    $("#saveStatus").html("");
 }
 
 function applyRedo() {
@@ -653,6 +719,7 @@ function applyRedo() {
         document.querySelector("#" + redoColor.key).checked = true;
         selectedRadio = redoColor.key;
     }
+    $("#saveStatus").html("");
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);

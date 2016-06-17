@@ -17,6 +17,13 @@ textarea {
     INPUT AREA
 *********************************************/
 
+#saveStatus {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 0 5px;
+    color: #2eac4b;
+}
+
 [type='button'] {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -241,6 +248,89 @@ canvas {
     -ms-transform: translateY(0);
     transform: translateY(0);
     transition: all .2s .1s;
+}
+
+/* TOA Banners */
+/* General */
+.activityBanner {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    font-size: 0;
+}
+
+.activityBanner p {
+    display: inline-block;
+    padding: 10px;
+}
+
+.activityBanner .label {
+    padding: 20px 25px 20px 0;
+    width: 140px;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    text-align: center;
+    vertical-align: top;
+}
+
+.activityBanner .activityType {
+    padding: 20px 0 20px 65px;
+    width: calc(100% - 140px);
+    color: #000;
+    font-size: 32px;
+}
+
+.activityBanner:after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 110px;
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    background-size: cover;
+}
+
+/* Prepare */
+.activityBanner.prepareBanner .label {
+    background: #49807b;
+}
+
+.activityBanner.prepareBanner .activityType {
+    background: #8ed0cb;
+}
+
+.activityBanner.prepareBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/caseStudy.png);
+}
+
+/* Teach One Another */
+.activityBanner.teachBanner .label {
+    padding: 9px 25px 9px 0;
+    background: #537491;
+}
+
+.activityBanner.teachBanner .activityType {
+    background: #9abad6;
+}
+
+.activityBanner.teachBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/fieldExperience.png);
+}
+
+/* Ponder & Prove */
+.activityBanner.ponderBanner .label {
+    padding: 9px 25px 9px 0;
+    background: #8163a5;
+}
+
+.activityBanner.ponderBanner .activityType {
+    background: #baa4d4;
+}
+
+.activityBanner.ponderBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/assessment.png);
 }
 
 @media only screen and (min-width: 1200px) {

@@ -17,10 +17,11 @@
         <input type="file" id="files" name="files[]" multiple>
 
         <h5>Load/Save Templates</h5>
-        <label id="fireOptions">
+        <div id="fireOptions">
             <input type="button" value="Load Template" onclick="loadScreen()">
             <input type="button" value="Save Template" onclick="saveScreen()">
-        </label>
+            <p id="saveStatus"></p>
+        </div>        
 
         <div id="inputs">
             <div id="page-options">
@@ -51,6 +52,24 @@
                         <strong>Links:</strong> Default
                         <input id="a" type="radio" name="small"> Hover
                         <input id="aHover" type="radio" name="small">
+                    </p>
+                    
+                    <p>
+                        <strong>TOA Prepare:</strong> Label
+                        <input id="prepareLabel" type="radio" name="small"> Activity
+                        <input id="prepareActivity" type="radio" name="small">
+                    </p>
+                    
+                    <p>
+                        <strong>TOA Teach:</strong> Label
+                        <input id="teachLabel" type="radio" name="small"> Activity
+                        <input id="teachActivity" type="radio" name="small">
+                    </p>
+                    
+                    <p>
+                        <strong>TOA Ponder:</strong> Label
+                        <input id="ponderLabel" type="radio" name="small"> Activity
+                        <input id="ponderActivity" type="radio" name="small">
                     </p>
 
                     <p>
@@ -137,6 +156,23 @@
                     <h2>Page Content</h2>
 
                     <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a class="default" href="#">default color</a> vel <a class="hover" href="#">hover color</a> eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                    
+                    <h4>Teach One Another Banners</h4>
+                    
+                    <div class="activityBanner prepareBanner">
+                        <p class="label">PREPARE</p>
+                        <p class="activityType">Case Study</p>
+                    </div>
+                    
+                    <div class="activityBanner teachBanner">
+                        <p class="label">TEACH ONE ANOTHER</p>
+                        <p class="activityType">Field Experience Sharing</p>
+                    </div>
+                    
+                    <div class="activityBanner ponderBanner">
+                        <p class="label">PONDER &amp; PROVE</p>
+                        <p class="activityType">Assessment</p>
+                    </div>
 
                     <!-- end #article -->
                 </div>
