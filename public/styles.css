@@ -43,6 +43,7 @@ textarea {
 
 #inputs {
     display: inline-block;
+    margin-left: 20px;
     padding: 10px;
     width: 410px;
     vertical-align: top;
@@ -83,6 +84,7 @@ canvas {
 .sp-container {
     border: none;
     background: #d5d5d5;
+    z-index: 0;
 }
 
 .sp-input {
@@ -104,8 +106,8 @@ canvas {
 
 #colorPallete {
     display: inline-block;
-    margin-left: 15px;
-    max-width: 150px;
+    margin-left: 5px;
+    max-width: 220px;
 }
 
 #colorPallete div div {
@@ -168,7 +170,7 @@ canvas {
 /* Default CSS (Needed to avoid multiple elements with the same ID */
 
 #template-wrapper {
-    padding: 20px 0 100px;
+    padding: 20px 0;
     background: -webkit-radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
 	background: radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
 }
@@ -345,12 +347,45 @@ canvas {
     background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/assessment.png);
 }
 
+.loadedSelect {
+    padding-bottom: 15px;
+}
+
+.loadedSelect .loader {
+    margin-left: 50px;
+}
+
+/* Loading animation for load screen */
+.loader {
+    border: 3px solid #f0f0f0;
+    border-top: 3px solid #6b6b6c;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 @media only screen and (min-width: 1200px) {
 
-    html,
     body {
         height: 100%;
+        font-size: 0;
     }
+    
+    body > * {
+        font-size: 16px;
+    }
+    
+    #input-wrapper,
+    #template-wrapper {
+        height: 100%;
+        overflow: auto;
+}
 
     #input-wrapper {
         display: inline-block;
@@ -360,6 +395,7 @@ canvas {
 
     #inputs {
         display: block;
+        margin-left: 0;
     }
 
     #color-wrapper {
@@ -376,7 +412,7 @@ canvas {
 
     #template-wrapper {
         display: inline-block;
-        width: calc(100% - 425px);
+        width: calc(100% - 420px);
         min-height: 100%;
     }
 }

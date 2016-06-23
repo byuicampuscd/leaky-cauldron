@@ -203,7 +203,7 @@ var options = {
     fireTemplateName;
 
 // Update selectedRadio everytime a radio button is clicked
-$("#general input:not(#useSmallTemplate)").click(function () {
+$("#general input[type='radio']").click(function () {
     selectedRadio = this.id;
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 });
@@ -527,8 +527,8 @@ function displayData(d, div) {
     for (var i in data) {
         select += '<option>' + i + '</option>';
     }
-    select += '</select><br><br>';
-    $('.loadedSelect').append(select);
+    select += '</select>';
+    $('.loadedSelect').html(select);
 }
 
 function readFromFire(div, func) {
@@ -608,7 +608,7 @@ function loadTemplateOptions() {
 function loadScreen(loadedTemplateData) {
 
     var loadContain = $("<div class='loadContain'></div>"),
-        loadedSelect = $("<div class='loadedSelect'></div>"),
+        loadedSelect = $("<div class='loadedSelect'><div class='loader'></div></div>"),
         div = $("<div class='loadScreen'></div>"),
         shade = $("<div class='shade'></div>"),
         h2 = $("<h2>Load Template</h2>"),
@@ -658,6 +658,40 @@ function changePage() {
 $("#colorPicker").on("dragstart.spectrum", function (e, color) {
     updateUndo(options[selectedRadio].color);
 });
+
+function desaturateTOA() {
+    // Update color values
+    options.prepareActivity.color = "#8ed0cb";
+    options.prepareLabel.color = "#49807b";
+    options.teachActivity.color = "#9abad6";
+    options.teachLabel.color = "#537491";
+    options.ponderActivity.color = "#baa4d4";
+    options.ponderLabel.color = "#8163a5";
+    // Set colors
+    options.prepareActivity.setColor();
+    options.prepareLabel.setColor();
+    options.teachActivity.setColor();
+    options.teachLabel.setColor();
+    options.ponderActivity.setColor();
+    options.ponderLabel.setColor();
+}
+
+function saturateTOA() {
+    // Update color values
+    options.prepareActivity.color = "#50d0c6";
+    options.prepareLabel.color = "#198278";
+    options.teachActivity.color = "#66afef";
+    options.teachLabel.color = "#1b65a7";
+    options.ponderActivity.color = "#c89efa";
+    options.ponderLabel.color = "#753cba";
+    // Set colors
+    options.prepareActivity.setColor();
+    options.prepareLabel.setColor();
+    options.teachActivity.setColor();
+    options.teachLabel.setColor();
+    options.ponderActivity.setColor();
+    options.ponderLabel.setColor();
+}
 
 function useSmallColors() {
     // Update color values
