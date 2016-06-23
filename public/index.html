@@ -21,7 +21,13 @@
             <input type="button" value="Load Template" onclick="loadScreen()">
             <input type="button" value="Save Template" onclick="saveScreen()">
             <p id="saveStatus"></p>
-        </div>        
+        </div>
+        
+        <div id="color-wrapper">
+            <input type="text" id="colorPicker">
+            <p><input id="undoButton" type="button" onclick="applyUndo()" value="Undo" disabled><input id="redoButton" type="button" onclick="applyRedo()" value="Redo" disabled></p>
+            <div id="colorPallete"></div>
+        </div>
 
         <div id="inputs">
             <div id="page-options">
@@ -133,10 +139,6 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div id="color-wrapper">
-            <input type="text" id="colorPicker">
-            <div id="colorPallete"></div>
         </div>
     </div>
     <div id="template-wrapper">

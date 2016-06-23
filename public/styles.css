@@ -75,6 +75,7 @@ canvas {
 /* Color-wrapper */
 #color-wrapper {
     display: inline-block;
+    margin-top: 20px;
 }
 
 /* Color Picker */
@@ -86,6 +87,17 @@ canvas {
 
 .sp-input {
     background: #f0f0f0;
+}
+
+/* Undo/Redo Buttons */
+#color-wrapper input[type='button'] {
+    margin: 0 5px;
+    padding: 5px 15px;
+}
+
+#color-wrapper input[type='button']:disabled {
+    opacity: .4;
+    cursor: default;
 }
 
 /* Color Pallete */

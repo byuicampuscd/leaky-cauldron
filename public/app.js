@@ -196,6 +196,7 @@ var options = {
     style = "",
     undo = [],
     redo = [],
+    undoRedoEnabled = true,
     body = document.querySelector("body"),
     imgHold = {},
     loadedTemplateData,
@@ -504,6 +505,7 @@ function saveToFire(name) {
             style: currStyle,
             images: imgHold
         }, function () {
+            undoRedoEnabled = true;
             $('.popupContain').remove();
             $("#saveStatus").html("Saved");
         })
@@ -511,6 +513,7 @@ function saveToFire(name) {
         database.ref(name).set({
             style: currStyle
         }, function () {
+            undoRedoEnabled = true;
             $('.popupContain').remove();
             $("#saveStatus").html("Saved");
         })
@@ -558,6 +561,7 @@ function saveScreen() {
                 "margin-left": "5px"
             }).click(function () {
                 $('.popupContain').remove();
+                undoRedoEnabled = true;
             }),
             warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
 
@@ -570,6 +574,9 @@ function saveScreen() {
         $(div).append(submit).append(cancel);
 
         $(popupContain).append(div).append(shade);
+        
+        // Disable undo/redo shortcut keys
+        undoRedoEnabled = false;
 
         $("body").append(popupContain);
     }
@@ -677,47 +684,74 @@ function useSmallColors() {
 
 function updateUndo(oldColor) {
     undo.push({
+        page: document.querySelector("#page-options input:checked").dataset.selector,
         key: selectedRadio,
         color: oldColor
     });
+    // Make sure undo button isn't disabled
+    document.querySelector("#undoButton").disabled = false;
     // Reset redo
     redo = [];
-    // Keep undo array from getting really large
-    if (undo.length > 30) {
-        undo.shift();
-    }
+    document.querySelector("#redoButton").disabled = true;
 }
 
 function applyUndo() {
-    var undoColor;
+    var undoColor,
+        pageSelector;
     if (undo.length > 0) {
-        redo.push({
-            key: selectedRadio,
-            color: options[selectedRadio].color
-        });
         undoColor = undo.pop();
+        if (undoColor.page != document.querySelector("#page-options input:checked").dataset.selector) {
+            pageSelector = "input[data-selector='" + undoColor.page + "']";
+            document.querySelector(pageSelector).click();
+            undo.push(undoColor);
+            return;
+        }
+        redo.push({
+            page: undoColor.page,
+            key: undoColor.key,
+            color: options[undoColor.key].color
+        });
+        
         options[undoColor.key].color = undoColor.color;
         options[undoColor.key].setColor();
         $("#colorPicker").spectrum("set", undoColor.color);
         document.querySelector("#" + undoColor.key).checked = true;
         selectedRadio = undoColor.key;
+        document.querySelector("#redoButton").disabled = false;
+    }
+    if (undo.length === 0) {
+        document.querySelector("#undoButton").disabled = true;
     }
     $("#saveStatus").html("");
 }
 
 function applyRedo() {
-    var redoColor;
+    var redoColor,
+        pageSelector;
     if (redo.length > 0) {
-        undo.push({
-            key: selectedRadio,
-            color: options[selectedRadio].color
-        });
         redoColor = redo.pop();
+        if (redoColor.page != document.querySelector("#page-options input:checked").dataset.selector) {
+            pageSelector = "input[data-selector='" + redoColor.page + "']";
+            document.querySelector(pageSelector).click();
+            redo.push(redoColor);
+            return;
+        }
+        undo.push({
+            page: redoColor.page,
+            key: redoColor.key,
+            color: options[redoColor.key].color
+        });
+        pageSelector = "input[data-selector='" + redoColor.page + "']";
+        document.querySelector(pageSelector).click();
         options[redoColor.key].color = redoColor.color;
         options[redoColor.key].setColor();
         $("#colorPicker").spectrum("set", redoColor.color);
         document.querySelector("#" + redoColor.key).checked = true;
         selectedRadio = redoColor.key;
+        document.querySelector("#undoButton").disabled = false;
+    }
+    if (redo.length === 0) {
+        document.querySelector("#redoButton").disabled = true;
     }
     $("#saveStatus").html("");
 }
@@ -725,9 +759,11 @@ function applyRedo() {
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 document.onkeydown = function () {
-  if (event.which === 85) {
-      applyUndo();
-  } else if (event.which === 82) {
-      applyRedo();
-  }
+    if (undoRedoEnabled) {
+       if (event.which === 85) {
+          applyUndo();
+      } else if (event.which === 82) {
+          applyRedo();
+      } 
+    }
 };
