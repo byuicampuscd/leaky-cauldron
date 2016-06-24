@@ -187,8 +187,9 @@ var options = {
         popup: {
             color: "#274b66",
             setColor: function () {
-                $("#features .popup").css("borderColor", this.color);
-                $("#features .popup span").css("backgroundColor", this.color);
+                $("#popupWord").css("borderColor", this.color);
+                $("#popupMessage").css("backgroundColor", this.color);
+                $("#popupTrangle").css("borderTopColor", this.color);
             }
         }
     },
@@ -584,8 +585,13 @@ function saveScreen() {
 
 function loadTemplateOptions() {
     
-    //Clear exisiting banners
+    //Clear exisiting banners, color suggestions, and the undo/redo arrays
     $(".header").html("");
+    $("#colorPallete").html("");
+    undo = [];
+    redo = [];
+    document.querySelector("#undoButton").disabled = true;
+    document.querySelector("#redoButton").disabled = true;
 
     var selectValue = $(".loadScreen select").val(),
         newOptions = JSON.parse(loadedTemplateData[selectValue].style);

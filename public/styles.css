@@ -247,21 +247,31 @@ canvas {
     background: #7f7f7f;
 }
 
-.popup span,
-.popup span {
-    opacity: 1;
-    z-index: 100;
-    transition: all .3s;
+#popupWord {
+    position: relative;
+    border-bottom: dotted 2px #3084c3;
+    cursor: help;
 }
 
-.popup:after,
-.popup:after {
-    opacity: 1;
-    z-index: 100;
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-    transition: all .2s .1s;
+#popupMessage {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: calc(50% - 100px);
+    padding: 15px;
+    width: 200px;
+    color: #fdfdfd;
+    background: #274b66;
+    border-radius: 8px;
+}
+
+#popupTrangle {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: calc(50% - 15px);
+    border-style: solid;
+    border-width: 15px 15px 0 15px;
+    border-color: #274b66 transparent transparent transparent;
 }
 
 /* TOA Banners */
