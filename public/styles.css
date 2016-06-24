@@ -264,7 +264,7 @@ canvas {
     border-radius: 8px;
 }
 
-#popupTrangle {
+#popupTriangle {
     content: '';
     position: absolute;
     bottom: 100%;

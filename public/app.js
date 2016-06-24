@@ -189,7 +189,7 @@ var options = {
             setColor: function () {
                 $("#popupWord").css("borderColor", this.color);
                 $("#popupMessage").css("backgroundColor", this.color);
-                $("#popupTrangle").css("borderTopColor", this.color);
+                $("#popupTriangle").css("borderTopColor", this.color);
             }
         }
     },
