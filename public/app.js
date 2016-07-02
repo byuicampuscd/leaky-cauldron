@@ -227,7 +227,6 @@ function insertBanners(e, filename, state) {
     var img2 = new Image();
     if (state === "fireload") {
         img.src = e;
-        console.log(filename);
         if (filename === "smallBanner") {
             img2.src = e;
             var colorThief = new ColorThief(),
@@ -364,7 +363,7 @@ function template() {
 /* DO NOT DELETE OR MODIFY THIS IMPORT */
 @import url("https://content.byui.edu/integ/gen/599082e0-3e89-4fd9-ac69-2615865d63c7/0/online.css");
 
-/* Add Course Specific css Below */
+/* Adjust/Add Course Specific css Below */
 html {
 	background: -webkit-radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
 	background: radial-gradient(ellipse, ${options.innergrad.color} 0%, ${options.outergrad.color} 100%) fixed;
@@ -464,6 +463,7 @@ a:visited {
 #main .popup:after {
     border-color: ${options.popup.color} transparent;
 }
+/* TOA Banners */
 h1.prepare,
 h2.prepare {
     background: ${options.prepareActivity.color};
@@ -609,6 +609,8 @@ function loadTemplateOptions() {
         options[option].setColor();
     }
     $('.loadContain').remove();
+    // Change to small template
+    document.querySelector("input[data-selector='small']").click();
 };
 
 function loadScreen(loadedTemplateData) {
