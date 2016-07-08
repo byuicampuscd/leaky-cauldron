@@ -31,7 +31,11 @@ function displayData(d, div) {
         select += '<option>' + i + '</option>';
     }
     select += '</select>';
-    $('.loadedSelect').html(select);
+    $('.loadedList').html(select);
+
+    $(".loader").css({
+        "display": "none"
+    })
 }
 
 function readFromFire(div, func) {
@@ -46,42 +50,47 @@ function saveScreen() {
     if (fireTemplateName) {
         saveToFire(fireTemplateName);
     } else {
-        var popupContain = $("<div class='popupContain'></div>"),
-            div = $("<div class='saveScreen'></div>"),
-            shade = $("<div class='shade'></div>"),
-            h2 = $("<h2>Save Template</h2>"),
-            para = $("<p>This will save your current CSS template to a database.  Please input the course title.</p>"),
-            courseNameInput = $("<input type='text' class='courseName' placeholder='Input course name here'>").css({
-                "margin-bottom": "5px",
-                "padding": "2.5px"
-            }),
-            submit = $("<input value='Submit to Database' type='button'>").click(function () {
-                var name = courseNameInput.val();
-                fireTemplateName = name;
-                saveToFire(name);
-            }),
-            cancel = $("<input value='Cancel' type='button'>").css({
-                "margin-left": "5px"
-            }).click(function () {
-                $('.popupContain').remove();
-                undoRedoEnabled = true;
-            }),
-            warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
+        $(".shade").css({
+            "display": "block"
+        });
+        $(".saveScreen").css({
+            "display": "block"
+        });
 
-        $(div).append(h2).append(para).append(courseNameInput);
+        var submit = $("input[value='Submit to Database'][type='button']"),
+            courseNameInput = $("input[class='courseName']");
+
+        submit.click(function () {
+            var name = courseNameInput.val();
+            fireTemplateName = name;
+            saveToFire(name);
+            $(".shade").css({
+                "display": "none"
+            });
+        });
+
+        var cancel = $("input[value='Cancel'][type='button']");
+
+        cancel.click(function (e) {
+            var modalParent = e.currentTarget.parentElement;
+            $(modalParent).css({
+                "display": "none"
+            });
+            $(".shade").css({
+                "display": "none"
+            });
+        });
+
+        var warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
 
         if ($(".header").children().length < 1) {
-            $(div).append(warning);
+            $(".saveScreen")
+                .append(warning);
         }
 
-        $(div).append(submit).append(cancel);
-
-        $(popupContain).append(div).append(shade);
-
         // Disable undo/redo shortcut keys
+        /*undoRedoEnabled is set in app.js*/
         undoRedoEnabled = false;
-
-        $("body").append(popupContain);
     }
 }
 
@@ -117,26 +126,35 @@ function loadTemplateOptions() {
 
 function loadScreen() {
 
-    var loadContain = $("<div class='loadContain'></div>"),
-        loadedSelect = $("<div class='loadedSelect'><div class='loader'></div></div>"),
-        div = $("<div class='loadScreen'></div>"),
-        shade = $("<div class='shade'></div>"),
-        h2 = $("<h2>Load Template</h2>"),
-        para = $("<p>This screen will load any saved templates.</p>"),
-        submit = $("<input value='Load Template' type='button'>").click(function () {
-            loadTemplateOptions();
-        }),
-        cancel = $("<input value='Cancel' type='button'>").css({
-            "margin-left": "5px"
-        }).click(function () {
-            $('.loadContain').remove();
+    $(".shade").css({
+        "display": "block"
+    });
+    $(".loadScreen").css({
+        "display": "block"
+    });
+
+    var submit = $("input[value='Load Template'][type='button']"),
+        div = $("div[class='loadScreen']");
+
+    submit.click(function () {
+        loadTemplateOptions();
+        $(".shade").css({
+            "display": "none"
         });
+        $(".loadScreen").css({
+            "display": "none"
+        });
+    });
 
-    $(div).append(h2).append(para).append(loadedSelect).append(submit).append(cancel);
-
-    $(loadContain).append(div).append(shade);
-
-    $("body").append(loadContain);
+    var cancel = $("input[value='Cancel'][type='button']")
+    cancel.click(function () {
+        $(".shade").css({
+            "display": "none"
+        });
+        $(".loadScreen").css({
+            "display": "none"
+        });
+    });
 
     readFromFire(div, displayData);
 }

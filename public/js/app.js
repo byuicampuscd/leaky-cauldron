@@ -4,6 +4,8 @@ var selectedRadio = "innergrad",
     redo = [],
     undoRedoEnabled = true;
 
+/*undoRedoEnabled also is used in firebaseLink.js*/
+
 // Update selectedRadio everytime a radio button is clicked
 $("#general input[type='radio']").click(function () {
     selectedRadio = this.id;

@@ -309,13 +309,38 @@
         <div class="colorContrast">
             <div class="contrastScreen">
                 <h2>Color Contrast Checker</h2>
-                <p>Application is set to approve 45% contrast.</p>
+                <p>Application is set to approve 40% contrast.</p>
                 <div id="errorMessages"></div>
                 <input value='Cancel' type='button'>
             </div>
         </div>
 
-        <div class="shade"></div>
+        <div class='popupContain'>
+            <div class='saveScreen'>
+                <h2>Save Template</h2>
+                <p>This will save your current CSS template to a database. Please input the course title.</p>
+                <input type='text' class='courseName' placeholder='Input course name here'>
+                <input value="Submit to Database" type="button">
+                <input value='Cancel' type='button'>
+            </div>
+        </div>
+
+        <div class='loadContain'>
+            <div class='loadScreen'>
+                <div class='loadedSelect'>
+                    <h2>Load Template</h2>
+                    <p>This screen will load any saved templates.</p>
+                    <div class="loadedList"></div>
+                    <div class='loader'></div>
+                    <input value='Load Template' type='button'>
+                    <input value='Cancel' type='button'>
+                </div>
+            </div>
+        </div>
+
+        <div class="shade">
+        </div>
+
     </div>
 
     <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->

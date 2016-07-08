@@ -137,8 +137,6 @@ h2.ponder:before {
     return style;
 }
 
-
-
 function cssTemplate() {
     var loadStyle = template();
     $("#small, #large, #features, #general, #color-wrapper").css("display", "none");

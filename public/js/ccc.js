@@ -24,6 +24,9 @@ function color_meter(cwith, ccolor) {
     return Math.abs(perc1 - perc2);
 }
 
+/*USE TO TEST HEX PERCENTAGE*/
+//console.log(color_meter("#c78d56", "#040404"));
+
 /*Color Constrast Checker*/
 function checker(page, names) {
 
@@ -31,7 +34,7 @@ function checker(page, names) {
 
         var foregroundColor,
             returnedOpt,
-            contrastThreshold = 45;
+            contrastThreshold = 40;
 
         if (page === "small") {
 
