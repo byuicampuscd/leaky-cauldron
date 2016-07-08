@@ -180,6 +180,13 @@ canvas {
     padding: 5px;
 }
 
+#modals input[type='text'],
+#modals input[type='button'],
+#modals select,
+#modals .loader {
+    margin-bottom: 10px;
+}
+
 /* Default CSS (Needed to avoid multiple elements with the same ID */
 
 #template-wrapper {
