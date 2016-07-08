@@ -1,22 +1,28 @@
+var = imgHold = {};
+
 function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";
     pallete.unshift(domColor);
     var palleteArray = [],
         flexContainer = document.createElement("div"),
         currentPage = "";
+
     // Check that a page is being viewed and not the css
     if (document.querySelector("#page-selection input:checked") != null) {
         currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
     }
+
     // If current page is features use small
     if (currentPage === "features") {
         currentPage = "small";
     }
+
     // Hide the color suggestions for banner not being viewed
     if (!cssTemplate.includes(currentPage)) {
         flexContainer.style.display = "none";
     }
     flexContainer.id = cssTemplate + "Suggestions";
+
     // Determine which suggestions to show or hide based off which page is currently selected
     for (var i = 0; i < pallete.length; i++) {
         var firstbit = pallete[i][0].toString(16),
@@ -30,6 +36,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         flexContainer.appendChild(div);
         palleteArray.push(hex);
     }
+
     // Add click event handler
     $("#colorPallete div > div").click(function () {
         $("#saveStatus").html("");
@@ -41,8 +48,10 @@ function getHexPallete(domColor, pallete, cssTemplate) {
 }
 
 function insertBanners(e, filename, state) {
+
     var img = new Image();
     var img2 = new Image();
+
     if (state === "fireload") {
         img.src = e;
         if (filename === "smallBanner") {
@@ -58,7 +67,6 @@ function insertBanners(e, filename, state) {
                 image = new CanvasImage(img2, filename + "Two");
         }
     }
-
 
     imgHold[filename] = img.src;
 

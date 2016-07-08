@@ -1,4 +1,4 @@
-
+var style = "";
 
 function template() {
     style = `/********************************************************
@@ -135,4 +135,14 @@ h2.ponder:before {
     background: ${options.ponderLabel.color};
 }`;
     return style;
+}
+
+
+
+function cssTemplate() {
+    var loadStyle = template();
+    $("#small, #large, #features, #general, #color-wrapper").css("display", "none");
+    $("#css-output").css("display", "block");
+    document.querySelector("#page-selection input:checked").checked = false;
+    document.querySelector("#css-output textarea").innerHTML = loadStyle;
 }

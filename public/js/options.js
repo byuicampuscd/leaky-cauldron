@@ -1,4 +1,5 @@
-var options = {
+var body = document.querySelector("body"),
+    options = {
     innergrad: {
         color: "#406986",
         setColor: function () {

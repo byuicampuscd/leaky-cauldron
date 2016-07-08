@@ -296,7 +296,7 @@
                 <div class="article">
                     <p><a href="small.html" download> Download small.html</a> | </p>
                     <p><a href="large.html" download> Download large.html</a> | </p>
-                    <p><a href="#" onclick="saveTextAsFile('cssOnly')"> Download course.css</a> | </p>
+                    <p><a href="#" onclick="saveTextToCSS()"> Download course.css</a> | </p>
                     <p><a href="js/course.js" download> Download course.js</a></p>
                     <textarea id="list"></textarea>
                 </div>
@@ -306,17 +306,38 @@
 
     <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->
     <footer>
+
+        <!--External libraries-->
         <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
         <script src="js/config.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="spectrum/spectrum.js"></script>
-        <script src="js/options.js"></script>
-        <script src="js/template.js"></script>
-        <script src="js/ccc.js"></script>
         <script src="js/color-thief.js"></script>
+
+        <!--Default styling options-->
+        <script src="js/options.js"></script>
+
+        <!--Both scripts share a style variable-->
+        <script src="js/template.js"></script>
+        <script src="js/saveTextToCSS.js"></script>
+
+        <!--Firebase save and load ability-->
+        <script src="js/firebaseLink.js"></script>
+
+        <!--Button events to change all the colors.-->
+        <script src="js/colorChanges.js"></script>
+
+        <!--Color Contrast checker-->
+        <script src="js/ccc.js"></script>
+
+        <!--Image loader for smallBanner and largeBanner-->
         <script src="js/loadImages.js"></script>
+
+        <!--Undo and redo features-->
         <script src="js/app.js"></script>
+
     </footer>
+
 </body>
 
 </html>
