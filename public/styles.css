@@ -118,6 +118,16 @@ canvas {
     cursor: pointer;
 }
 
+/*Color contrast*/
+#colorContrast {
+    display: block;
+    margin-top: 5px;
+}
+
+#colorContrast > input {
+    margin-left: 5px;
+}
+
 /*********************************************
     TEMPLATE AREA
 *********************************************/

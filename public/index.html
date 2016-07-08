@@ -23,6 +23,9 @@
             <p id="saveStatus"></p>
         </div>
         
+        <label id="colorContrast">Color Contrast Checker<input type="button" value="Check Contrast" onclick="checkContrast()"></label>
+
+
         <div id="color-wrapper">
             <input type="text" id="colorPicker">
             <p><input id="undoButton" type="button" onclick="applyUndo()" value="Undo" disabled><input id="redoButton" type="button" onclick="applyRedo()" value="Redo" disabled></p>
@@ -287,6 +290,7 @@
     <script src="config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="spectrum/spectrum.js"></script>
+    <script src="ccc.js"></script>
     <script src="color-thief.js"></script>
     <script src="app.js"></script>
 </body>

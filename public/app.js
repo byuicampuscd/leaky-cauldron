@@ -203,6 +203,73 @@ var options = {
     loadedTemplateData,
     fireTemplateName;
 
+/*Color Constrast Checker*/
+function checker(page, names) {
+
+    var errorArray = [];
+
+    names.forEach(function (name) {
+
+        var foregroundColor,
+            returnedOpt;
+
+        if (page === "small") {
+
+            foregroundColor = options[name].color;
+
+            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#F0F0F0"));
+
+            if (returnedOpt.fail) {
+                console.log(name + " failed. --- " + returnedOpt.contrast);
+            }
+        } else if (page === "large") {
+
+            foregroundColor = options[name].color;
+
+            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#125576"));
+
+            console.log(options.splashBackground.color)
+
+            if (returnedOpt.fail) {
+                console.log(name + " failed. --- " + returnedOpt.contrast);
+            }
+
+        }else if (page === "features") {
+            foregroundColor = options[name].color;
+
+            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#F0F0F0"));
+
+            if (returnedOpt.fail) {
+                console.log(name + " failed. --- " + returnedOpt.contrast);
+            }
+        }
+    })
+
+}
+
+function checkContrast() {
+
+    var smallColorCheck = ["h1"
+                      , "h2"
+                      , "h3"
+                      , "a"
+                      , "aHover"
+                          ],
+        largeColorCheck = ["splashColor"
+                      , "splashH1"
+                      , "splashH2"
+                      , "splashH3"
+                      , "splashA"
+                      , "splashAHover"
+                      , "splashFooterColor"
+                      ],
+        calloutColorCheck = ["calloutColor"];
+
+    checker("small", smallColorCheck);
+    checker("large", largeColorCheck);
+    checker("features", calloutColorCheck);
+}
+
 // Update selectedRadio everytime a radio button is clicked
 $("#general input[type='radio']").click(function () {
     selectedRadio = this.id;
@@ -273,7 +340,7 @@ function handleFileSelect(evt) {
         })(f);
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-        
+
         $("#saveStatus").html("");
     }
 }
@@ -575,7 +642,7 @@ function saveScreen() {
         $(div).append(submit).append(cancel);
 
         $(popupContain).append(div).append(shade);
-        
+
         // Disable undo/redo shortcut keys
         undoRedoEnabled = false;
 
@@ -584,7 +651,7 @@ function saveScreen() {
 }
 
 function loadTemplateOptions() {
-    
+
     //Clear exisiting banners, color suggestions, and the undo/redo arrays
     $(".header").html("");
     $("#colorPallete").html("");
@@ -753,7 +820,7 @@ function applyUndo() {
             key: undoColor.key,
             color: options[undoColor.key].color
         });
-        
+
         options[undoColor.key].color = undoColor.color;
         options[undoColor.key].setColor();
         $("#colorPicker").spectrum("set", undoColor.color);
@@ -802,10 +869,10 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 
 document.onkeydown = function () {
     if (undoRedoEnabled) {
-       if (event.which === 85) {
-          applyUndo();
-      } else if (event.which === 82) {
-          applyRedo();
-      } 
+        if (event.which === 85) {
+            applyUndo();
+        } else if (event.which === 82) {
+            applyRedo();
+        }
     }
 };
