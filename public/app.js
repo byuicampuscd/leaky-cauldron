@@ -201,12 +201,11 @@ var options = {
     body = document.querySelector("body"),
     imgHold = {},
     loadedTemplateData,
-    fireTemplateName;
+    fireTemplateName,
+    errorArray = [];
 
 /*Color Constrast Checker*/
 function checker(page, names) {
-
-    var errorArray = [];
 
     names.forEach(function (name) {
 
@@ -220,7 +219,9 @@ function checker(page, names) {
             returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
             if (returnedOpt < 40) {
-                console.log(name + " failed. --- " + returnedOpt);
+                var error = name + " failed. --- " + returnedOpt + "%";
+                console.log(error);
+                errorArray.push(error)
             }
         } else if (page === "large") {
 
@@ -229,7 +230,9 @@ function checker(page, names) {
             returnedOpt = color_meter(foregroundColor, "#125576");
 
             if (returnedOpt < 40) {
-                console.log(name + " failed. --- " + returnedOpt);
+                var error = name + " failed. --- " + returnedOpt + "%";
+                console.log(error);
+                errorArray.push(error)
             }
 
         } else if (page === "features") {
@@ -238,7 +241,9 @@ function checker(page, names) {
             returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
             if (returnedOpt < 40) {
-                console.log(name + " failed. --- " + returnedOpt);
+                var error = name + " failed. --- " + returnedOpt + "%";
+                console.log(error);
+                errorArray.push(error)
             }
         }
     })
@@ -246,6 +251,20 @@ function checker(page, names) {
 }
 
 function checkContrast() {
+
+    var colorContrast = $("<div class='colorContrast'></div>"),
+        div = $("<div class='contrastScreen'></div>"),
+        shade = $("<div class='shade'></div>"),
+        h2 = $("<h2>Color Contrast Checker</h2>"),
+        para = $("<p>What color doesn't meet contrast requirements?</p>"),
+        cancel = $("<input value='Cancel' type='button'>").css({
+            "margin-left": "5px"
+        }).click(function () {
+            $('.colorContrast').remove();
+        });
+
+    $(div).append(h2).append(para);
+
 
     var smallColorCheck = ["h1"
                       , "h2"
@@ -266,6 +285,19 @@ function checkContrast() {
     checker("small", smallColorCheck);
     checker("large", largeColorCheck);
     checker("features", calloutColorCheck);
+
+    errorArray.forEach(function (errorString) {
+        var errorMessage = $("<p>" + errorString + "</p>");
+        $(div).append(errorMessage);
+    })
+
+    $(div).append(cancel)
+    $(colorContrast).append(div).append(shade);
+    $("body").append(colorContrast);
+
+    console.log(errorArray);
+    errorArray = [];
+    console.log(errorArray);
 }
 
 // Update selectedRadio everytime a radio button is clicked
