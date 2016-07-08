@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaky Cauldron</title>
+
+    <!--STYLESHEETS-->
     <link type="text/css" rel="stylesheet" href="spectrum/spectrum.css">
     <link type="text/css" rel="stylesheet" href="https://content.byui.edu/integ/gen/be2c7d0f-ed5e-4dca-ac0b-0b2a7155a4f2/0/byuidefault.css">
     <link rel="stylesheet" href="styles.css" type="text/css">
@@ -12,26 +14,37 @@
 
 <body>
 
+    <!--OPTIONS AND FEATURES OF LEAKY CAULDRON-->
     <div id="input-wrapper">
+
+        <!--"upload" smallBanner and largeBanner-->
         <h4>Upload Banners</h4>
         <input type="file" id="files" name="files[]" multiple>
 
+        <!--Load templates from firebase-->
         <h5>Load/Save Templates</h5>
         <div id="fireOptions">
             <input type="button" value="Load Template" onclick="loadScreen()">
             <input type="button" value="Save Template" onclick="saveScreen()">
             <p id="saveStatus"></p>
         </div>
-        
-        <label id="colorContrast">Color Contrast Checker<input type="button" value="Check Contrast" onclick="checkContrast()"></label>
 
+        <!--Check the color contrast-->
+        <label id="colorContrast">Color Contrast Checker
+            <input type="button" value="Check Contrast" onclick="checkContrast()">
+        </label>
 
+        <!--Color Picker-->
         <div id="color-wrapper">
             <input type="text" id="colorPicker">
-            <p><input id="undoButton" type="button" onclick="applyUndo()" value="Undo" disabled><input id="redoButton" type="button" onclick="applyRedo()" value="Redo" disabled></p>
+            <p>
+                <input id="undoButton" type="button" onclick="applyUndo()" value="Undo" disabled>
+                <input id="redoButton" type="button" onclick="applyRedo()" value="Redo" disabled>
+            </p>
             <div id="colorPallete"></div>
         </div>
 
+        <!--Radio buttons to select what is being changed-->
         <div id="inputs">
             <div id="page-options">
                 <p id="page-selection">
@@ -62,25 +75,25 @@
                         <input id="a" type="radio" name="small"> Hover
                         <input id="aHover" type="radio" name="small">
                     </p>
-                    
+
                     <p>
                         <strong>TOA Preset Colors:</strong>
                         <input type="button" onclick="desaturateTOA()" value="Desaturated (default)">
                         <input type="button" onclick="saturateTOA()" value="Saturated">
                     </p>
-                    
+
                     <p>
                         <strong>TOA Prepare:</strong> Label
                         <input id="prepareLabel" type="radio" name="small"> Activity
                         <input id="prepareActivity" type="radio" name="small">
                     </p>
-                    
+
                     <p>
                         <strong>TOA Teach:</strong> Label
                         <input id="teachLabel" type="radio" name="small"> Activity
                         <input id="teachActivity" type="radio" name="small">
                     </p>
-                    
+
                     <p>
                         <strong>TOA Ponder:</strong> Label
                         <input id="ponderLabel" type="radio" name="small"> Activity
@@ -150,6 +163,10 @@
             </div>
         </div>
     </div>
+
+    <!--LIVE PREVIEW OF CHANGES BEING MADE
+        Includes - small.html, large.html, and cssfeatures.html
+        -->
     <div id="template-wrapper">
         <div id="small">
             <div class="main">
@@ -167,19 +184,19 @@
                     <h2>Page Content</h2>
 
                     <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <a class="default" href="#">default color</a> vel <a class="hover" href="#">hover color</a> eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                    
+
                     <h4>Teach One Another Banners</h4>
-                    
+
                     <div class="activityBanner prepareBanner">
                         <p class="label">PREPARE</p>
                         <p class="activityType">Case Study</p>
                     </div>
-                    
+
                     <div class="activityBanner teachBanner">
                         <p class="label">TEACH ONE ANOTHER</p>
                         <p class="activityType">Field Experience Sharing</p>
                     </div>
-                    
+
                     <div class="activityBanner ponderBanner">
                         <p class="label">PONDER &amp; PROVE</p>
                         <p class="activityType">Assessment</p>
@@ -280,19 +297,25 @@
                     <p><a href="small.html" download> Download small.html</a> | </p>
                     <p><a href="large.html" download> Download large.html</a> | </p>
                     <p><a href="#" onclick="saveTextAsFile('cssOnly')"> Download course.css</a> | </p>
-                    <p><a href="course.js" download> Download course.js</a></p>
+                    <p><a href="js/course.js" download> Download course.js</a></p>
                     <textarea id="list"></textarea>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-    <script src="config.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="spectrum/spectrum.js"></script>
-    <script src="ccc.js"></script>
-    <script src="color-thief.js"></script>
-    <script src="app.js"></script>
+
+    <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->
+    <footer>
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="js/config.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="spectrum/spectrum.js"></script>
+        <script src="js/options.js"></script>
+        <script src="js/template.js"></script>
+        <script src="js/ccc.js"></script>
+        <script src="js/color-thief.js"></script>
+        <script src="js/app.js"></script>
+    </footer>
 </body>
 
 </html>
