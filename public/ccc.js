@@ -1,39 +1,23 @@
-function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+function color_meter(cwith, ccolor) {
 
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
-}
+    if (!cwith && !ccolor) return;
 
-var darkOrLight = function (forObj, backObj) {
+    var _cwith = (cwith.charAt(0) == "#") ? cwith.substring(1, 7) : cwith,
+        _ccolor = (ccolor.charAt(0) == "#") ? ccolor.substring(1, 7) : ccolor,
+        _r = parseInt(_cwith.substring(0, 2), 16),
+        _g = parseInt(_cwith.substring(2, 4), 16),
+        _b = parseInt(_cwith.substring(4, 6), 16),
+        __r = parseInt(_ccolor.substring(0, 2), 16),
+        __g = parseInt(_ccolor.substring(2, 4), 16),
+        __b = parseInt(_ccolor.substring(4, 6), 16),
+        p1 = (_r / 255) * 100,
+        p2 = (_g / 255) * 100,
+        p3 = (_b / 255) * 100,
+        perc1 = Math.round((p1 + p2 + p3) / 3),
+        p1 = (__r / 255) * 100,
+        p2 = (__g / 255) * 100,
+        p3 = (__b / 255) * 100,
+        perc2 = Math.round((p1 + p2 + p3) / 3);
 
-    var foreground,
-        background,
-        contrast;
-
-    foreground = (forObj.r * 299) + (forObj.g * 587) + (forObj.b * 114);
-
-    background = (backObj.r * 299) + (backObj.g * 587) + (backObj.b * 114);
-
-    contrast = foreground / background;
-
-    // values range from 0 to 1
-    // anything greater than 0.5 should be bright enough for dark text
-    if (contrast >= 0.5) {
-        return {
-            fail: true,
-            message: "The text is below 50% contrast ratio.",
-            contrast: contrast
-        };
-    } else {
-        return {
-            fail: false,
-            message: "The test approves!",
-            contrast: contrast
-        };
-    }
-
+    return Math.abs(perc1 - perc2);
 }

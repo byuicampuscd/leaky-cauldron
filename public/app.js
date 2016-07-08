@@ -217,30 +217,28 @@ function checker(page, names) {
 
             foregroundColor = options[name].color;
 
-            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#F0F0F0"));
+            returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
-            if (returnedOpt.fail) {
-                console.log(name + " failed. --- " + returnedOpt.contrast);
+            if (returnedOpt < 40) {
+                console.log(name + " failed. --- " + returnedOpt);
             }
         } else if (page === "large") {
 
             foregroundColor = options[name].color;
 
-            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#125576"));
+            returnedOpt = color_meter(foregroundColor, "#125576");
 
-            console.log(options.splashBackground.color)
-
-            if (returnedOpt.fail) {
-                console.log(name + " failed. --- " + returnedOpt.contrast);
+            if (returnedOpt < 40) {
+                console.log(name + " failed. --- " + returnedOpt);
             }
 
-        }else if (page === "features") {
+        } else if (page === "features") {
             foregroundColor = options[name].color;
 
-            returnedOpt = darkOrLight(hexToRgb(foregroundColor), hexToRgb("#F0F0F0"));
+            returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
-            if (returnedOpt.fail) {
-                console.log(name + " failed. --- " + returnedOpt.contrast);
+            if (returnedOpt < 40) {
+                console.log(name + " failed. --- " + returnedOpt);
             }
         }
     })
