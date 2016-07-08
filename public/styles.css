@@ -152,9 +152,10 @@ canvas {
     display: inline-block;
 }
 
-/*********Popups**************/
+/*********MODALS**************/
 
 .shade {
+    display: none;
     position: fixed;
     top: 0px;
     left: 0px;
@@ -162,12 +163,13 @@ canvas {
     width: 100%;
     height: 2000px;
     overflow: none;
-    z-index: 99;
+    z-index: 90;
 }
 
 .saveScreen,
 .loadScreen,
 .contrastScreen{
+    display: none;
     position: absolute;
     left: 30%;
     top: 30%;

@@ -1,4 +1,4 @@
-var = imgHold = {};
+var imgHold = {};
 
 function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";

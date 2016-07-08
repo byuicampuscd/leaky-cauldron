@@ -69,26 +69,20 @@ function checker(page, names) {
 
 function checkContrast() {
 
-    var colorContrast = $("<div class='colorContrast'></div>"),
-        div = $("<div class='contrastScreen'></div>"),
-        shade = $("<div class='shade'></div>"),
-        h2 = $("<h2>Color Contrast Checker</h2>"),
-        para = $("<p>Application is set to approve 40% contrast.</p>"),
-        cancel = $("<input value='Cancel' type='button'>").css({
-            "margin-left": "5px"
-        }).click(function () {
-            $('.colorContrast').remove();
-        });
+    $(".shade").css({
+        "display": "block"
+    });
+    $(".contrastScreen").css({
+        "display": "block"
+    });
 
-    $(div).append(h2).append(para);
-
-
-    var smallColorCheck = ["h1"
+    var cancel = $("input[value='Cancel'][type='button']"),
+        smallColorCheck = ["h1"
                       , "h2"
                       , "h3"
                       , "a"
                       , "aHover"
-                          ],
+                        ],
         largeColorCheck = ["splashColor"
                       , "splashH1"
                       , "splashH2"
@@ -99,9 +93,21 @@ function checkContrast() {
                       ],
         calloutColorCheck = ["calloutColor"];
 
+    cancel.click(function (e) {
+        var modalParent = e.currentTarget.parentElement;
+        $(modalParent).css({
+            "display": "none"
+        });
+        $(".shade").css({
+            "display": "none"
+        });
+    });
+
     checker("small", smallColorCheck);
     checker("large", largeColorCheck);
     checker("features", calloutColorCheck);
+
+    $("#errorMessages").html("");
 
     errorArray.forEach(function (errorString) {
         var errorMessage;
@@ -110,17 +116,13 @@ function checkContrast() {
         } else {
             errorMessage = $("<p>Good Contrast!</p>");
         }
-        $(div).append(errorMessage);
+        $("#errorMessages").append(errorMessage);
     })
 
     if (errorArray.length === 0) {
         var approval = "<h4>All approved!</h4>";
-        $(div).append(approval);
+        $("#errorMessages").append(approval);
     }
-
-    $(div).append(cancel)
-    $(colorContrast).append(div).append(shade);
-    $("body").append(colorContrast);
 
     errorArray = [];
 }
