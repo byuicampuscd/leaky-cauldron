@@ -210,7 +210,8 @@ function checker(page, names) {
     names.forEach(function (name) {
 
         var foregroundColor,
-            returnedOpt;
+            returnedOpt,
+            contrastThreshold = 45;
 
         if (page === "small") {
 
@@ -218,7 +219,7 @@ function checker(page, names) {
 
             returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
-            if (returnedOpt < 40) {
+            if (returnedOpt <= contrastThreshold) {
                 var error = name + " failed. --- " + returnedOpt + "%";
                 console.log(error);
                 errorArray.push(error)
@@ -229,7 +230,7 @@ function checker(page, names) {
 
             returnedOpt = color_meter(foregroundColor, "#125576");
 
-            if (returnedOpt < 40) {
+            if (returnedOpt <= contrastThreshold) {
                 var error = name + " failed. --- " + returnedOpt + "%";
                 console.log(error);
                 errorArray.push(error)
@@ -240,14 +241,13 @@ function checker(page, names) {
 
             returnedOpt = color_meter(foregroundColor, "#f0f0f0");
 
-            if (returnedOpt < 40) {
+            if (returnedOpt <= contrastThreshold) {
                 var error = name + " failed. --- " + returnedOpt + "%";
                 console.log(error);
                 errorArray.push(error)
             }
         }
     })
-
 }
 
 function checkContrast() {
@@ -256,7 +256,7 @@ function checkContrast() {
         div = $("<div class='contrastScreen'></div>"),
         shade = $("<div class='shade'></div>"),
         h2 = $("<h2>Color Contrast Checker</h2>"),
-        para = $("<p>What color doesn't meet contrast requirements?</p>"),
+        para = $("<p>Application is set to approve 40% contrast.</p>"),
         cancel = $("<input value='Cancel' type='button'>").css({
             "margin-left": "5px"
         }).click(function () {
@@ -287,17 +287,27 @@ function checkContrast() {
     checker("features", calloutColorCheck);
 
     errorArray.forEach(function (errorString) {
-        var errorMessage = $("<p>" + errorString + "</p>");
+        var errorMessage;
+        if (errorString) {
+            errorMessage = $("<p>" + errorString + "</p>");
+        } else {
+            errorMessage = $("<p>Good Contrast!</p>");
+        }
         $(div).append(errorMessage);
     })
+
+    if (errorArray.length === 0) {
+        var approval = "<h4>All approved!</h4>";
+        $(div).append(approval);
+    }
+
+    console.log(errorArray.length)
 
     $(div).append(cancel)
     $(colorContrast).append(div).append(shade);
     $("body").append(colorContrast);
 
-    console.log(errorArray);
     errorArray = [];
-    console.log(errorArray);
 }
 
 // Update selectedRadio everytime a radio button is clicked
