@@ -28,6 +28,7 @@ $("#colorPicker").spectrum({
         $("#saveStatus").html("");
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
+        evaluator(color);
     }
 });
 
@@ -35,11 +36,14 @@ $("#colorPicker").spectrum({
 function changePage() {
     var page = this.event.srcElement.dataset.selector,
         selector = "#" + page + ", #" + page + "-options";
+
     // Close all pages and feature options
     $("#small, #large, #features, #css-output, #small-options, #large-options, #features-options").css("display", "none");
+
     // Display selected page and options
     $(selector + ", #general").css("display", "block");
     $("#color-wrapper").css("display", "");
+
     // Display correct color suggestions
     if (page === "small" || page === "features") {
         $("#largeBannerSuggestions").css("display", "none");
@@ -48,8 +52,10 @@ function changePage() {
         $("#smallBannerSuggestions").css("display", "none");
         $("#largeBannerSuggestions").css("display", "");
     }
+
     // Update selectedRadio
     selectedRadio = document.querySelector("#" + page + "-options input:checked").id;
+
     // Update colorPicker
     $("#colorPicker").spectrum("set", options[selectedRadio].color);
 }
@@ -60,13 +66,16 @@ $("#colorPicker").on("dragstart.spectrum", function (e, color) {
 });
 
 function updateUndo(oldColor) {
+
     undo.push({
         page: document.querySelector("#page-options input:checked").dataset.selector,
         key: selectedRadio,
         color: oldColor
     });
+
     // Make sure undo button isn't disabled
     document.querySelector("#undoButton").disabled = false;
+
     // Reset redo
     redo = [];
     document.querySelector("#redoButton").disabled = true;

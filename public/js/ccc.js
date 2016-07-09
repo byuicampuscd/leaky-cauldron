@@ -7,7 +7,8 @@ the application.
 /*
 In case if there are any color contrast that does not pass
 */
-var errorArray = [];
+var errorArray = [],
+    contrastThreshold = 40;
 
 /*
 Function to calculate the color contrast based off of Hex codes
@@ -49,8 +50,7 @@ function checker(page, names) {
     names.forEach(function (name) {
 
         var foregroundColor,
-            returnedOpt,
-            contrastThreshold = 40;
+            returnedOpt;
 
         if (page === "small") {
 
@@ -147,4 +147,44 @@ function checkContrast() {
     }
 
     errorArray = [];
+}
+
+function errorHandler(perc, opt) {
+    if (perc <= contrastThreshold) {
+        $("#"+opt).parent().attr("title", "Contrat Percentage " + perc).css({
+            "border": "2px solid red"
+        })
+    } else if (contrastThreshold < perc) {
+        console.log(contrastThreshold < perc, perc)
+//        $("#"+opt).parent().attr("title", "Contrat Percentage " + perc).css({
+//            "border": "none"
+//        })
+    }
+}
+
+function evaluator(color) {
+
+    var getType = {},
+        isFunction;
+
+    for (var i in options) {
+
+        var perc;
+
+        isFunction = options[i].backColor && getType.toString.call(options[i].backColor) === '[object Function]';
+
+        if (typeof options[i].backColor === "string") {
+
+            perc = color_meter(options[i].color, options[i].backColor);
+
+        } else if (isFunction) {
+
+            perc = color_meter(options[i].color, options[i].backColor());
+
+        } else {
+//            console.log("No background color");
+        }
+
+        errorHandler(perc, i);
+    }
 }
