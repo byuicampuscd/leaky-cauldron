@@ -151,25 +151,24 @@ function checkContrast() {
 
 function errorHandler(perc, opt) {
     if (perc <= contrastThreshold) {
-        $("#"+opt).parent().attr("title", "Contrat Percentage " + perc).css({
-            "border": "2px solid red"
+        $("#"+opt).attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
+            "width": "2em",
+            "background-image": "url(./error.png)"
         })
-    } else if (contrastThreshold < perc) {
-        console.log(contrastThreshold < perc, perc)
-//        $("#"+opt).parent().attr("title", "Contrat Percentage " + perc).css({
-//            "border": "none"
-//        })
+    } else {
+        $("#"+opt).attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
+            "width": "auto"
+        })
     }
 }
 
 function evaluator(color) {
 
     var getType = {},
-        isFunction;
+        isFunction,
+        perc;
 
     for (var i in options) {
-
-        var perc;
 
         isFunction = options[i].backColor && getType.toString.call(options[i].backColor) === '[object Function]';
 
