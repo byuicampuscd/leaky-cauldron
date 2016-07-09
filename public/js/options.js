@@ -1,3 +1,7 @@
+/*
+Default options for the CSS template
+*/
+
 var body = document.querySelector("body"),
     options = {
     innergrad: {

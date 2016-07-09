@@ -1,6 +1,17 @@
+/**************************************************
+File has all the functions that link the application
+to the data that is found in Firebase.  File contains
+save and load functions.  These functions will either
+save or load the data and display the necessary
+information requested.
+****************************************************/
+
 var fireTemplateName,
     loadedTemplateData;
 
+/*
+Save data to firebase
+*/
 function saveToFire(name) {
     var currStyle = JSON.stringify(options);
     if (imgHold) {
@@ -23,6 +34,9 @@ function saveToFire(name) {
     }
 }
 
+/*
+Display the data requested
+*/
 function displayData(d, div) {
     var data = d;
     var select = '<select>';
@@ -38,6 +52,9 @@ function displayData(d, div) {
     })
 }
 
+/*
+Request the data from Firebase
+*/
 function readFromFire(div, func) {
     database.ref().once("value", function (snap) {
         loadedTemplateData = snap.val();
@@ -45,6 +62,9 @@ function readFromFire(div, func) {
     })
 }
 
+/*
+Show a screen to indicate saving data to Firebase
+*/
 function saveScreen() {
 
     if (fireTemplateName) {
@@ -94,6 +114,10 @@ function saveScreen() {
     }
 }
 
+/*
+With the requested data from firebase then display the data
+to the application.
+*/
 function loadTemplateOptions() {
 
     //Clear exisiting banners, color suggestions, and the undo/redo arrays
@@ -124,6 +148,9 @@ function loadTemplateOptions() {
     document.querySelector("input[data-selector='small']").click();
 };
 
+/*
+Load screen to request data from Firebase
+*/
 function loadScreen() {
 
     $(".shade").css({

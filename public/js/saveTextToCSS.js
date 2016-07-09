@@ -1,3 +1,6 @@
+/*This function takes the CSS template and saves it as a BLOB
+and then downloads it for the user.*/
+
 function saveTextToCSS() {
     var textToWrite = style,
         textFileAsBlob = new Blob([textToWrite], {

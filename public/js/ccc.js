@@ -1,5 +1,17 @@
+/****************
+This file contains all the functions in order to calculate
+the color contrast based off of the hex codes inputed from
+the application.
+*****************/
+
+/*
+In case if there are any color contrast that does not pass
+*/
 var errorArray = [];
 
+/*
+Function to calculate the color contrast based off of Hex codes
+*/
 function color_meter(cwith, ccolor) {
 
     if (!cwith && !ccolor) return;
@@ -27,7 +39,11 @@ function color_meter(cwith, ccolor) {
 /*USE TO TEST HEX PERCENTAGE*/
 //console.log(color_meter("#c78d56", "#040404"));
 
-/*Color Constrast Checker*/
+/*
+Color Constrast Checker - Loop through all the objects
+found in the options variable in options.js and determine
+the color contrast.
+*/
 function checker(page, names) {
 
     names.forEach(function (name) {
@@ -70,6 +86,9 @@ function checker(page, names) {
     })
 }
 
+/*
+Use arrays to check the color contrast.
+*/
 function checkContrast() {
 
     $(".shade").css({

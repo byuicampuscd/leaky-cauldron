@@ -1,5 +1,13 @@
+/********
+Get the BLOB data from the images uploaded and get
+the dominant color scheme to append to the document
+*********/
+
 var imgHold = {};
 
+/*
+Get the dominant color scheme.
+*/
 function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";
     pallete.unshift(domColor);
@@ -47,11 +55,16 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     });
 }
 
+/*
+Put the banners into the application.
+*/
 function insertBanners(e, filename, state) {
 
     var img = new Image();
     var img2 = new Image();
 
+    /*If the state is fireload then load the data
+    from firebase.*/
     if (state === "fireload") {
         img.src = e;
         if (filename === "smallBanner") {
@@ -77,13 +90,18 @@ function insertBanners(e, filename, state) {
         get = getHexPallete(domColor, pallete, filename);
 }
 
+/*
+Handle the files that are uploaded into the application
+*/
 function handleFileSelect(evt) {
     "use strict";
     fireTemplateName = "";
 
     //Clear exisiting banners
     $(".header").html("");
+
     var files = evt.target.files;
+
     for (var i = 0, f; f = files[i]; i++) {
         if (!f.type.match('image.*')) {
             continue;

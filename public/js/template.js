@@ -1,5 +1,11 @@
+/*This is the file that contains the stylesheet that will be
+outputted to the textarea with the "Show CSS" button*/
+
 var style = "";
 
+/*
+Template String that has the default settings
+*/
 function template() {
     style = `/********************************************************
     The purpose of course.css is to house only the css
@@ -137,6 +143,9 @@ h2.ponder:before {
     return style;
 }
 
+/*
+Function to output the CSS template to the textarea
+*/
 function cssTemplate() {
     var loadStyle = template();
     $("#small, #large, #features, #general, #color-wrapper").css("display", "none");

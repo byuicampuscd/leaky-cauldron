@@ -1,3 +1,7 @@
+/*
+Firebase configuration in order to setup the hosting environment
+*/
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBjfsSzb_ZZx0Lyy7UsNeOkdCRTXwTMy5M",
@@ -7,4 +11,5 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//Get the database
 var database = firebase.database();

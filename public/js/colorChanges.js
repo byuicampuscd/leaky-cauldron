@@ -1,3 +1,8 @@
+/*
+These functions are for the buttons on the application
+to change the page colors quickly
+*/
+
 function desaturateTOA() {
     // Update color values
     options.prepareActivity.color = "#8ed0cb";
