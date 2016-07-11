@@ -174,13 +174,14 @@ canvas {
     left: 30%;
     top: 30%;
     width: 500px;
-    height: 300px;
+    height: auto;
     z-index: 100;
     background-color: #e8f4ff;
     padding: 5px;
 }
 
 #modals input[type='text'],
+#modals input[type='number'],
 #modals input[type='button'],
 #modals select,
 #modals .loader {

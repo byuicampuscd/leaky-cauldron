@@ -319,7 +319,9 @@
             <div class='saveScreen'>
                 <h2>Save Template</h2>
                 <p>This will save your current CSS template to a database. Please input the course title.</p>
-                <input type='text' class='courseName' placeholder='Input course name here'>
+                <input type='text' class='department' placeholder='Department'>
+                <input type='number' class='courseNum' placeholder='Course Number'>
+                <input type='text' class='domain' placeholder='Domain'>
                 <input value="Submit to Database" type="button">
                 <input value='Cancel' type='button'>
             </div>
@@ -330,7 +332,8 @@
                 <div class='loadedSelect'>
                     <h2>Load Template</h2>
                     <p>This screen will load any saved templates.</p>
-                    <div class="loadedList"></div>
+                    <div class="loadedDept"></div>
+                    <div class="loadedCourseNum"></div>
                     <div class='loader'></div>
                     <input value='Load Template' type='button'>
                     <input value='Cancel' type='button'>
@@ -360,9 +363,6 @@
         <script src="js/template.js"></script>
         <script src="js/saveTextToCSS.js"></script>
 
-        <!--Firebase save and load ability-->
-        <script src="js/firebaseLink.js"></script>
-
         <!--Button events to change all the colors.-->
         <script src="js/colorChanges.js"></script>
 
@@ -371,6 +371,9 @@
 
         <!--Image loader for smallBanner and largeBanner-->
         <script src="js/loadImages.js"></script>
+
+        <!--Firebase save and load ability-->
+        <script src="js/firebaseLink.js"></script>
 
         <!--Undo and redo features-->
         <script src="js/app.js"></script>

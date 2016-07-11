@@ -6,59 +6,84 @@ save or load the data and display the necessary
 information requested.
 ****************************************************/
 
-var fireTemplateName,
-    loadedTemplateData;
+var departmentCode,
+    loadedTemplateData,
+    courseID;
+
+function updateFirebase(name, num) {
+    var currStyle = JSON.stringify(options);
+
+    database.ref(`${name}/${num}`).update({
+        style: currStyle
+    }, function () {
+        undoRedoEnabled = true;
+        $('.popupContain').remove();
+        $("#saveStatus").html("Saved");
+    })
+}
 
 /*
 Save data to firebase
 */
-function saveToFire(name) {
+function saveToFire(name, num, domain) {
     var currStyle = JSON.stringify(options);
-    if (imgHold) {
-        database.ref(name).update({
-            style: currStyle,
-            images: imgHold
-        }, function () {
-            undoRedoEnabled = true;
-            $('.popupContain').remove();
-            $("#saveStatus").html("Saved");
-        })
-    } else {
-        database.ref(name).set({
-            style: currStyle
-        }, function () {
-            undoRedoEnabled = true;
-            $('.popupContain').remove();
-            $("#saveStatus").html("Saved");
-        })
-    }
+
+    database.ref(`${name}/${num}`).update({
+        style: currStyle,
+        images: imgHold,
+        domain: domain
+    }, function () {
+        undoRedoEnabled = true;
+        $('.popupContain').remove();
+        $("#saveStatus").html("Saved");
+    })
+
 }
 
 /*
 Display the data requested
 */
-function displayData(d, div) {
+function displayData(d, id) {
     var data = d;
-    var select = '<select>';
+    var select = `<select id="${id}">`;
 
     for (var i in data) {
         select += '<option>' + i + '</option>';
     }
     select += '</select>';
-    $('.loadedList').html(select);
+
+    if (id === "deptName") {
+        $('.loadedDept').html(select);
+
+        $(`#${id}`).click(function (e) {
+            loadCourses(e);
+        })
+    } else if (id === "courseNum") {
+        $('.loadedCourseNum').html(select);
+    }
 
     $(".loader").css({
         "display": "none"
     })
 }
 
+function loadCourses(e) {
+    var dept = e.target.value;
+
+    database.ref(dept).once("value", function (snap) {
+        var course = snap.val();
+
+        displayData(course, "courseNum")
+    })
+}
+
 /*
 Request the data from Firebase
 */
-function readFromFire(div, func) {
+function readFromFire(func) {
     database.ref().once("value", function (snap) {
         loadedTemplateData = snap.val();
-        func(loadedTemplateData, div);
+        func(loadedTemplateData, "deptName");
     })
 }
 
@@ -67,9 +92,22 @@ Show a screen to indicate saving data to Firebase
 */
 function saveScreen() {
 
-    if (fireTemplateName) {
-        saveToFire(fireTemplateName);
+    if (departmentCode && courseID) {
+        updateFirebase(departmentCode, courseID);
     } else {
+
+        var submit = $("input[value='Submit to Database'][type='button']"),
+            dept = $("input[class='department']"),
+            courseNum = $("input[class='courseNum']"),
+            domain = $("input[class='domain']");
+
+        var name = dept.val().split(" ")[0].toUpperCase(),
+            num = courseNum.val().trim(),
+            dom = domain.val().trim().toLowerCase();
+
+        departmentCode = name;
+        courseID = num;
+
         $(".shade").css({
             "display": "block"
         });
@@ -77,13 +115,8 @@ function saveScreen() {
             "display": "block"
         });
 
-        var submit = $("input[value='Submit to Database'][type='button']"),
-            courseNameInput = $("input[class='courseName']");
-
         submit.click(function () {
-            var name = courseNameInput.val();
-            fireTemplateName = name;
-            saveToFire(name);
+            saveToFire(name, num, dom);
             $(".shade").css({
                 "display": "none"
             });
@@ -128,21 +161,25 @@ function loadTemplateOptions() {
     document.querySelector("#undoButton").disabled = true;
     document.querySelector("#redoButton").disabled = true;
 
-    var selectValue = $(".loadScreen select").val(),
-        newOptions = JSON.parse(loadedTemplateData[selectValue].style);
+    var dept = $(".loadScreen #deptName").val(),
+        courseNum = $(".loadScreen #courseNum").val(),
+        newOptions = JSON.parse(loadedTemplateData[dept][courseNum].style),
+        newImages = loadedTemplateData[dept][courseNum].images;
 
-    fireTemplateName = selectValue;
+    departmentCode = dept;
+    courseID = courseNum;
 
     //CALL FUNCTION WITH TEXT IMAGE DATA
 
-    for (image in loadedTemplateData[selectValue].images) {
-        insertBanners(loadedTemplateData[selectValue].images[image], image, 'fireload');
+    for (image in newImages) {
+        insertBanners(newImages[image], image, 'fireload');
     }
 
     for (option in options) {
         options[option].color = newOptions[option].color;
         options[option].setColor();
     }
+
     $('.loadContain').remove();
     // Change to small template
     document.querySelector("input[data-selector='small']").click();
@@ -183,5 +220,5 @@ function loadScreen() {
         });
     });
 
-    readFromFire(div, displayData);
+    readFromFire(displayData);
 }
