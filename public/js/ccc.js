@@ -162,7 +162,7 @@ function errorHandler(perc, opt) {
     }
 }
 
-function evaluator(color) {
+function evaluator() {
 
     var getType = {},
         isFunction,

@@ -3,6 +3,9 @@ This JS file contains basic page manipulation for the application.
 It contains the color picker, page changing, redo, and undo features.
 **********/
 
+/*Set the color contraster by default*/
+evaluator();
+
 // Options set
 var selectedRadio = "innergrad",
     undo = [],
@@ -28,7 +31,7 @@ $("#colorPicker").spectrum({
         $("#saveStatus").html("");
         options[selectedRadio].color = color.toHexString();
         options[selectedRadio].setColor();
-        evaluator(color);
+        evaluator();
     }
 });
 

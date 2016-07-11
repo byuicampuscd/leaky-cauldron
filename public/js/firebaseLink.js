@@ -68,9 +68,7 @@ function displayData(d, id) {
 }
 
 function loadCourses(e) {
-    var dept = e.target.value;
-
-    database.ref(dept).once("value", function (snap) {
+    database.ref(e.target.value).once("value", function (snap) {
         var course = snap.val();
 
         displayData(course, "courseNum")
@@ -81,10 +79,12 @@ function loadCourses(e) {
 Request the data from Firebase
 */
 function readFromFire(func) {
-    database.ref().once("value", function (snap) {
-        loadedTemplateData = snap.val();
-        func(loadedTemplateData, "deptName");
-    })
+    if (!departmentCode && !courseID) {
+        database.ref().once("value", function (snap) {
+            loadedTemplateData = snap.val();
+            func(loadedTemplateData, "deptName");
+        })
+    }
 }
 
 /*
@@ -137,8 +137,7 @@ function saveScreen() {
         var warning = $("<p><strong>Warning: </strong>You don't have any banners uploaded.  They will not be saved to the database.</p>");
 
         if ($(".header").children().length < 1) {
-            $(".saveScreen")
-                .append(warning);
+            $(".saveScreen").append(warning);
         }
 
         // Disable undo/redo shortcut keys
@@ -166,6 +165,7 @@ function loadTemplateOptions() {
         newOptions = JSON.parse(loadedTemplateData[dept][courseNum].style),
         newImages = loadedTemplateData[dept][courseNum].images;
 
+
     departmentCode = dept;
     courseID = courseNum;
 
@@ -180,7 +180,8 @@ function loadTemplateOptions() {
         options[option].setColor();
     }
 
-    $('.loadContain').remove();
+    evaluator();
+
     // Change to small template
     document.querySelector("input[data-selector='small']").click();
 };
@@ -197,7 +198,7 @@ function loadScreen() {
         "display": "block"
     });
 
-    var submit = $("input[value='Load Template'][type='button']"),
+    var submit = $(".loadScreen input[value='Load Template'][type='button']"),
         div = $("div[class='loadScreen']");
 
     submit.click(function () {
