@@ -114,7 +114,7 @@ function handleFileSelect(evt) {
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
 
-            var filename = theFile.name.replace(/\.[^/.]+$/, "");
+            var filename = theFile.name.replace(/\.[^/.]+$/, "").toLowerCase();
             return function (e) {
                 insertBanners(e, filename, 'new');
             };
