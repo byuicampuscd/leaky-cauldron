@@ -21,21 +21,27 @@ var body = document.querySelector("body"),
             setColor: function () {
                 $("#small h1").css("color", this.color);
             },
-            backColor: "#F0F0F0"
+            backColor: function () {
+                return "#F0F0F0";
+            }
         },
         h2: {
             color: "#2d5d94",
             setColor: function () {
                 $("#small h2, #features h2, #small h4, #features h4").css("color", this.color);
             },
-            backColor: "#F0F0F0"
+            backColor: function () {
+                return "#F0F0F0";
+            }
         },
         h3: {
             color: "#5f6060",
             setColor: function () {
                 $("#small h3, #features h3, #small h5, #features h5").css("color", this.color);
             },
-            backColor: "#F0F0F0"
+            backColor: function () {
+                return "#F0F0F0";
+            }
         },
         a: {
             color: "#2d5d94",
@@ -43,7 +49,9 @@ var body = document.querySelector("body"),
                 $("#small a.default").css("color", this.color);
                 $("#small a.default").css("borderColor", this.color);
             },
-            backColor: "#F0F0F0"
+            backColor: function () {
+                return "#F0F0F0";
+            }
         },
         aHover: {
             color: "#7b4c8d",
@@ -51,42 +59,62 @@ var body = document.querySelector("body"),
                 $("#small a.hover").css("color", this.color);
                 $("#small a.hover").css("borderColor", this.color);
             },
-            backColor: "#F0F0F0"
+            backColor: function () {
+                return "#F0F0F0";
+            }
         },
         prepareLabel: {
             color: "#49807b",
             setColor: function () {
                 $(".prepareBanner .label").css("background", this.color);
+            },
+            backColor: function () {
+                return "#F0F0F0";
             }
         },
         prepareActivity: {
             color: "#8ed0cb",
             setColor: function () {
                 $(".prepareBanner .activityType").css("background", this.color);
+            },
+            backColor: function () {
+                return "#000000";
             }
         },
         teachLabel: {
             color: "#537491",
             setColor: function () {
                 $(".teachBanner .label").css("background", this.color);
+            },
+            backColor: function () {
+                return "#F0F0F0";
             }
         },
         teachActivity: {
             color: "#9abad6",
             setColor: function () {
                 $(".teachBanner .activityType").css("background", this.color);
+            },
+            backColor: function () {
+                return "#000000";
             }
         },
         ponderLabel: {
             color: "#8163a5",
             setColor: function () {
                 $(".ponderBanner .label").css("background", this.color);
+            },
+            backColor: function () {
+                return "#F0F0F0";
             }
         },
         ponderActivity: {
             color: "#baa4d4",
             setColor: function () {
                 $(".ponderBanner .activityType").css("background", this.color);
+            },
+            backColor: function () {
+                return "#000000";
             }
         },
         footerBackground: {

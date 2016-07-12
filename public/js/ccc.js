@@ -151,14 +151,15 @@ function checkContrast() {
 
 function errorHandler(perc, opt) {
     if (perc <= contrastThreshold) {
-        $("#"+opt).attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
-            "width": "2em",
-            "background-image": "url(./error.png)"
+        $("#"+opt).parent().attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
+            "border": "2px solid red"
+        })
+    } else if (contrastThreshold <= perc) {
+        $("#"+opt).parent().attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
+            "border": "none"
         })
     } else {
-        $("#"+opt).attr("title", "Contrat Percentage of " + opt + " is " + perc).css({
-            "width": "auto"
-        })
+        $("#"+opt).attr("title", "No background color assigned")
     }
 }
 
@@ -172,16 +173,10 @@ function evaluator() {
 
         isFunction = options[i].backColor && getType.toString.call(options[i].backColor) === '[object Function]';
 
-        if (typeof options[i].backColor === "string") {
-
-            perc = color_meter(options[i].color, options[i].backColor);
-
-        } else if (isFunction) {
-
+        if (isFunction) {
             perc = color_meter(options[i].color, options[i].backColor());
-
         } else {
-//            console.log("No background color");
+            console.log("No background color");
         }
 
         errorHandler(perc, i);
