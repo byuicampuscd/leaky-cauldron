@@ -34,11 +34,11 @@ var CanvasImage = function (image, fileName) {
 
     if (fileName === undefined) {
         $("#colorPallete").append(this.canvas);
-    } else if (fileName.search("small") > -1 && !fileName.includes("Two")) {
+    } else if (fileName.includes("small") && !fileName.includes("Two")) {
         $("#small .header").append(this.canvas);
-    } else if (fileName.search("small") > -1 && fileName.includes("Two")) {
+    } else if (fileName.includes("small") && fileName.includes("Two")) {
         $("#features .header").append(this.canvas);
-    }else if (fileName.search("large") > -1) {
+    }else if (fileName.includes("large")) {
         $("#large .header").append(this.canvas);
     } else {
         console.log("error! There is no image");
