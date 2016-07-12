@@ -198,6 +198,11 @@ Load screen to request data from Firebase
 */
 function loadScreen() {
 
+    var submit = $(".loadScreen input[value='Load Template'][type='button']"),
+        div = $("div[class='loadScreen']");
+
+    submit.prop("disabled", false);
+
     $(".shade").css({
         "display": "block"
     });
@@ -205,10 +210,9 @@ function loadScreen() {
         "display": "block"
     });
 
-    var submit = $(".loadScreen input[value='Load Template'][type='button']"),
-        div = $("div[class='loadScreen']");
-
     submit.click(function () {
+        submit.prop("disabled", true);
+
         loadTemplateOptions();
         $(".shade").css({
             "display": "none"
