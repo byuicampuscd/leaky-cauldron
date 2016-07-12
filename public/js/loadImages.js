@@ -67,6 +67,7 @@ function insertBanners(e, filename, state) {
     from firebase.*/
     if (state === "fireload") {
         img.src = e;
+
         if (filename.includes("small")) {
             img2.src = e;
             var colorThief = new ColorThief(),
@@ -74,6 +75,7 @@ function insertBanners(e, filename, state) {
         }
     } else if (state === "new") {
         img.src = e.target.result;
+
         if (filename.includes("small")) {
             img2.src = e.target.result;
             var colorThief = new ColorThief(),
@@ -84,8 +86,8 @@ function insertBanners(e, filename, state) {
     imgHold[filename] = img.src;
 
     var colorThief = new ColorThief(),
-        image = new CanvasImage(img, filename);
-    var domColor = colorThief.getColor(img),
+        image = new CanvasImage(img, filename),
+        domColor = colorThief.getColor(img),
         pallete = colorThief.getPalette(img),
         get = getHexPallete(domColor, pallete, filename);
 }

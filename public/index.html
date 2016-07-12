@@ -14,6 +14,11 @@
 
 <body>
 
+    <nav>
+        <button disabled class="nav_button" id="quickstart-sign-in">Sign in with Google</button>
+        <div id="naver"></div>
+    </nav>
+
     <!--OPTIONS AND FEATURES OF LEAKY CAULDRON-->
     <div id="input-wrapper">
 
@@ -357,6 +362,7 @@
                     <p><a href="large.html" download> Download large.html</a> | </p>
                     <p><a href="#" onclick="saveTextToCSS()"> Download course.css</a> | </p>
                     <p><a href="js/course.js" download> Download course.js</a></p>
+                    <div id="imagesDownload"></div>
                     <textarea id="list"></textarea>
                 </div>
             </div>
@@ -379,9 +385,15 @@
                 <h2>Save Template</h2>
                 <p>This will save your current CSS template to a database. Please input the course title.</p>
                 <p id="saveScreenError"></p>
-                <label>Deptartment <input type='text' class='department' placeholder='e.g., ENG'></label>
-                <label>Course Number <input type='number' class='courseNum' placeholder='e.g., 101'></label>
-                <label>Domain <input type='text' class='domain' placeholder='e.g., Online'></label>
+                <label>Deptartment
+                    <input type='text' class='department' placeholder='e.g., ENG'>
+                </label>
+                <label>Course Number
+                    <input type='number' class='courseNum' placeholder='e.g., 101'>
+                </label>
+                <label>Domain
+                    <input type='text' class='domain' placeholder='e.g., Online'>
+                </label>
                 <input value="Submit to Database" type="button">
                 <input value='Cancel' type='button'>
             </div>
@@ -411,9 +423,13 @@
     <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->
     <footer>
 
-        <!--External libraries-->
+        <!--Firebase-->
         <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
         <script src="js/config.js"></script>
+        <!-- Firebase OAuth-->
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+        <!--External Libraries-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="spectrum/spectrum.js"></script>
         <script src="js/color-thief.js"></script>
@@ -436,6 +452,9 @@
 
         <!--Firebase save and load ability-->
         <script src="js/firebaseLink.js"></script>
+
+        <!--login-->
+        <script src="js/login.js"></script>
 
         <!--Undo and redo features-->
         <script src="js/app.js"></script>

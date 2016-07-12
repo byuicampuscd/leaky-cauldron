@@ -10,8 +10,16 @@ var departmentCode,
     loadedTemplateData,
     courseID;
 
+function pushEdit(name, num, userName) {
+    database.ref(`${name}/${num}/edits`).push({
+        name: userName,
+        timeStamp: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+
 function updateFirebase(name, num) {
-    var currStyle = JSON.stringify(options);
+    var currStyle = JSON.stringify(options),
+        userName = localStorage["leakyCauldronDisplayName"];
 
     database.ref(`${name}/${num}`).update({
         style: currStyle
@@ -19,14 +27,16 @@ function updateFirebase(name, num) {
         undoRedoEnabled = true;
         $('.popupContain').remove();
         $("#saveStatus").html("Saved");
-    })
+        pushEdit(name, num, userName);
+    });
 }
 
 /*
 Save data to firebase
 */
 function saveToFire(name, num, domain) {
-    var currStyle = JSON.stringify(options);
+    var currStyle = JSON.stringify(options),
+        userName = localStorage["leakyCauldronDisplayName"];
 
     database.ref(`${name}/${num}`).update({
         style: currStyle,
@@ -36,7 +46,8 @@ function saveToFire(name, num, domain) {
         undoRedoEnabled = true;
         $('.popupContain').remove();
         $("#saveStatus").html("Saved");
-    })
+        pushEdit(name, num, userName);
+    });
 
 }
 
