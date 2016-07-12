@@ -31,16 +31,17 @@ var CanvasImage = function (image, fileName) {
     File modified in order to only append images that contain largeBanner
     or smallBanner in the image file name.
     */
-    if (fileName==="largeBanner") {
-        document.querySelector("#large .header").appendChild(this.canvas);
-    } else if (fileName==="smallBanner") {
-        document.querySelector("#small .header").appendChild(this.canvas);
-    } else if (fileName === "smallBannerTwo") {
-        document.querySelector("#features .header").appendChild(this.canvas);
-    }else if (fileName === undefined) {
-        document.querySelector("#colorPallete").appendChild(this.canvas);
+
+    if (fileName === undefined) {
+        $("#colorPallete").append(this.canvas);
+    } else if (fileName.search("small") > -1 && !fileName.includes("Two")) {
+        $("#small .header").append(this.canvas);
+    } else if (fileName.search("small") > -1 && fileName.includes("Two")) {
+        $("#features .header").append(this.canvas);
+    }else if (fileName.search("large") > -1) {
+        $("#large .header").append(this.canvas);
     } else {
-        console.log("error! undefined image name");
+        console.log("error! There is no image");
     }
 
     this.width = this.canvas.width = image.width;

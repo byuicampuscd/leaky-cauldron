@@ -95,7 +95,6 @@ Handle the files that are uploaded into the application
 */
 function handleFileSelect(evt) {
     "use strict";
-    fireTemplateName = "";
 
     //Clear exisiting banners
     $(".header").html("");
