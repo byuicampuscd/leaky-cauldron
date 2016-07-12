@@ -18,4 +18,6 @@ Click on the page radio buttons and the detail radio buttons in order to make th
 
 6. Download the BYU-Idaho standard web files.
 
+7. Firebase Google OAuth in order to track changes made to templates.
+
 [Click here for the application!](https://leaky-cauldron-4d025.firebaseapp.com/)
