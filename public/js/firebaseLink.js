@@ -110,17 +110,23 @@ function saveScreen() {
 
         submit.click(function () {
 
-            var name = dept.val().trim().toUpperCase(),
+            var name = dept.val().split(" ")[0].trim().toUpperCase(),
                 num = courseNum.val().trim(),
                 dom = domain.val().trim().toLowerCase();
 
             departmentCode = name;
             courseID = num;
 
-            saveToFire(departmentCode, courseID, dom);
-            $(".shade").css({
-                "display": "none"
-            });
+            if (departmentCode && courseID && dom) {
+                saveToFire(departmentCode, courseID, dom);
+                $(".shade").css({
+                    "display": "none"
+                });
+            } else {
+                $("#saveScreenError").html('');
+                $("#saveScreenError").append('You must fill out each box in order to save.');
+            }
+
         });
 
         var cancel = $("input[value='Cancel'][type='button']");

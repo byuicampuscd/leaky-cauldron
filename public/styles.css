@@ -13,7 +13,8 @@ textarea {
     display: block;
 }
 
-#loadError {
+#loadError,
+#saveScreenError{
     color: red;
     font-size: 14px;
 }
