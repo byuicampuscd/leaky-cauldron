@@ -3,8 +3,19 @@
 A web application to create a psuedo CSS template file according to BYU-Idaho online web page standard.
 
 ## Use
-Exploring Firebase integration.
+Click on the page radio buttons and the detail radio buttons in order to make the modifications to the page.  To make the modifications to the page, just use the color picker provided.
 
-From there, a form will appear asking for which colors you want to use for which features on the template.  To choose colors you can either use the suggested dominant colors or slightly alter it by the color picker on the screen.  Once the form is done, then click "See CSS" to download or copy and paste the file.  Additionally you can download the other html and js files BYU-Idaho standard.  The generated CSS file will appear in a text box.
+## Features
+1. Recognizes image uploads that must contain the word "small" or "large" (case sensitive).  This will append the images to the proper designated template.
+
+2. Dynamic color editing with the color picker and a color palette scheme generated off of the dominant color schemes of the banner.
+
+3. Save the CSS and image banner data to Firebase.
+
+4. Load any saved template from Firebase.
+
+5. Integrated color contrast checking for accessibility.  The color contrast may be viewed as a modal popup or a red box will appear around each item that has invalid contrast.  Default contrast is set to 40%.
+
+6. Download the BYU-Idaho standard web files.
 
 [Click here for the application!](https://leaky-cauldron-4d025.firebaseapp.com/)
