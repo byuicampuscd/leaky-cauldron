@@ -19,7 +19,8 @@
 
         <!--"upload" smallBanner and largeBanner-->
         <h4>Upload Banners</h4>
-        <input type="file" id="files" name="files[]" multiple>
+        <input accept="image/*" type="file" id="files" name="files[]" multiple>
+        <label id="loadError"></label>
 
         <!--Load templates from firebase-->
         <h5>Load/Save Templates</h5>

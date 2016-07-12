@@ -13,6 +13,11 @@ textarea {
     display: block;
 }
 
+#loadError {
+    color: red;
+    font-size: 14px;
+}
+
 /*********************************************
     INPUT AREA
 *********************************************/

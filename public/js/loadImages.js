@@ -103,15 +103,20 @@ function handleFileSelect(evt) {
 
     for (var i = 0, f; f = files[i]; i++) {
         if (!f.type.match('image.*')) {
+            $("#loadError").html("");
+            $("#loadError").append("Error!  Must load only images.");
             continue;
         }
+
         var reader = new FileReader();
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
+
             var filename = theFile.name.replace(/\.[^/.]+$/, "");
             return function (e) {
                 insertBanners(e, filename, 'new');
             };
+
         })(f);
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
