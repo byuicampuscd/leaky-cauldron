@@ -101,13 +101,6 @@ function saveScreen() {
             courseNum = $("input[class='courseNum']"),
             domain = $("input[class='domain']");
 
-        var name = dept.val().split(" ")[0].toUpperCase(),
-            num = courseNum.val().trim(),
-            dom = domain.val().trim().toLowerCase();
-
-        departmentCode = name;
-        courseID = num;
-
         $(".shade").css({
             "display": "block"
         });
@@ -116,7 +109,15 @@ function saveScreen() {
         });
 
         submit.click(function () {
-            saveToFire(name, num, dom);
+
+            var name = dept.val().trim().toUpperCase(),
+                num = courseNum.val().trim(),
+                dom = domain.val().trim().toLowerCase();
+
+            departmentCode = name;
+            courseID = num;
+
+            saveToFire(departmentCode, courseID, dom);
             $(".shade").css({
                 "display": "none"
             });
