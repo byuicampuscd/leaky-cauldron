@@ -51,38 +51,49 @@ function saveToFire(name, num, domain) {
 
 }
 
+function displayCourses(e) {
+
+    $(".courses").css({
+        "display": "none"
+    })
+
+    var selectedDept = e.target.value;
+
+    $(`#${selectedDept}`).css({
+        "display": "block"
+    })
+}
+
 /*
 Display the data requested
 */
 function displayData(d, id) {
     var data = d;
-    var select = `<select id="${id}">`;
+    var select = $(`<select id="${id}"></select>`);
 
     for (var i in data) {
-        select += '<option>' + i + '</option>';
-    }
-    select += '</select>';
+        $(select).append('<option>' + i + '</option>');
 
-    if (id === "deptName") {
-        $('.loadedDept').html(select);
+        var selectTwo = $(`<select class="courses" id="${i}"></select>`).css({
+            "display": "none"
+        });
 
-        $(`#${id}`).click(function (e) {
-            loadCourses(e);
-        })
-    } else if (id === "courseNum") {
-        $('.loadedCourseNum').html(select);
+        for (var j in data[i]) {
+            console.log(data[i][j], j);
+            $(selectTwo).append('<option>' + j + '</option>');
+        }
+
+//        $(selectTwo).click()
+        $('.courseLoad').append(selectTwo);
+
     }
+
+    $(select).click(displayCourses);
+
+    $('.loadedDept').html(select);
 
     $(".loader").css({
         "display": "none"
-    })
-}
-
-function loadCourses(e) {
-    database.ref(e.target.value).once("value", function (snap) {
-        var course = snap.val();
-
-        displayData(course, "courseNum")
     })
 }
 
@@ -91,7 +102,7 @@ Request the data from Firebase
 */
 function readFromFire(func) {
     if (!departmentCode && !courseID) {
-        database.ref().once("value", function (snap) {
+        database.ref("courses").once("value", function (snap) {
             loadedTemplateData = snap.val();
             func(loadedTemplateData, "deptName");
         })
@@ -179,10 +190,9 @@ function loadTemplateOptions() {
     document.querySelector("#redoButton").disabled = true;
 
     var dept = $(".loadScreen #deptName").val(),
-        courseNum = $(".loadScreen #courseNum").val(),
+        courseNum = $(`.loadScreen #${dept}`).val(),
         newOptions = JSON.parse(loadedTemplateData[dept][courseNum].style),
         newImages = loadedTemplateData[dept][courseNum].images;
-
 
     departmentCode = dept;
     courseID = courseNum;
