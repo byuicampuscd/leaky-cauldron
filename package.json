@@ -18,5 +18,6 @@
   "homepage": "https://github.com/andrewgremlich/leaky-cauldron#readme",
   "devDependencies": {
     "color-contrast-checker": "^1.2.0"
-  }
+  },
+  "dependencies": {}
 }

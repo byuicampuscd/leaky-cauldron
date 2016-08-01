@@ -35,11 +35,6 @@
             <p id="saveStatus"></p>
         </div>
 
-        <!--Check the color contrast-->
-        <label id="colorContrast">Color Contrast Checker
-            <input type="button" value="Check Contrast" onclick="checkContrast()">
-        </label>
-
         <!--Color Picker-->
         <div id="color-wrapper">
             <input type="text" id="colorPicker">
@@ -371,14 +366,6 @@
 
     <!--MODALS FOR LOAD, SAVE, and COLOR CONTRAST CHECKER-->
     <div id="modals">
-        <div class="colorContrast">
-            <div class="contrastScreen">
-                <h2>Color Contrast Checker</h2>
-                <p>Application is set to approve 40% contrast.</p>
-                <div id="errorMessages"></div>
-                <input value='Cancel' type='button'>
-            </div>
-        </div>
 
         <div class='popupContain'>
             <div class='saveScreen'>
@@ -423,41 +410,43 @@
     <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->
     <footer>
 
+        <script src="./js/colorContraster.js"></script>
+
         <!--Firebase-->
         <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-        <script src="js/config.js"></script>
+        <script src="./js/config.js"></script>
         <!-- Firebase OAuth-->
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
         <!--External Libraries-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-        <script src="spectrum/spectrum.js"></script>
-        <script src="js/color-thief.js"></script>
+        <script src="./spectrum/spectrum.js"></script>
+        <script src="./js/color-thief.js"></script>
 
         <!--Default styling options-->
-        <script src="js/options.js"></script>
+        <script src="./js/options.js"></script>
 
         <!--Both scripts share a style variable-->
-        <script src="js/template.js"></script>
-        <script src="js/saveTextToCSS.js"></script>
+        <script src="./js/template.js"></script>
+        <script src="./js/saveTextToCSS.js"></script>
 
         <!--Button events to change all the colors.-->
-        <script src="js/colorChanges.js"></script>
+        <script src="./js/colorChanges.js"></script>
 
         <!--Color Contrast checker-->
-        <script src="js/ccc.js"></script>
+        <script src="./js/ccc.js"></script>
 
         <!--Image loader for smallBanner and largeBanner-->
-        <script src="js/loadImages.js"></script>
+        <script src="./js/loadImages.js"></script>
 
         <!--Firebase save and load ability-->
-        <script src="js/firebaseLink.js"></script>
+        <script src="./js/firebaseLink.js"></script>
 
         <!--login-->
-        <script src="js/login.js"></script>
+        <script src="./js/login.js"></script>
 
         <!--Undo and redo features-->
-        <script src="js/app.js"></script>
+        <script src="./js/app.js"></script>
 
     </footer>
 
