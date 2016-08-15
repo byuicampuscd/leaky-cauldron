@@ -11,7 +11,7 @@ var departmentCode,
     courseID;
 
 function pushEdit(name, num, userName) {
-    database.ref(`${name}/${num}/edits`).push({
+    database.ref(`courses/${name}/${num}/edits`).push({
         name: userName,
         timeStamp: firebase.database.ServerValue.TIMESTAMP
     });
@@ -21,7 +21,7 @@ function updateFirebase(name, num) {
     var currStyle = JSON.stringify(options),
         userName = localStorage["leakyCauldronDisplayName"];
 
-    database.ref(`${name}/${num}`).update({
+    database.ref(`courses/${name}/${num}`).update({
         style: currStyle
     }, function () {
         undoRedoEnabled = true;
@@ -38,7 +38,7 @@ function saveToFire(name, num, domain) {
     var currStyle = JSON.stringify(options),
         userName = localStorage["leakyCauldronDisplayName"];
 
-    database.ref(`${name}/${num}`).update({
+    database.ref(`courses/${name}/${num}`).update({
         style: currStyle,
         images: imgHold,
         domain: domain
