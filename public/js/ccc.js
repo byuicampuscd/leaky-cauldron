@@ -50,8 +50,6 @@ function evaluator() {
         if (isFunction) {
             errorHandler(ccc.isLevelAA(options[i].backColor(), options[i].color, 16), i);
 //            perc = color_meter(options[i].color, options[i].backColor());
-        } else {
-            console.log("No background color");
         }
     }
 }

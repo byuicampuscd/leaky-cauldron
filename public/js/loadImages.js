@@ -52,6 +52,7 @@ function getHexPallete(domColor, pallete, cssTemplate) {
         options[selectedRadio].color = this.id;
         options[selectedRadio].setColor();
         $("#colorPicker").spectrum("set", options[selectedRadio].color);
+        evaluator();
     });
 }
 

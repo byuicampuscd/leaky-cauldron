@@ -2,7 +2,7 @@
 Default options for the CSS template
 */
 
-var body = document.querySelector("body"),
+var body = document.body,
     options = {
         innergrad: {
             color: "#406986",
@@ -64,7 +64,7 @@ var body = document.querySelector("body"),
             }
         },
         prepareLabel: {
-            color: "#49807b",
+            color: "#477470",
             setColor: function () {
                 $(".prepareBanner .label").css("background", this.color);
             },
@@ -82,7 +82,7 @@ var body = document.querySelector("body"),
             }
         },
         teachLabel: {
-            color: "#537491",
+            color: "#50718e",
             setColor: function () {
                 $(".teachBanner .label").css("background", this.color);
             },
@@ -100,7 +100,7 @@ var body = document.querySelector("body"),
             }
         },
         ponderLabel: {
-            color: "#8163a5",
+            color: "#7b619c",
             setColor: function () {
                 $(".ponderBanner .label").css("background", this.color);
             },
@@ -185,7 +185,7 @@ var body = document.querySelector("body"),
             }
         },
         splashAHover: {
-            color: "#c08fd3",
+            color: "#deb5ee",
             setColor: function () {
                 $("#large a.hover").css("color", this.color);
                 $("#large a.hover").css("borderColor", this.color);
