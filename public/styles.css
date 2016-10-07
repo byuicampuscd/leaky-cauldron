@@ -14,11 +14,32 @@ textarea {
 }
 
 #loadError,
-#saveScreenError {
+#saveScreenError,
+#signInWrapper p {
     color: red;
     font-size: 14px;
 }
+/* These will be shown by login.js when ready */
+#loginDependentArea,
+#signInWrapper,
+#signOutBtn,
+#fireOptions {
+    display: none;
+}
 
+#signInWrapper {
+    text-align: center;
+}
+
+#signInWrapper button{
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+#signOutBtn {
+    float: right;
+}
 
 /*********************************************
     INPUT AREA
@@ -407,6 +428,10 @@ canvas {
     background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/assessment.png);
 }
 
+#signInLoader {
+    margin: 10px auto;
+}
+
 .loadedSelect {
     padding-bottom: 15px;
 }
@@ -414,26 +439,6 @@ canvas {
 .loadedSelect .loader {
     margin-left: 50px;
 }
-
-
-/*Login Nav*/
-
-nav {
-    position: absolute;
-    top: 0px;
-    right: 20px;
-    z-index: 100;
-}
-
-nav button {
-    background: #F0F0F0;
-    padding: 2px;
-    border: #cacaca 1px solid;
-    font-size: 2em;
-    color: #151515;
-    z-index: 100;
-}
-
 
 /* Loading animation for load screen */
 
@@ -470,7 +475,7 @@ nav button {
     }
     #input-wrapper {
         display: inline-block;
-        width: 420px;
+        width: 440px;
         vertical-align: top;
     }
     #inputs {
@@ -489,7 +494,7 @@ nav button {
     }
     #template-wrapper {
         display: inline-block;
-        width: calc(100% - 420px);
+        width: calc(100% - 440px);
         min-height: 100%;
     }
 }

@@ -79,22 +79,20 @@ function displayData(d, id) {
         });
 
         for (var j in data[i]) {
-            console.log(data[i][j], j);
             $(selectTwo).append('<option>' + j + '</option>');
         }
 
-//        $(selectTwo).click()
         $('.courseLoad').append(selectTwo);
 
     }
-
-    $(select).click(displayCourses);
+    $('.courseLoad select').hide();
+    $('.courseLoad select:first-child').show();
+    $(select).on('change', displayCourses);
 
     $('.loadedDept').html(select);
 
-    $(".loader").css({
-        "display": "none"
-    })
+    $("#modals .loader").hide();
+    $('.loadedDept, .courseLoad').show();
 }
 
 /*
@@ -223,6 +221,9 @@ function loadScreen() {
         div = $("div[class='loadScreen']");
 
     submit.prop("disabled", false);
+    
+    $('.loadedDept, .courseLoad').hide();
+    $("#modals .loader").show();
 
     $(".shade").css({
         "display": "block"

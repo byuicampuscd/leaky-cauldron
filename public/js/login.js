@@ -29,7 +29,6 @@ function toggleSignIn() {
         localStorage.removeItem("leakyCauldronDisplayName");
         localStorage.removeItem("leakyCauldronPhoto");
     }
-    document.getElementById('quickstart-sign-in').disabled = true;
 }
 
 function initApp() {
@@ -38,12 +37,12 @@ function initApp() {
         if (result.credential) {
             // This gives you a Google Access Token. You can use it to access the Google API.
             var token = result.credential.accessToken;
-            location.reload();
-            console.log(token);
         } else {
 //            console.log('token null');
         }
         var user = result.user;
+        $('#loginDependentArea').show();
+        $('#signInLoader').hide();
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -55,6 +54,7 @@ function initApp() {
             console.error(error);
         }
     });
+    
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             displayName = user.displayName;
@@ -70,21 +70,20 @@ function initApp() {
             localStorage["leakyCauldronDisplayName"] = displayName;
             localStorage["leakyCauldronPhoto"] = photoURL;
 
-            document.getElementById('quickstart-sign-in').textContent = 'Sign out';
             database.ref('users/' + uid).update({
                 displayName: displayName,
                 email: email,
                 photoURL: photoURL,
             });
-            $("#loadError").html("");
+            
+            $("#signInWrapper").hide();
+            $("#fireOptions, #signOutBtn").show();
         } else {
-            document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
-            $("#loadError").html("");
-            $("#loadError").append("You must be signed in to see and modify templates!");
+            $("#signInWrapper").show();
+            $("#fireOptions, #signOutBtn").hide();
         }
-        document.getElementById('quickstart-sign-in').disabled = false;
     });
-    document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+    $('#signInWrapper button, #signOutBtn').click(toggleSignIn);
 }
 
 window.onload = function () {

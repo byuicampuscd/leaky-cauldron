@@ -6,11 +6,11 @@ to change the page colors quickly
 function desaturateTOA() {
     // Update color values
     options.prepareActivity.color = "#8ed0cb";
-    options.prepareLabel.color = "#49807b";
+    options.prepareLabel.color = "#477470";
     options.teachActivity.color = "#9abad6";
-    options.teachLabel.color = "#537491";
+    options.teachLabel.color = "#50718e";
     options.ponderActivity.color = "#baa4d4";
-    options.ponderLabel.color = "#8163a5";
+    options.ponderLabel.color = "#7b619c";
     // Set colors
     options.prepareActivity.setColor();
     options.prepareLabel.setColor();
