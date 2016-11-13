@@ -13,32 +13,9 @@ textarea {
     display: block;
 }
 
-#loadError,
-#saveScreenError,
-#signInWrapper p {
+#loadError{
     color: red;
     font-size: 14px;
-}
-/* These will be shown by login.js when ready */
-#loginDependentArea,
-#signInWrapper,
-#signOutBtn,
-#fireOptions {
-    display: none;
-}
-
-#signInWrapper {
-    text-align: center;
-}
-
-#signInWrapper button{
-    padding: 0;
-    border: none;
-    background: none;
-}
-
-#signOutBtn {
-    float: right;
 }
 
 /*********************************************
@@ -186,43 +163,6 @@ canvas {
 
 #css-output p {
     display: inline-block;
-}
-
-
-/*********MODALS**************/
-
-.shade {
-    display: none;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    background-color: rgba(10, 10, 10, 0.3);
-    width: 100%;
-    height: 2000px;
-    overflow: none;
-    z-index: 90;
-}
-
-.saveScreen,
-.loadScreen,
-.contrastScreen {
-    display: none;
-    position: absolute;
-    left: 30%;
-    top: 30%;
-    width: 500px;
-    height: auto;
-    z-index: 100;
-    background-color: #e8f4ff;
-    padding: 5px;
-}
-
-#modals input[type='text'],
-#modals input[type='number'],
-#modals input[type='button'],
-#modals select,
-#modals .loader {
-    margin-bottom: 10px;
 }
 
 
@@ -426,38 +366,6 @@ canvas {
 
 .activityBanner.ponderBanner:after {
     background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/assessment.png);
-}
-
-#signInLoader {
-    margin: 10px auto;
-}
-
-.loadedSelect {
-    padding-bottom: 15px;
-}
-
-.loadedSelect .loader {
-    margin-left: 50px;
-}
-
-/* Loading animation for load screen */
-
-.loader {
-    border: 3px solid #f0f0f0;
-    border-top: 3px solid #6b6b6c;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 @media only screen and (min-width: 1200px) {
