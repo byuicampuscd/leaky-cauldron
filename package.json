@@ -1,7 +1,7 @@
 {
   "name": "leaky-cauldron",
   "version": "1.0.0",
-  "description": "The GS code that runs the English Assessment Spreadsheet",
+  "description": "CSS template generator and modifier for BYU-Idaho Online domain standards.",
   "main": "",
   "scripts": {
     "test": "NA"
