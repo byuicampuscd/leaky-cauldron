@@ -17,7 +17,3 @@ Click on the page radio buttons and the detail radio buttons in order to make th
 5. Integrated color contrast checking for accessibility.  The color contrast may be viewed as a modal popup or a red box will appear around each item that has invalid contrast.  Default contrast is set to 40%.
 
 6. Download the BYU-Idaho standard web files.
-
-7. Firebase Google OAuth in order to track changes made to templates.
-
-[Click here for the application!](https://leaky-cauldron-4d025.firebaseapp.com/)
