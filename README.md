@@ -10,10 +10,6 @@ Click on the page radio buttons and the detail radio buttons in order to make th
 
 2. Dynamic color editing with the color picker and a color palette scheme generated off of the dominant colors of the banner.
 
-3. Save the CSS and image banner data to Firebase.
+3. Integrated color contrast checking for accessibility.  The color contrast may be viewed as a modal popup or a red box will appear around each item that has invalid contrast.  Default contrast is set to 40%.
 
-4. Load any saved template from Firebase.
-
-5. Integrated color contrast checking for accessibility.  The color contrast may be viewed as a modal popup or a red box will appear around each item that has invalid contrast.  Default contrast is set to 40%.
-
-6. Download the BYU-Idaho standard web files.
+4. Download the BYU-Idaho standard web files.
