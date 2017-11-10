@@ -61,6 +61,10 @@ function insertBanners(e, filename, state) {
         }
         var suggestionCanvas = cloneColorThief();
         document.querySelector("#colorPallete").append(suggestionCanvas);
+        var smallCanvas = cloneColorThief();
+        document.querySelector("#small .header").append(smallCanvas);
+        var largeCanvas = cloneColorThief();
+        document.querySelector("#large .header").append(largeCanvas);
     }
     if (state === "new") {
         img.src = e.target.result;
