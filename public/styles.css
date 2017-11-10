@@ -498,3 +498,7 @@ canvas {
         min-height: 100%;
     }
 }
+
+/*DO NOT SHOW CERTAIN CANVASES*/
+#colorPallete canvas{display:none;}
+body > canvas{display:none;}

@@ -221,7 +221,7 @@ function loadScreen() {
         div = $("div[class='loadScreen']");
 
     submit.prop("disabled", false);
-    
+
     $('.loadedDept, .courseLoad').hide();
     $("#modals .loader").show();
 

@@ -54,7 +54,7 @@ function initApp() {
             console.error(error);
         }
     });
-    
+
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             displayName = user.displayName;
@@ -75,7 +75,7 @@ function initApp() {
                 email: email,
                 photoURL: photoURL,
             });
-            
+
             $("#signInWrapper").hide();
             $("#fireOptions, #signOutBtn").show();
         } else {

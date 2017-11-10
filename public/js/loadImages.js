@@ -12,23 +12,8 @@ function getHexPallete(domColor, pallete, cssTemplate) {
     "use strict";
     pallete.unshift(domColor);
     var palleteArray = [],
-        flexContainer = document.createElement("div"),
-        currentPage = "";
+        flexContainer = document.createElement("div");
 
-    // Check that a page is being viewed and not the css
-    if (document.querySelector("#page-selection input:checked") != null) {
-        currentPage = document.querySelector("#page-selection input:checked").dataset.selector;
-    }
-
-    // If current page is features use small
-    if (currentPage === "features") {
-        currentPage = "small";
-    }
-
-    // Hide the color suggestions for banner not being viewed
-    if (!cssTemplate.includes(currentPage)) {
-        flexContainer.style.display = "none";
-    }
     flexContainer.id = cssTemplate + "Suggestions";
 
     // Determine which suggestions to show or hide based off which page is currently selected
@@ -60,37 +45,42 @@ function getHexPallete(domColor, pallete, cssTemplate) {
 Put the banners into the application.
 */
 function insertBanners(e, filename, state) {
-
     var img = new Image();
-    var img2 = new Image();
+    //    var img2 = new Image();
 
-    /*If the state is fireload then load the data
-    from firebase.*/
-    if (state === "fireload") {
-        img.src = e;
+    img.onload = function () {
+        var colorThief = new ColorThief();
+        var image = new CanvasImage(img);
+        var domColor = colorThief.getColor(img),
+            pallete = colorThief.getPalette(img),
+            get = getHexPallete(domColor, pallete, filename);
 
-        if (filename.includes("small")) {
-            img2.src = e;
-            var colorThief = new ColorThief(),
-                image = new CanvasImage(img2, filename + "Two");
+        // clone the canvas for each new banner insert
+        function cloneColorThief(){
+            return cloneCanvas(document.querySelector("canvas:last-child"));
         }
-    } else if (state === "new") {
+        var suggestionCanvas = cloneColorThief();
+        document.querySelector("#colorPallete").append(suggestionCanvas);
+    }
+    if (state === "new") {
         img.src = e.target.result;
-
-        if (filename.includes("small")) {
-            img2.src = e.target.result;
-            var colorThief = new ColorThief(),
-                image = new CanvasImage(img2, filename + "Two");
-        }
     }
 
     imgHold[filename] = img.src;
+}
 
-    var colorThief = new ColorThief(),
-        image = new CanvasImage(img, filename),
-        domColor = colorThief.getColor(img),
-        pallete = colorThief.getPalette(img),
-        get = getHexPallete(domColor, pallete, filename);
+/****** ADB: cloneCanvas *********************
+ * Makes a copy of an existing canvas so the old
+ * one will stay put when you try to do crap.
+ * Thanks stackexchange...
+ *************************************************/
+function cloneCanvas(oldCanvas) {
+    var newCanvas = document.createElement('canvas');
+    var context = newCanvas.getContext('2d');
+    newCanvas.width = oldCanvas.width;
+    newCanvas.height = oldCanvas.height;
+    context.drawImage(oldCanvas, 0, 0);
+    return newCanvas;
 }
 
 /*

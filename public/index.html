@@ -13,38 +13,8 @@
 </head>
 
 <body>
-
-<!--
-    <nav>
-        <button disabled class="nav_button" id="quickstart-sign-in">Sign in with Google</button>
-        <div id="naver"></div>
-    </nav>
--->
-
     <!--OPTIONS AND FEATURES OF LEAKY CAULDRON-->
     <div id="input-wrapper">
-        
-        <div id="signInLoader" class='loader'></div>
-        
-        <div id="loginDependentArea">
-            
-            <button type="button" id="signOutBtn">Sign Out</button>
-        
-            <div  id="signInWrapper">
-                <button type="button"><img src="googleSignin.png" /></button>
-                <p>Sign in to load/save templates</p>
-            </div>
-
-            <!--Load templates from firebase-->
-            <div id="fireOptions">
-                <h5>Load/Save Templates</h5>
-                <input type="button" value="Load Template" onclick="loadScreen()">
-                <input type="button" value="Save Template" onclick="saveScreen()">
-                <p id="saveStatus"></p>
-            </div>
-        
-        </div>
-
         <!--"upload" smallBanner and largeBanner-->
         <h4>Upload Banners</h4>
         <input accept="image/*" type="file" id="files" name="files[]" multiple>
@@ -424,45 +394,24 @@
 
     <!--SCRIPTS TO MAKE EVERYTHING POSSIBLE-->
     <footer>
-
         <script src="./js/colorContraster.js"></script>
-
-        <!--Firebase-->
-        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-        <script src="./js/config.js"></script>
-        <!-- Firebase OAuth-->
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-
         <!--External Libraries-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="./spectrum/spectrum.js"></script>
         <script src="./js/color-thief.js"></script>
-
         <!--Default styling options-->
         <script src="./js/options.js"></script>
-
         <!--Both scripts share a style variable-->
         <script src="./js/template.js"></script>
         <script src="./js/saveTextToCSS.js"></script>
-
         <!--Button events to change all the colors.-->
         <script src="./js/colorChanges.js"></script>
-
         <!--Color Contrast checker-->
         <script src="./js/ccc.js"></script>
-
         <!--Image loader for smallBanner and largeBanner-->
         <script src="./js/loadImages.js"></script>
-
-        <!--Firebase save and load ability-->
-        <script src="./js/firebaseLink.js"></script>
-
-        <!--login-->
-        <script src="./js/login.js"></script>
-
         <!--Undo and redo features-->
         <script src="./js/app.js"></script>
-
     </footer>
 
 </body>
