@@ -1,0 +1,504 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+html {
+    background: #f0f0f0;
+}
+
+input,
+textarea {
+    display: block;
+}
+
+#loadError,
+#saveScreenError,
+#signInWrapper p {
+    color: red;
+    font-size: 14px;
+}
+/* These will be shown by login.js when ready */
+#loginDependentArea,
+#signInWrapper,
+#signOutBtn,
+#fireOptions {
+    display: none;
+}
+
+#signInWrapper {
+    text-align: center;
+}
+
+#signInWrapper button{
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+#signOutBtn {
+    float: right;
+}
+
+/*********************************************
+    INPUT AREA
+*********************************************/
+
+#saveStatus {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 0 5px;
+    color: #2eac4b;
+}
+
+[type='button'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px #316286 solid;
+    background-color: #376d95;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    display: inline;
+    cursor: pointer;
+}
+
+#input-wrapper {
+    padding: 10px;
+}
+
+#inputs {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 10px;
+    width: 410px;
+    vertical-align: top;
+}
+
+#large-options,
+#features-options {
+    display: none;
+}
+
+canvas {
+    width: 100%;
+}
+
+#page-selection {
+    padding: 5px;
+    border-bottom: #0F0F0F solid;
+}
+
+#inputs b {
+    margin-right: 5px;
+}
+
+#inputs input {
+    display: inline;
+    margin-right: 10px;
+}
+
+
+/* Color-wrapper */
+
+#color-wrapper {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+
+/* Color Picker */
+
+.sp-container {
+    border: none;
+    background: #d5d5d5;
+    z-index: 0;
+}
+
+.sp-input {
+    background: #f0f0f0;
+}
+
+
+/* Undo/Redo Buttons */
+
+#color-wrapper input[type='button'] {
+    margin: 0 5px;
+    padding: 5px 15px;
+}
+
+#color-wrapper input[type='button']:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+
+/* Color Pallete */
+
+#colorPallete {
+    display: inline-block;
+    margin-left: 5px;
+    max-width: 220px;
+}
+
+#colorPallete div div {
+    display: inline-block;
+    margin: 2px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+
+/*Color contrast*/
+
+#colorContrast {
+    display: block;
+    margin-top: 5px;
+}
+
+#colorContrast > input {
+    margin-left: 5px;
+}
+
+
+/*********************************************
+    TEMPLATE AREA
+*********************************************/
+
+#large,
+#features,
+#css-output {
+    display: none;
+}
+
+#css-output input {
+    margin-bottom: 10px;
+}
+
+#css-output textarea {
+    width: 100%;
+    height: 1450px;
+    padding: 10px;
+}
+
+#css-output p {
+    display: inline-block;
+}
+
+
+/*********MODALS**************/
+
+.shade {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(10, 10, 10, 0.3);
+    width: 100%;
+    height: 2000px;
+    overflow: none;
+    z-index: 90;
+}
+
+.saveScreen,
+.loadScreen,
+.contrastScreen {
+    display: none;
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    width: 500px;
+    height: auto;
+    z-index: 100;
+    background-color: #e8f4ff;
+    padding: 5px;
+}
+
+#modals input[type='text'],
+#modals input[type='number'],
+#modals input[type='button'],
+#modals select,
+#modals .loader {
+    margin-bottom: 10px;
+}
+
+
+/* Default CSS (Needed to avoid multiple elements with the same ID */
+
+#template-wrapper {
+    padding: 20px 0;
+    background: -webkit-radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
+    background: radial-gradient(ellipse, #406986 0%, #16344a 100%) fixed;
+}
+
+.main {
+    width: 90%;
+    max-width: 950px;
+    margin: 0 auto;
+    box-shadow: 0 0 12px #000000;
+}
+
+#small a.default,
+#small a.default:visited {
+    color: #2d5d94;
+    border-bottom: 2px solid #2d5d94;
+}
+
+#small a.hover {
+    color: #7b4c8d;
+    border-bottom: 2px solid #7b4c8d;
+}
+
+#large a.hover {
+    color: #c08fd3;
+    border-bottom: 2px solid #c08fd3;
+}
+
+#large a.default,
+#large a.default:visited {
+    color: #a1d7ff;
+    border-bottom: 2px solid #a1d7ff;
+}
+
+.header canvas {
+    width: 100%;
+    display: block;
+}
+
+.article {
+    position: relative;
+    padding: 20px;
+    color: #3e3e3e;
+    background-color: #f0f0f0;
+}
+
+.splash > .article {
+    color: #eaeaea;
+    background-color: #125576;
+}
+
+
+/* Keeps images from escaping the bottom of #article */
+
+.article:after {
+    content: "";
+    clear: both;
+    height: 0px;
+    display: block;
+    opacity: 0;
+}
+
+.footer {
+    text-align: center;
+    padding: 6px;
+    color: #e2e2e2;
+    background-color: #2d5d94;
+    font-size: 13px;
+}
+
+.splash .footer {
+    color: #e2e2e2;
+    background-color: #133955;
+}
+
+.drop-down.hover {
+    background: #7f7f7f;
+}
+
+#popupWord {
+    position: relative;
+    border-bottom: dotted 2px #3084c3;
+    cursor: help;
+}
+
+#popupMessage {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: calc(50% - 100px);
+    padding: 15px;
+    width: 200px;
+    color: #fdfdfd;
+    background: #274b66;
+    border-radius: 8px;
+}
+
+#popupTriangle {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: calc(50% - 15px);
+    border-style: solid;
+    border-width: 15px 15px 0 15px;
+    border-color: #274b66 transparent transparent transparent;
+}
+
+
+/* TOA Banners */
+
+
+/* General */
+
+.activityBanner {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    font-size: 0;
+}
+
+.activityBanner p {
+    display: inline-block;
+    padding: 10px;
+}
+
+.activityBanner .label {
+    padding: 20px 25px 20px 0;
+    width: 140px;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    text-align: center;
+    vertical-align: top;
+}
+
+.activityBanner .activityType {
+    padding: 20px 0 20px 65px;
+    width: calc(100% - 140px);
+    color: #000;
+    font-size: 32px;
+}
+
+.activityBanner:after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 110px;
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    background-size: cover;
+}
+
+
+/* Prepare */
+
+.activityBanner.prepareBanner .label {
+    background: #49807b;
+}
+
+.activityBanner.prepareBanner .activityType {
+    background: #8ed0cb;
+}
+
+.activityBanner.prepareBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/caseStudy.png);
+}
+
+
+/* Teach One Another */
+
+.activityBanner.teachBanner .label {
+    padding: 9px 25px 9px 0;
+    background: #537491;
+}
+
+.activityBanner.teachBanner .activityType {
+    background: #9abad6;
+}
+
+.activityBanner.teachBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/fieldExperience.png);
+}
+
+
+/* Ponder & Prove */
+
+.activityBanner.ponderBanner .label {
+    padding: 9px 25px 9px 0;
+    background: #8163a5;
+}
+
+.activityBanner.ponderBanner .activityType {
+    background: #baa4d4;
+}
+
+.activityBanner.ponderBanner:after {
+    background-image: url(https://content.byui.edu/file/599082e0-3e89-4fd9-ac69-2615865d63c7/71/icons.zip/icons/assessment.png);
+}
+
+#signInLoader {
+    margin: 10px auto;
+}
+
+.loadedSelect {
+    padding-bottom: 15px;
+}
+
+.loadedSelect .loader {
+    margin-left: 50px;
+}
+
+/* Loading animation for load screen */
+
+.loader {
+    border: 3px solid #f0f0f0;
+    border-top: 3px solid #6b6b6c;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    body {
+        height: 100%;
+        font-size: 0;
+    }
+    body > * {
+        font-size: 16px;
+    }
+    #input-wrapper,
+    #template-wrapper {
+        height: 100%;
+        overflow: auto;
+    }
+    #input-wrapper {
+        display: inline-block;
+        width: 440px;
+        vertical-align: top;
+    }
+    #inputs {
+        display: block;
+        margin-left: 0;
+    }
+    #color-wrapper {
+        display: block;
+        text-align: center;
+    }
+    #colorPallete {
+        display: block;
+        margin-top: 15px;
+        margin-left: 0;
+        max-width: none;
+    }
+    #template-wrapper {
+        display: inline-block;
+        width: calc(100% - 440px);
+        min-height: 100%;
+    }
+}
+
+/*DO NOT SHOW CERTAIN CANVASES*/
+#colorPallete canvas{display:none;}
+body > canvas{display:none;}
